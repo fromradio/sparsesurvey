@@ -1,0 +1,43 @@
+\section{Sparse Representation in Geometry Processing}
+\label{sec:L0}
+
+In this section we will give the survey of sparse representation in geometry processing according to its continuous promotion.
+
+\subsection{$l_0$-norm}
+
+At the very beginning of the development of sparse representation, the $l_0$ norm of a vector counts the number of non-zero entries, which directly measures sparsity, here we call it standard sparse representation. Mathematically, a signal $x\in R^{N}$ can be represented as a linear combination of a few atoms from a overcomplete dictionary $\mathbf{D}_{n \times m}$, i.e., $x\approx\mathbf{D}\alpha$, via $l_0$-minimization:
+\begin{equation}
+ \label{eq:L0 modeling}
+ \alpha_{x} = \arg\min_{\alpha}||\alpha||_0, s.t. ||x-\mathbf{D}\alpha||_2 \le \varepsilon
+\end{equation}
+where, as mentioned above, $\|\centerdot\|_0$ counts the number of the non-zero coefficients in $\alpha$, and $\varepsilon$ is a small constant balancing the sparsity and the approximation error. Matching Pursuit(MP)\cite{mallat1993matching} and its variant Orthogonal Matching Pursuit(OMP)\cite{pati1993orthogonal} is well known in generating the solution which is out of the scope of this article.
+
+Since this norm is difficult to optimize directly due to its combinational nature requiring that one enumerate all possible $k$-element collections of $\mathbf{D}$, for $k=1,2,...,m$, such an algorithm would cost at least $O(2^{m})$ flops to carry out in general, and at least $O(m^{k})$ even when a sparse $k$-element represent existed, there are not many works based on it.
+
+\paragraph{Modeling}Modeling with constraints is an important tool for the construction and modification of 3D geometric models. Especially in the case of modeling man-made structure like architecture or machine parts, geometric constraints are able to create and preserve ubiquitous alignment properties like element parallelism, conllinearity, fixed angles and distances, or symmetry relations. Existing approaches to analyze and solve constraint systems usually fail to meet two main challenges of an interactive 3D modeling system: for each atomic editing operation, it is crucial to adjust as few auxiliary vertices as possible in order to not destroy the user's earlier editing effort; the whole constraint resolution pipeline is required to run in real-time to enable a fluent, interactive workflow.
+
+To address both issues, \cite{habbecke2012linear} presents a novel interactive constrained modeling with a well-defined strategy that, for an atomic editing operation, computes as small as possible model updates in terms of the total number of adjusted vertices. Briefly, a model instance $\mathbf{X}_0$, whose elements are the vertex positions, satisfies all constraints denoted by $\mathbf{c(X_0)=0}$ which is a vector-valued function. Then for a given editing displacement $\mathbf{d}$, the central goal is to find a correction displacement $\mathbf{d'}$ such that $\mathbf{c(X_0+d+d')=0}$, where the zero elements of $\mathbf{d'}$ and $\mathbf{d}$ are disjoint and $\mathbf{d'}$ should be as sparse as possible. Figure... shows the result.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/modeling_L0}
+  \caption{$l_0$ optimization: constrained modeling\cite{habbecke2012linear}. Left: original configuration. Center: editing operation such that the base plane of the dormers changes its orientation(example A1). Right: the dormers' base plane does not change(example A2). Blue vertices are relaxed in the analysis phase and automatically updated by the editing system.}
+\end{figure}
+
+\paragraph{Mesh denoising} Mesh denoising is an important tool in geometry processing. A wide variety of denoising algorithms already exist that can be divided into two approaches: prescribed differential information based and extending the bilateral filter from 2D signal processing to arbitrary 3D meshes. But it is inherently challenging as it can be difficult to distinguish features from noise.
+
+Last year, \cite{he2013mesh} extends the image $l_0$-smoothing method\cite{xu2011image} to denoise triangulated meshes of 3D models with a new developed discrete gradient operator on arbitrary triangle meshes. The goal is to minimize the curvature of the surface except at sharp features instead of creating piecewise constant functions as was done for images. Due to the nature of $l_0$ norm, this work can handle large amount of noise and produce high quality results except some shapes with extreme triangulations that the only vertices that exist lie at sharp features in the model. Figure... shows the results.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/denoise_L0}
+  \caption{$l_1$ optimization: mesh denoising\cite{he2013mesh}. Left: initial surface. Center: surface corrupted by Gaussian noise in random directions with standard deviation $\sigma=0.4l_{e}$($l_{e}$ is the mean edge length). Right: denoising result. The wireframe shows folded triangles as red edges.}
+\end{figure}
+
+To apply sparse representation in images and graphics better, several promotions of $l_0$ norm have been proposed based on which there are much more works in recent years.
+
+\input{L1}
+\input{Lp}
+\input{Learning}
+\input{Lowrank}
+
