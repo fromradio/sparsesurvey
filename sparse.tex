@@ -8,5 +8,34 @@ A common formulation for this problem is that:
 \min_{\mathbf{a}} & \|\mathbf{a}\|_0\\
 \mathrm{s.t.} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2 \leq \epsilon.
 \end{array}
+\label{eq-sparse}
 \end{equation}
-Here $\mathbf{X}=(\mathbf{x}_1,\,\mathbf{x}_2,\cdots ,\,\mathbf{x}_n)$ denotes the dictionary matrix collecting all basis vectors. 
+Here $\mathbf{X}=(\mathbf{x}_1,\,\mathbf{x}_2,\cdots ,\,\mathbf{x}_n)$ denotes the dictionary matrix collecting all basis vectors.
+Unfortunately, $\|\mathbf{x}\|_0$ is not differentiable or even continuous.
+Thus this optimization problem is a NP-hard problem and cannot be easily solved.
+Generally, we are not able to obtain the optimal solution of Problem~\ref{eq-sparse}.
+But many approximated solvers have been created to solve this problem.
+Matching pursuit (MP), orthogonal matching pursuit (OMP) iteratively add the best basis vector to represent $\mathbf{x}$ which is an approximating solution of problem:
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 \\
+\mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
+\end{array}
+\end{equation} 
+Here $s$ denotes the number of chosen basis vectors which stands for the sparsity of this problem.
+Under certain assumptions, the solution of OMP algorithm converges to the real solution.
+
+Another widely-used technique for solving sparse problem is to use $\ell_1$ norm to replace $\ell_0$ norm in Problem~\ref{eq-sparse}.
+The least absolute shrinkage and selection operator (LASSO) approach uses the constraint that $\|\mathbf{a}\|_1$ is no greater than a given value $\epsilon$
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2\\
+\mathrm{s.t.} & \|\mathbf{a}\|_1 \leq \epsilon
+\end{array}
+\end{equation}
+This problem is also equivalent to an unconstrained minimization of:
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
+\end{array}
+\end{equation}
