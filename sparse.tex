@@ -33,7 +33,7 @@ The least absolute shrinkage and selection operator (LASSO) approach uses the co
 \mathrm{s.t.} & \|\mathbf{a}\|_1 \leq \epsilon
 \end{array}
 \end{equation}
-This problem is also equivalent to an unconstrained minimization of:
+This problem is also equivalent to an unconstrained minimization with a specific $\beta$ of:
 \begin{equation}
 \begin{array}{cl}
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
@@ -41,12 +41,16 @@ This problem is also equivalent to an unconstrained minimization of:
 \end{equation}
 This problem is solved using general convex optimization methods like quadratic programming, as well as by specific approaches like the least angle regression algorithm.
 
-As discussed above, we show some basic methods of finding the coefficients when the basis vectors are given.
+\paragraph{Dictionary Learning.}
+As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
 Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
-One algorithm called K-SVD uses an iterative procedure by iteratively updating the coefficients $\mathbf{a}$ and dictionary $\mathbf{X}$
+One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $\mathbf{A}$ and dictionary $\mathbf{X}$ separately
 \begin{equation}
 \begin{array}{cl}
-\min_{\mathbf{X},\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\| \\
-\mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
+\min_{\mathbf{X},\mathbf{A}} & \|\mathbf{Y}-\mathbf{X}\mathbf{A}\| \\
+\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
 \end{array}
 \end{equation}
+Here $\mathbf{Y}=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $\mathbf{A} = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
+To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
+Then
