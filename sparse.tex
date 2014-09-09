@@ -1,4 +1,5 @@
 \section{The Problems of Sparse Coding}
+\subsection{Sparse Coding}
 There are many basic different aspects in sparse coding problems such as finding the coefficients, learning the basis vectors, matrix factorization etc.
 At the very first, we briefly introduce some popular sparse methods for machine learning.
 Recall that the target of sparse coding is to find as small number of basis vectors as possible to represent an input vector.
@@ -21,7 +22,7 @@ Matching pursuit (MP), orthogonal matching pursuit (OMP) iteratively add the bes
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 \\
 \mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
 \end{array}
-\end{equation} 
+\end{equation}
 Here $s$ denotes the number of chosen basis vectors which stands for the sparsity of this problem.
 Under certain assumptions, the solution of OMP algorithm converges to the real solution.
 
@@ -51,6 +52,10 @@ One algorithm called K-SVD uses an iterative procedure by updating the coefficie
 \mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
 \end{array}
 \end{equation}
+
 Here $\mathbf{Y}=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $\mathbf{A} = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
 To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
 Then
+
+\subsection{Matrix Factorization}
+Sparse-based matrix factorization is another hot field in machine learning like sparse principle component analysis, low rank representation and so on.
