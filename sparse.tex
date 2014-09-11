@@ -1,4 +1,5 @@
 \section{The Problems of Sparse Coding}
+\subsection{Sparse Coding}
 There are many basic different aspects in sparse coding problems such as finding the coefficients, learning the basis vectors, matrix factorization etc.
 At the very first, we briefly introduce some popular sparse methods for machine learning.
 Recall that the target of sparse coding is to find as small number of basis vectors as possible to represent an input vector.
@@ -21,7 +22,7 @@ Matching pursuit (MP), orthogonal matching pursuit (OMP) iteratively add the bes
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 \\
 \mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
 \end{array}
-\end{equation} 
+\end{equation}
 Here $s$ denotes the number of chosen basis vectors which stands for the sparsity of this problem.
 Under certain assumptions, the solution of OMP algorithm converges to the real solution.
 
@@ -33,7 +34,7 @@ The least absolute shrinkage and selection operator (LASSO) approach uses the co
 \mathrm{s.t.} & \|\mathbf{a}\|_1 \leq \epsilon
 \end{array}
 \end{equation}
-This problem is also equivalent to an unconstrained minimization of:
+This problem is also equivalent to an unconstrained minimization with a specific $\beta$ of:
 \begin{equation}
 \begin{array}{cl}
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
@@ -41,12 +42,52 @@ This problem is also equivalent to an unconstrained minimization of:
 \end{equation}
 This problem is solved using general convex optimization methods like quadratic programming, as well as by specific approaches like the least angle regression algorithm.
 
-As discussed above, we show some basic methods of finding the coefficients when the basis vectors are given.
+\subsection{Dictionary Learning.}
+As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
 Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
-One algorithm called K-SVD uses an iterative procedure by iteratively updating the coefficients $\mathbf{a}$ and dictionary $\mathbf{X}$
+One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $\mathbf{A}$ and dictionary $\mathbf{X}$ separately
 \begin{equation}
 \begin{array}{cl}
-\min_{\mathbf{X},\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\| \\
-\mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
+\min_{\mathbf{X},\mathbf{A}} & \|\mathbf{Y}-\mathbf{X}\mathbf{A}\| \\
+\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
 \end{array}
 \end{equation}
+
+Here $\mathbf{Y}=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $\mathbf{A} = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
+To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
+Then
+
+\subsection{Low rank representation and robust principle component analysis}
+Sparse-based matrix factorization technique is another hot field in machine learning.
+A typical technique is low rank representation which attemps to decompose any given matrix $M$ into a low rank matrix $L$ and a residual matrix $S$.
+The residual matrix $S$ may have some specific properties like the input is corrupted by Gaussian noise or spase noise.
+Under the assumption that $M$ is corrupted by Gaussian noise, a low rank problem is formulated as:
+\begin{equation}
+\label{eq-lowrank}
+\begin{array}{cl}
+\min_{L,S} & \|S\|_F\\
+\mathrm{s.t.} & \mathrm{rank}(L)\leq r\\
+&M=L+S
+\end{array}
+\end{equation}
+here $r\ll \min(m,n)$ where $M$ is a $m\times n$ matrix.
+The above problem is equivalent to principle component analysis (PCA) according to~\cite{jolliffe2005principal,wold1987principal}.
+This problem is easily solved by first computing the singular value decomposition (SVD) of $M$ and then projecting the columns of $M$ onto the subspace spanned by the $r$ principle left singular vectors.
+%Low rank representation attempts to approxmate 
+%\paragraph{Low rank representation}
+
+However, PCA assumes that corruption is caused by Gaussian noise.
+The result of PCA can be arbitraryly far from $M$ if only a few entry of $M$ is corrupted.
+\cite{wright2009robust,candes2011robust} show that under some conditions that $S$ is rather sparse, one can exactly recover $M$ by solving
+%If $S$ is assumed to be sparse, the problem becomes:
+\begin{equation}
+\label{eq-lowranksparse}
+\begin{array}{cl}
+\min_{L,S} & \|L\|_* + \lambda \|S\|_1 \\
+\mathrm{s.t.} & M = L+S
+\end{array}
+\end{equation}
+
+%It is a critical task to find a low rank representation or approximation for a general data matrix.
+But low rank representation has been widely used in many applications like image compression, noise reduction, principle component analysis, regularization for ill-posed problems and so on. 
+%The basic problem of low rank is to approximate a given matrix $A$ using a matrix $B$ with low rank.
