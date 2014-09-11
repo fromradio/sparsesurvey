@@ -1,8 +1,7 @@
 \documentclass[3p,twocolumn]{elsarticle}
 %\documentclass[review]{elsartical}%sigal column
 
-\usepackage{lineno,hyperref}
-\modulolinenumbers[5]
+
 
 \journal{Journal of \LaTeX\ Templates}
 
@@ -10,11 +9,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{amsmath,amssymb}
+\DeclareMathOperator*{\argmin}{argmin}
 
 \usepackage{picins}
 \usepackage{picinpar}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
 
 \begin{document}
 
@@ -63,8 +66,8 @@
 \input{Introduction}
 \input{Pre}
 \input{Sparse}
-\input{L0}
-\input{Conclusion}
+\input{SparseProblem}
+\input{Survey}
 \input{Acknowledgements}
 
 \bibliography{sparsesurvey}

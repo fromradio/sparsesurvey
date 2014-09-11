@@ -1,0 +1,256 @@
+\label{sec:SparseRegularization}
+
+\input{SRpart1}  % modeling & denoising
+\input{SRpart2}  % reconstruction based on L_1 median and TV
+
+\subsection{Shape Matching}
+
+Here, we give shape matching a more extensive definition: finding the correspondence(point-wise, pair-wise) between two rigid or non-rigid deformable geometric data sets.
+
+\subsubsection{Rigid registration} Rigid registration is a fundamental task in computer graphics and geometry processing. It aims at finding a suitable set of corresponding points on source and target point set. The $Iterative~Closest~Point$(ICP) addresses this problem by assuming the input data to be in coarse alignment. Under this assumption, a set of correspondences can be obtained by querying closest points on the target geometry. Given two surfaces $\mathcal{X}$, $\mathcal{Y}$, it is formulated as
+
+\small{
+\begin{equation}
+ \label{eq:ICP}
+ \mathop{\argmin}_{\mathbf{R},\mathbf{t}}\int_{\mathcal{X}}^{}\varphi(\mathbf{Rx}+\mathbf{t},\mathcal{Y})d\mathbf{x}+I_{\mathcal{SO}(k)}(\mathbf{R})
+\end{equation}
+}
+\\
+where $\mathbf{R}$ is a rotation matrix, $\mathbf{t}$ is a translation vector, $\mathbf{x}$ is a point on the source geometry. The quality of a registration is evaluated by the metric $\varphi(\mathbf{x},\mathbf{y})=\|\mathbf{x}-\mathbf{y}\|{_2^2}$, i.e., classical ICP is in a least-square sense which would fail with outliers.
+
+Now that sparse regularization methods excels in processing data set with noises or outliers, \cite{bouaziz2013sparse} tries to formulate the local alignment problem as recovering rigid transformation that minimizes the number of zero distances between two correspondences. Since \cite{chartrand2007exact} shows that $l_{p}$ norms with $p<1$ outperform the $l_1$ norm in inducing sparsity and \cite{elad2010sparse} also illustrates the tendency of $l_{p}$($0<p<1$)norms to drive results to become sparse. \cite{bouaziz2013sparse} adopts $l_{p}$($0\le p\le1$) norm based sparse regularizer to obtain an heuristic-free, robust rigid registration algorithm by modifying
+
+\small{
+\begin{equation}
+ \label{eq:permutedsparse}
+ \varphi(\mathbf{x},\mathbf{y})=\|\mathbf{x}-\mathbf{y}\|{_2^{p}}
+\end{equation}
+}
+
+Figure...is the registration results of sparse ICP under different values of $p$ among which it can be found that $0<p<1$ reduces better results, but the value of $p$ is selected according to the experiments to offer a trade-off between performance and robustness which may make the sparse ICP unpractical.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/sparseICP}
+  \caption{Sparse regularization: rigid registration results using sparse ICP\cite{chartrand2007exact} under different $l_{p}$ norms.}
+\end{figure}
+
+\subsubsection{Non-rigid shape matching}
+Matching of deformable shapes is a notoriously difficult problem playing an important role in many application, non-rigid matching typically uses point-wise representation of correspondence, which results in the number of degrees of freedom growing exponentially with the number of matched points.
+
+Recently, \cite{ovsjanikov2012functional} introduces a functional representation for correspondences which are modeled as the correspondences between functions on two shapes rather than points.
+Briefly, let $X$ and $Y$ be two shapes equipped with bases $\{\phi_{i}\}_{i\ge1}$ and $\{\psi_{j}\}_{j\ge1}$ respectively, any real function $f: X\to \mathbb{R}$ and $g=T(f): Y\to \mathbb{R}$ can be represented as $f=\sum_{i\ge1}^{}a_{i}\phi_{i}$ and $g=\sum_{j\ge1}^{}b_{j}\psi_{j}$.
+Taking discretized functions $\phi_{i}$ and $\psi_{j}$ as the columns of bases matrices $\Phi$ and $\Psi$, the functions vectors...$\mathbf{b^{T}}=\mathbf{a^{T}C}$. Thus, the matrix $\mathbf{C}$ fully encodes the linear map $T$ between the functional spaces.
+In case the shapes $X$ and $Y$ are isometric and the corresponding Laplace-Beltrami operators have simple spectra, the harmonic bases(Laplacian eigenfunctions) have a compatible behavior, $\psi_{i}=T(\phi_{i})$ such that $c_{ij}=\delta_{ij}$.
+Choosing the discretized eigenfunctions of the Laplace-Beltrami operator as $\Phi$ and $\Psi$ causes every low-distortion correspondence being represented by a nearly diagonal, and therefore very sparse matrix $C$.
+
+Based on the above theory, \cite{pokrass2013sparse} firstly gets two collections of similar functions $\{f_{i}:X\to \mathbb{R}\}$ and $\{g_{j}:Y\to \mathbb{R}\}$ using some region detection process like\cite{litman2011diffusion}. \parpic[r]{\label{fig:regionmatching}\includegraphics[width=0.4\linewidth]{images/matching_function}}As shown in the right figure, different colors represent different functions and the correspondence of these two collections of functions is unknown, i.e., we do not know to which $g_{j}$ in $Y$ a $f_{i}$ in $X$ corresponds.
+\cite{pokrass2013sparse} adopts an unknown permutation matrix $\mathbf{\Pi}$ to express this ordering. Finally, the robust permuted sparse coding is formulated as following
+
+\small{
+\begin{equation}
+ \label{eq:permutedsparse}
+ \min_{\mathbf{C},\mathbf{O},\mathbf{\Pi}}\frac{1}{2}\|\mathbf{\Pi}\mathbf{B}-\mathbf{AC}-\mathbf{O}\|{_{F}^2}+\lambda\|\mathbf{W}\odot\mathbf{C}\|_1+\mu\|\mathbf{O}\|_{2,1}
+\end{equation}
+}
+\\
+where $\mathbf{W}$ is assigned with larger weights in off-diagonal part and small weights in diagonal part to promote diagonal solutions, $\|\mathbf{O}\|_{2,1}$ promotes row-wise sparsity allowing to absorb the errors in the data term corresponding to the rows of $\mathbf{A}$ having no corresponding rows in $\mathbf{B}$.
+Figure...This method relies on the region detection technique and assumption: near-isometric shapes.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/matching_L1}
+  \caption{Sparse regularization: non-rigid shape matching \cite{wang2014decoupling}. First row: point-to-point correspondences between different non-isometric shapes. Second row: point-to-point correspondence between SHREC shapes undergoing nearly isometric deformations and noise.}
+\end{figure}
+
+
+\subsubsection{Co-segmentation}
+Co-segmentation aims to consistently segment a group of shapes and obtain the correspondence between resulted segments simultaneously. As (b) in figure...shows, corresponding parts are labeled in the same colors.
+To be more intuitive and efficient, \cite{hu2012co} processes co-segmentation on patch-level instead of face-level like many other works.
+
+So they firstly over-segment all the models((a) in figure) followed by calculating their feature vectors using some feature descriptors.
+For example, figure... shows the colormaps of average geodesic distance(AGD) features of two tables with over-segmented patches, and actually there are $H=5$ feature descriptors.
+They define the feature vector as a histogram of the feature measurement on the triangles of that patch.
+Then it is obvious that two corresponding patches have similar distributions, which means their feature vectors lie in a common subspace generated by standard basis corresponding to these nonzero entries.
+Based on this observation, they regard co-segmentation as a subspace clustering problem since the final segments are all clustering of patches.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/co-segmentationAGD}
+  \caption{Sparse regularization: co-segmentation\cite{hu2012co}. Colormaps of AGD features of two tables with over-segmented patches. The AGD feature vectors of the two patches(marked in rectangles) from each table's leg have similar distribution, as shown in histograms in the middle. It can be seen that these two feature vectors lie in the common subspace generated by standard basis corresponding to the nonzero entries.}
+\end{figure}
+
+
+Since that each data point(here is the feature vector) in a union of linear subspaces can always be represented as a linear combination of the points belonging to the same linear subspace and thus the combination could be sparse if the point is written as a linear combination of all other points. Following\cite{elhamifar2009sparse,wang2011efficient}, finding the sparse combination matrix for the single-feature co-segmentation is formulated as
+
+\small{
+\begin{equation}
+ \label{eq:SSC}
+ \begin{split}
+ &\min_{W_{h}}\|X_{h}W_{h}-X_{h}\|{_{F}^2}+\lambda\|W_{h}^{T}W_{h}\|_{1,1} \\
+ &s.t.~W_{h}\ge0,~\textrm{diag}(W_{h})=0
+ \end{split}
+\end{equation}
+}
+\\
+where $h$ corresponds to the $h$-th feature descriptor,
+the feature matrix $X_{h}=[x_{h1},x_{h2},\cdots,x_{hN}]$ is constructed with $x_{hi}$ which is the feature vector of the $i$-th patch($i=1,2,\cdots,N$).
+$\|W_{h}^{T}W_{h}\|_{1,1}$ is seen as a penalty item in the optimization, which favors the sparsity of the optimal solution $\overline{W_{h}}$ of which each entry measures the linear correlation between two points in the meshes.
+After defining the affinity matrix $S=(s_{ij})$ as $s_{ij}=|\overline{w_{h}}_{ij}|+|\overline{w_{h}}_{ji}|$, the NCut method\cite{shi2000normalized} is applied to get the co-segmentation results.
+
+However, single one feature is not enough for co-segmenting different categories of models.
+Taking two following things into account:
+finding the most similar patch pairs considering selected features and corresponding patches need not be similar in these features,
+\cite{hu2012co} adds the consistent multi-feature penalty to ensure the co-segmentation results consistent with different feature spaces by combing $H$ feature descriptors
+
+\small{
+\begin{equation}
+ \label{eq:SSC}
+ \begin{split}
+ &\min_{W_{1},\cdots,W_{H}}\sum_{h=1}^{H}\mathcal{F}(W_{h})+\mathcal{P}_{cons}(W_1,W_2,\cdots,W_H)\\
+ &s.t.~W_{h}\ge0,~\textrm{diag}(W_{h})=0,h=1,2,\cdots,H.
+ \end{split}
+\end{equation}
+}
+\\
+where $\mathcal{P}_{cons}$ is the penalty on the matrices $W_1,W_2,\cdots,W_H$
+
+\small{
+\begin{equation}
+ \label{eq:SSC}
+ \mathcal{P}_{cons}(W_1,W_2,\cdots,W_H)=\alpha\|W\|_{2,1}+\beta\|W\|_{1,1}\\
+\end{equation}
+}
+\\
+here the $H\times N^2$ matrix $W$ is formed by concatenating $W_1,W_2,\cdots,W_H$(each matrix in one row) together:
+
+\small{
+\begin{equation}
+ \label{eq:edgecotanoperator}
+ W = {\left[ \begin{array}{cccc}
+ (W_1)_{11} & (W_1)_{12} & \cdots & (W_1)_{N^2}\\
+ (W_2)_{11} & (W_2)_{12} & \cdots & (W_2)_{N^2}\\
+ \vdots & \vdots & \ddots & \vdots\\
+ (W_{H})_{11} & (W_{H})_{12} & \cdots & (W_{H})_{N^2}
+ \end{array}
+ \right]}
+\end{equation}
+}
+\\
+the $\ell_{2,1}$ penalty on $W$ induces column sparsity of $W$ such that most columns of $W$ are shrunken to be entirely zero, which means that the corresponding pairs of patches will likely not be in the same cluster.
+The $\ell_{1,1}$ penalty on $W$ induces the sparsity within each column of $W$.
+This means that for each non-zero column, that is for each similar patch pair, only a subset of features are actually used to measure their similarity.
+Hence this term enables the prominent features to pop up and guarantees the sparsity-consistency of the matrices $W_1,W_2,\cdots,W_H$.
+
+Notice that without $\mathcal{P}_{cons}$, the formulation () will reduce to a naive solution which is exactly the same as applying subspace clustering to each feature matrix $X_{h}$ independently.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/co-segmentation}
+  \caption{Sparse regularization: co-segmentation\cite{hu2012co}. Left shows the over segmented patches that will be clustered to get the co-segmentation result.}
+\end{figure}
+
+
+
+\subsection{Barycentric coordinates}
+$\mathbf{Barycentric~coordinates}$ provide a simple and convenient way of interpolating values from a set of control points over the interior of a domain, using weighted combinations of values associated with different control points. Current barycentric coordinates typically are of global nature, meaning that the interpolated value depends on many, potentially $all$, control points. Besides the lack of locality and scalability, the interpolation is computationally expensive since it involves a weighted sum of all control points for each interior vertex. Thus, barycentric coordinates with locality provide benefit in terms of storage requirements as well as computational cost. $\mathbf{Juyong~Zhang}$ introduces a novel method to derive $local~barycentric~coordinates$(LBC), which depend only on a small number of control points. LBC are computed by minimizing a target functional based on total variation, subject to a set of constraints that ensure desired properties such as locality, linearity, non-negativity, and smoothness. LBC induce lower computational cost for applications such as cage-based deformation(Figure...), since each point on the target shape is only determined by a small number of control points.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/LBC_L1}
+  \caption{Sparse regularization: local barycentric coordinates\cite{}. Using LBC for 3D cage-based manipulation allows for local, smooth and shape-aware deformations. Only parts near the manipulated control points are deformed, as indicated by the color-coding.}
+\end{figure}
+
+
+\subsection{Skeleton extraction}
+In section..., we have introduced much information about $L_1$ median and its success in point cloud consolidation.
+Except for reducing 2D surface that approximate origin point-set, \cite{huang2013l1} observed that adapting $L_1$ medians $locally$ to a point set representing a geometric shape also gives rise to a $one-dimensional$ structure which can be seen as a localized center of the shape, i.e., a medial curve skeleton that can be used for shape abstraction and consequently an effective tool for shape analysis and manipulation\cite{cornea2007curve}.
+Without building any point connectivity or estimating point normals, they directly project point samples onto their local centers as $l_1$ medians with growing neighborhood and push the projected samples via conditional regularization to obtain a uniform distribution of samples along skeleton branches.
+
+It is intuitively a modification of LOP by modifying the repulsion term $E_2$ in () and proposing a different weighted density parameter that can also be named WLOP\cite{huang2009consolidation}. Re-centering. Figure... shows an example.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/skeleton_L1}
+  \caption{Sparse regularization: skeleton extraction\cite{huang2013l1}. Given an unorganized, unoriented, and incomplete raw scan with noise and outliers(b), a complete and quality curve skeleton is extracted(c).}
+\end{figure}
+
+
+\subsection{Constrained modeling} Constrained modeling is an important tool for the construction and modification of 3D geometric models. Especially in the case of modeling man-made structure like architecture or machine parts, geometric constraints are able to create and preserve ubiquitous alignment properties like element parallelism, conllinearity, fixed angles and distances, or symmetry relations. Generally, analyzing and solving constraint systems usually fail to meet two main challenges of an interactive 3D modeling system: for each atomic editing operation, it is crucial to adjust as few auxiliary vertices as possible in order to not destroy the user's earlier editing effort; the whole constraint resolution pipeline is required to run in real-time to enable a fluent, interactive workflow.
+
+To address both issues, \cite{habbecke2012linear} presents a novel interactive constrained modeling with a well-defined strategy that, for an atomic editing operation, computes $as~small~as~possible$ model updates in terms of the total number of adjusted vertices.
+
+Mathematically, a model instance $\mathbf{X}_0$, whose elements are the vertex positions, satisfies all constraints denoted by $\mathbf{c}(\mathbf{X}_0)=\mathbf{0}$ which is a vector-valued function. Then for a given editing displacement $\mathbf{d}$ corresponding to one user editing operation, the central goal is to find a correction displacement $\mathbf{d'}$  such that $\mathbf{c}(\mathbf{X}_0+\mathbf{d}+\mathbf{d'})=\mathbf{0}$, where the zero elements of $\mathbf{d'}$ and $\mathbf{d}$ are disjoint and $\mathbf{d'}$ should be as sparse as possible.
+
+If the space of possible movements of each vertex $\mathbf{x}_{i}$ is represented with a basis $\{\mathbf{b}_{i,1},\mathbf{b}_{i,1},\mathbf{b}_{i,3}\}$, $\mathbf{b}_{i,k} \in \mathbb{R}^3$, after extending the 3-dimensional basis vectors to vectors $\mathbf{B}_{i,k}:=(0,...,0,\mathbf{b}{_{i,k}^{T}},0,...,0) \in \mathbb{R}^{3n}$ with $3(i-1)$ leading zeros, the correction displacement $\mathbf{d'}$ can then be represented as linear combination
+
+\small{
+\begin{equation}
+ \label{eq:ConstrainedModeling}
+ \mathbf{d'} := \sum_{i\notin I(\mathbf{b})}^{}\sum_{k=1}^{3}\alpha_{i,k}\mathbf{B}_{i,k}.
+\end{equation}
+}
+
+So the computation of the correction of displacement $\mathbf{d'}$ is actually to compute the non-zero coefficient $\alpha_{i,k}$ with analysis phase determining its set and solution phase computing its values. Figure... shows one modeling result. In this paper, each editing operation is performed on a input model instance that satisfies all predefined constraints, due to the sparsity of solutions, this strong assumption can not result in some limitations. But changing the predefined constraint types or the number of the constraints may result in failure cases.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=3in]{images/modeling_L0}
+  \caption{Sparse regularization: constrained modeling\cite{habbecke2012linear}. Left: original configuration. Center: editing operation such that the base plane of the dormers changes its orientation(example A1). Right: the dormers' base plane does not change(example A2). Blue vertices are relaxed in the analysis phase and automatically updated by the editing system.}
+\end{figure}
+
+
+
+%
+%
+%
+%\cite{elhamifar2009sparse} has proposed an approach of sparse subspace clustering(SSC) considering that each data point in a union of linear subspaces can always be represented as a linear combination of the points belonging to the same linear subspace and thus the combination could be sparse if the point is written as a linear combination of all other points. This is formulated as
+%
+%\begin{equation}
+% \label{eq:SSC}
+% \min_{W}\|XW-X\|{_{F}^2}+\lambda\|W\|_{1,1},~s.t.~\textrm{diag}(W)=0
+%\end{equation}
+%\\
+%where $X$ is represents the data points, $\|W\|_{1,1}$ is seen as a penalty item in the optimization, which favors the sparsity of the optimal solution $\overline{W}$ of which each entry measures the linear correlation between two points in the dataset. After defining the affinity matrix $S=(s_{ij})$ as $s{ij}=|\overline{w}_{ij}|+|\overline{w}_{ji}|$, the NCut method\cite{shi2000normalized} is applied to segment the object set into $K$ clusters.
+%
+%To reduce computation, \cite{wang2011efficient} adopts a new penalty item $\|W^{T}W\|_{1,1}$ in () as
+%
+%\small{
+%\begin{equation}
+% \label{eq:SSC}
+% \begin{split}
+% &\min_{W}\|XW-X\|{_{F}^2}+\lambda\|W^{T}W\|_{1,1} \\
+% &s.t.~W\ge0,~\textrm{diag}(W)=0
+% \end{split}
+%\end{equation}
+%}
+%\\
+%where $\|W^{T}W\|_{1,1}$ also enforces sparsity of the optimal solution $\overline{W}$.
+%
+%Following (), for single feature, \cite{hu2012co} gives their optimization problem
+%
+%\small{
+%\begin{equation}
+% \label{eq:SSC}
+% \begin{split}
+% &\min_{W_{h}}\|X_{h}W_{h}-X_{h}\|{_{F}^2}+\lambda\|W_{h}^{T}W_{h}\|_{1,1} \\
+% &s.t.~W_{h}\ge0,~\textrm{diag}(W_{h})=0
+% \end{split}
+%\end{equation}
+%}
+%\\
+%here $h$ corresponds to some feature descriptor, the feature matrix $X_{h}=[x_{h1},x_{h2},\cdots,x_{hN}]$ is constructed with $x_{hi}$ which is the feature vector of the $i$-th patch($i=1,2,\cdots,N$).
+%
+%\begin{figure}[ht]
+%  \centering
+%  \includegraphics[width=3in]{images/co-segmentation}
+%  \caption{Sparse regularization: co-segmentation\cite{hu2012co}. Left: over segmented patches. Right: co-segmented result.}
+%\end{figure}
+%
+%
+
+
+
+
+
+In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts. Most of the $l_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations. Even though they are designed for quality rather than performance due to their nature, the performance problem is worth researching. 
