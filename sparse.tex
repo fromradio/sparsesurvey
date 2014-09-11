@@ -71,19 +71,23 @@ Under the assumption that $M$ is corrupted by Gaussian noise, a low rank problem
 \end{array}
 \end{equation}
 here $r\ll \min(m,n)$ where $M$ is a $m\times n$ matrix.
-The above problem is equivalent to principle component analysis (PCA) according to~\cite{jolliffe2005principal}.
-The 
+The above problem is equivalent to principle component analysis (PCA) according to~\cite{jolliffe2005principal,wold1987principal}.
+This problem is easily solved by first computing the singular value decomposition (SVD) of $M$ and then projecting the columns of $M$ onto the subspace spanned by the $r$ principle left singular vectors.
 %Low rank representation attempts to approxmate 
 %\paragraph{Low rank representation}
-If $S$ is assumed to be sparse, the problem becomes:
+
+However, PCA assumes that corruption is caused by Gaussian noise.
+The result of PCA can be arbitraryly far from $M$ if only a few entry of $M$ is corrupted.
+\cite{wright2009robust,candes2011robust} show that under some conditions that $S$ is rather sparse, one can exactly recover $M$ by solving
+%If $S$ is assumed to be sparse, the problem becomes:
 \begin{equation}
 \label{eq-lowranksparse}
 \begin{array}{cl}
-\min_{L,S} & \|S\|_0 \\
-\mathrm{s.t.} & \mathrm{rank}(L) \leq r\\
-& M = L+S
+\min_{L,S} & \|L\|_* + \lambda \|S\|_1 \\
+\mathrm{s.t.} & M = L+S
 \end{array}
 \end{equation}
-It is a critical task to find a low rank representation or approximation for a general data matrix.
+
+%It is a critical task to find a low rank representation or approximation for a general data matrix.
 But low rank representation has been widely used in many applications like image compression, noise reduction, principle component analysis, regularization for ill-posed problems and so on. 
-The basic problem of low rank is to approximate a given matrix $A$ using a matrix $B$ with low rank.
+%The basic problem of low rank is to approximate a given matrix $A$ using a matrix $B$ with low rank.
