@@ -205,9 +205,17 @@ whether it is easy for the users to give the suitable values.
 \end{figure}
 
 
-
 \subsection{Reconstruction}
-Surface reconstruction from point cloud is of great practical importance in computer graphics, it takes as input a set of dense, unorganized points sampled from a subjacent, piecewise smooth surface and outputs a triangular mesh to approximate the surface. Existing methods often realize reconstruction via a few phases with respective goals, e.g., as mentioned in section..., point cloud consolidation can be a preprocessing phasse to denoise, remove outlier and thus can reduce more reliable normal estimation. However, integration of some processing phases may not give an optimal solution. To avoid the inherent limitations of multi-phase processing in the prior art, $\mathbf{Juyong Zhang}$ proposes a unified framework that treats geometry and connectivity construction as one joint optimization problem. In this dictionary learning based method, dictionary consists of the vertices of the reconstructed triangular mesh and the sparse coding matrix encodes the connectivity of the mesh. Figure.. gives an illustration of this reconstruction problem, it is clear that each column of sparse coding matrix $\mathbf{B}$ contains no more than 3 non-zero(green) elements corresponding to a triangle in mesh. They formulate the surface reconstruction as following
+Surface reconstruction from point cloud is of great practical importance in computer graphics,
+it takes as input a set of dense, unorganized points sampled from a subjacent, piecewise smooth surface and outputs a triangular mesh to approximate the surface.
+Existing methods often realize reconstruction via a few phases with respective goals, e.g., as mentioned in section..., point cloud consolidation can be a preprocessing phasse to denoise, remove outlier and thus can reduce more reliable normal estimation.
+However, integration of processing phases may not give an optimal solution.
+
+To avoid the inherent limitations of multi-phase processing in the prior art, $\mathbf{Juyong Zhang}$ proposes a unified framework that treats geometry and connectivity construction as one joint optimization problem.
+
+As figure..(a) shows, given a point set $\mathbb{P}=\{ \mathbf{p}_1, \mathbf{p}_2, \cdots, \mathbf{p}_n \}$(blue) sampled from a piecewise smooth surface $\textsl{S}$, 
+they attempt to find a triangular mesh $\textsl{M}=\{ \mathbb{V}, \mathbb{}F\}$ with 
+vertex set $\mathbb{V}=\{ \mathbf{v}_1, \mathbf{v}_2, \cdots, \mathbf{v}_m \}$(red) and triangle set $\mathbb{F}$ to approximate the underlying surface $\textsl{S}$ so that the approximation error is as small as possible
 
 \small{
 \begin{equation}
@@ -220,16 +228,16 @@ Surface reconstruction from point cloud is of great practical importance in comp
 \end{equation}
 }
 \\
-where $E_{reg}$ is to regularize the reconstructed mesh to produce good mesh quality. Figure...shows the reconstruction results. (a)the Merlion model with various geometric features such as sharp and semi-sharp features and different levels of surface details. (b) high triangle quality.
+where $E_{reg}$ is to regularize the reconstructed mesh to produce good mesh quality, 
+each column of sparse coding matrix $\mathbf{B}$ corresponds to a triangle in mesh. Finally, all the points sampled from the region approximated by a triangle can be represented as a convex combination of the same three vertices.
 
-Despite these high quality results, the nonconvex optimization model makes it difficult for the solver to theoretically guarantee convergence or produce a global optimal solution. And it can fail when the point cloud has large holes or is highly non-uniform due to the current sampling method.
+Figure...shows the reconstruction result, with high triangle quality, of the Merlion model with various geometric features such as sharp and semi-sharp features and different levels of surface details. Despite these high quality results, the nonconvex optimization model makes it difficult for the solver to theoretically guarantee convergence or produce a global optimal solution. And it can fail when the point cloud has large holes or is highly non-uniform due to the current sampling method.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=3in]{images/reconstruction_learning}
-  \caption{Dictionary learning: reconstruction\cite{}. Left: an illustration of the reconstruction problem. Right: reconstruction of the Merlion model.}
+  \caption{Dictionary learning: reconstruction\cite{}. Left: (Top)an illustration of the reconstruction problem. Given point set $\mathbb{P}$(blue) sampled from surface \textsl{S}, they approximate S with piecewise linear surface \textsl{M} with vertices $\mathbb{V}$(red) and triangles $\mathbb{F}$. (Bottom) The reconstruction problem where $\mathbf{P}$ is the position of sample point set. $\mathbf{V}$ is the dictionary and $\mathbf{B}$(green) is the sparse coding matrix that encodes triangles $\mathbb{F}$. Right: reconstruction result of the Merlion model.}
 \end{figure}
-
 
 
 \subsection{Compression}
@@ -294,14 +302,16 @@ they firstly \textit{training} a set of exemplar(basis) pairs $\{(\bar{U}_{c},\b
 \end{equation}
 }
 \\
-where $\bar{S}_{ia}$ contains the coefficients of the \textit{i}th HRDF when projected onto the \textit{a}th exemplar, $M$ is a binary matrix associating each HRDF to its corresponding exemplar pair$(\bar{U}_{c},\bar{V}_c)$
-
-
-use a leaning based approach, Clustered Exemplar Orthogonal Bases(CEOB), to train a compact dictionary of orthogonal basis pairs, enabling efficient sparse projection of the SLF data. This method has an overall advantage in terms of memory footprint, rendering performance and reconstruction error.
-
-
-
-This method enables real-time rendering of virtual scenes exhibiting complex material and light source configurations with full global illumination.
+where $\bar{S}_{ia}$ contains the coefficients of the \textit{i}th HRDF when projected onto the \textit{a}th exemplar, $M$ is a binary matrix associating each HRDF to its corresponding exemplar pair$(\bar{U}{_{a}^{c}},\bar{V}{_{a}^{c}})$. Finally, let $(\xi_1, \xi_2)$ be an element of an HRDF matrix, the sparsity of $\bar{S}_i$ allows for a compact reconstruction formula for Clustered Exemplar Orthogonal Bases(CEOB)
+\small{
+\begin{equation}
+ \label{eq:L1reconstruction}
+ H{_{i}^{c}}(\xi_1, \xi_2) = \sum_{i=1}^{} \bar{U}{_{a}^{c}}(\bar{S}_{i}(t,1), \xi_1) \bar{S}_{i}(t,3) \bar(V){_{a}^{c}}(\bar{S}_{i}(t,1), \xi_2),
+\end{equation}
+}
+\\
+where $\bar{S}_{i}$ is a matrix of size $t\times3$: the first two columns describe the index of a non-zero element and the third stores its value.
+Figure(b) shows three scenes with different materials.
 
 \begin{figure}[ht]
   \centering

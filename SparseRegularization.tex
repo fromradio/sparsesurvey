@@ -151,9 +151,30 @@ Notice that without $\mathcal{P}_{cons}$, the formulation () will reduce to a na
 \end{figure}
 
 
-
 \subsection{Barycentric coordinates}
-$\mathbf{Barycentric~coordinates}$ provide a simple and convenient way of interpolating values from a set of control points over the interior of a domain, using weighted combinations of values associated with different control points. Current barycentric coordinates typically are of global nature, meaning that the interpolated value depends on many, potentially $all$, control points. Besides the lack of locality and scalability, the interpolation is computationally expensive since it involves a weighted sum of all control points for each interior vertex. Thus, barycentric coordinates with locality provide benefit in terms of storage requirements as well as computational cost. $\mathbf{Juyong~Zhang}$ introduces a novel method to derive $local~barycentric~coordinates$(LBC), which depend only on a small number of control points. LBC are computed by minimizing a target functional based on total variation, subject to a set of constraints that ensure desired properties such as locality, linearity, non-negativity, and smoothness. LBC induce lower computational cost for applications such as cage-based deformation(Figure...), since each point on the target shape is only determined by a small number of control points.
+
+Barycentric~coordinates provide a simple and convenient way of interpolating values from a set of control points over the interior of a domain, using weighted combinations of values associated with different control points.
+
+Many barycentric coordinates typically are of global nature, meaning that the interpolated value depends on many, potentially $all$, control points. Besides the lack of locality and scalability, the interpolation is computationally expensive since it involves a weighted sum of all control points for each interior vertex.
+Thus, barycentric coordinates with locality provide benefit in terms of storage requirements as well as computational cost.
+
+$\mathbf{Juyong~Zhang}$ introduces a novel method to derive $local~barycentric~coordinates$(LBC), which depend only on a small number of control points.
+Given a set of control points $\mathbf{c}_1, \cdots, \mathbf{c}_n$ in $\mathbb{R}^2$ or  $\mathbb{R}^3$ which are the vertices of a closed control cage, and let the domain bounded by the cage.
+They want to find a function $w_{i}$: $\Omega\rightarrow\mathbb{R}$ for each $\mathbf{c}_{i}$, such that $[w_1(\mathbf{x}), \cdots, w_n(\mathbf{x})]$ is a set of generalized barycentric coordinates of $\mathbf{x}\in\Omega$ with respect to the control points $\{\mathbf{c}_{i}\}$ and is used for interpolating function values $f(\mathbf{c}_1), \cdots, f(\mathbf{c}_n)$ at control points on the interior of $\Omega$ by
+
+\small{
+\begin{equation}
+ \label{eq:BC}
+ f(\mathbf{x}) = \sum_{i=1}^{n}w_{i}(\mathbf{x})f(\mathbf{c}_{i})
+\end{equation}
+}
+\\
+which satisfies several properties, such as reproduction, partition of unity, non-negative, smoothness and locality.
+
+
+
+subject to a set of constraints that ensure desired properties such as locality, linearity, non-negativity, and smoothness.
+LBC induce lower computational cost for applications such as cage-based deformation(Figure...), since each point on the target shape is only determined by a small number of control points.
 
 \begin{figure}[ht]
   \centering
@@ -176,7 +197,13 @@ It is intuitively a modification of LOP by modifying the repulsion term $E_2$ in
 \end{figure}
 
 
-\subsection{Constrained modeling} Constrained modeling is an important tool for the construction and modification of 3D geometric models. Especially in the case of modeling man-made structure like architecture or machine parts, geometric constraints are able to create and preserve ubiquitous alignment properties like element parallelism, conllinearity, fixed angles and distances, or symmetry relations. Generally, analyzing and solving constraint systems usually fail to meet two main challenges of an interactive 3D modeling system: for each atomic editing operation, it is crucial to adjust as few auxiliary vertices as possible in order to not destroy the user's earlier editing effort; the whole constraint resolution pipeline is required to run in real-time to enable a fluent, interactive workflow.
+\subsection{Constrained modeling}
+Constrained modeling is an important tool for the construction and modification of 3D geometric models.
+Especially in the case of modeling man-made structure like architecture or machine parts, geometric constraints are able to create and preserve ubiquitous alignment properties like element parallelism, conllinearity, fixed angles and distances, or symmetry relations.
+
+Generally, analyzing and solving constraint systems usually fail to meet two main challenges of an interactive 3D modeling system: for each atomic editing operation,
+it is crucial to adjust as few auxiliary vertices as possible in order to not destroy the user's earlier editing effort;
+the whole constraint resolution pipeline is required to run in real-time to enable a fluent, interactive workflow.
 
 To address both issues, \cite{habbecke2012linear} presents a novel interactive constrained modeling with a well-defined strategy that, for an atomic editing operation, computes $as~small~as~possible$ model updates in terms of the total number of adjusted vertices.
 
@@ -186,71 +213,37 @@ If the space of possible movements of each vertex $\mathbf{x}_{i}$ is represente
 
 \small{
 \begin{equation}
- \label{eq:ConstrainedModeling}
+ \label{eq:ConstrainedModeling1}
  \mathbf{d'} := \sum_{i\notin I(\mathbf{b})}^{}\sum_{k=1}^{3}\alpha_{i,k}\mathbf{B}_{i,k}.
 \end{equation}
 }
 
-So the computation of the correction of displacement $\mathbf{d'}$ is actually to compute the non-zero coefficient $\alpha_{i,k}$ with analysis phase determining its set and solution phase computing its values. Figure... shows one modeling result. In this paper, each editing operation is performed on a input model instance that satisfies all predefined constraints, due to the sparsity of solutions, this strong assumption can not result in some limitations. But changing the predefined constraint types or the number of the constraints may result in failure cases.
+So the computation of the correction of displacement $\mathbf{d'}$ is actually to compute the non-zero coefficient $\alpha_{i,k}$.
+They firstly determine its non-zero set in analysis phase by solving
+
+\small{
+\begin{equation}
+ \label{eq:ConstrainedModeling2}
+ \sum_{i\notin I(\mathbf{d})}^{}\sum_{k=1}^{3}\alpha_{i,k}P\mathbf{B}_{i,k}=-P\mathbf{d}.
+\end{equation}
+}
+\\
+using $Orthogonal~Matching~Pursuit$(OMP),%\cite{tropp2007signal},
+and here $P$ is the constraints' Jacobian $J_{\mathbf{c}}\in \mathbb{R}^{m\times 3n}$.
+
+Then the solution phase is designed to compute its values as
+
+\small{
+\begin{equation}
+ \label{eq:ConstrainedModeling3}
+ E(\{\alpha_{i,k}|(i,k)\in \Lambda\})=\sum_{j\in C}^{}c{_j^2}(\mathbf{X}_0+\mathbf{d}+\sum_{}^{}\alpha_{i,k}\mathbf{B}_{i,k}),
+\end{equation}
+}
+\\
+Figure... shows one modeling result. In this paper, each editing operation is performed on a input model instance that satisfies all predefined constraints, due to the sparsity of solutions, this strong assumption can not result in some limitations. But changing the predefined constraint types or the number of the constraints may result in failure cases.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=3in]{images/modeling_L0}
   \caption{Sparse regularization: constrained modeling\cite{habbecke2012linear}. Left: original configuration. Center: editing operation such that the base plane of the dormers changes its orientation(example A1). Right: the dormers' base plane does not change(example A2). Blue vertices are relaxed in the analysis phase and automatically updated by the editing system.}
-\end{figure}
-
-
-
-%
-%
-%
-%\cite{elhamifar2009sparse} has proposed an approach of sparse subspace clustering(SSC) considering that each data point in a union of linear subspaces can always be represented as a linear combination of the points belonging to the same linear subspace and thus the combination could be sparse if the point is written as a linear combination of all other points. This is formulated as
-%
-%\begin{equation}
-% \label{eq:SSC}
-% \min_{W}\|XW-X\|{_{F}^2}+\lambda\|W\|_{1,1},~s.t.~\textrm{diag}(W)=0
-%\end{equation}
-%\\
-%where $X$ is represents the data points, $\|W\|_{1,1}$ is seen as a penalty item in the optimization, which favors the sparsity of the optimal solution $\overline{W}$ of which each entry measures the linear correlation between two points in the dataset. After defining the affinity matrix $S=(s_{ij})$ as $s{ij}=|\overline{w}_{ij}|+|\overline{w}_{ji}|$, the NCut method\cite{shi2000normalized} is applied to segment the object set into $K$ clusters.
-%
-%To reduce computation, \cite{wang2011efficient} adopts a new penalty item $\|W^{T}W\|_{1,1}$ in () as
-%
-%\small{
-%\begin{equation}
-% \label{eq:SSC}
-% \begin{split}
-% &\min_{W}\|XW-X\|{_{F}^2}+\lambda\|W^{T}W\|_{1,1} \\
-% &s.t.~W\ge0,~\textrm{diag}(W)=0
-% \end{split}
-%\end{equation}
-%}
-%\\
-%where $\|W^{T}W\|_{1,1}$ also enforces sparsity of the optimal solution $\overline{W}$.
-%
-%Following (), for single feature, \cite{hu2012co} gives their optimization problem
-%
-%\small{
-%\begin{equation}
-% \label{eq:SSC}
-% \begin{split}
-% &\min_{W_{h}}\|X_{h}W_{h}-X_{h}\|{_{F}^2}+\lambda\|W_{h}^{T}W_{h}\|_{1,1} \\
-% &s.t.~W_{h}\ge0,~\textrm{diag}(W_{h})=0
-% \end{split}
-%\end{equation}
-%}
-%\\
-%here $h$ corresponds to some feature descriptor, the feature matrix $X_{h}=[x_{h1},x_{h2},\cdots,x_{hN}]$ is constructed with $x_{hi}$ which is the feature vector of the $i$-th patch($i=1,2,\cdots,N$).
-%
-%\begin{figure}[ht]
-%  \centering
-%  \includegraphics[width=3in]{images/co-segmentation}
-%  \caption{Sparse regularization: co-segmentation\cite{hu2012co}. Left: over segmented patches. Right: co-segmented result.}
-%\end{figure}
-%
-%
-
-
-
-
-
-In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts. Most of the $l_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations. Even though they are designed for quality rather than performance due to their nature, the performance problem is worth researching. 
+\end{figure} 

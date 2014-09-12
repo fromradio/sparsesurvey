@@ -57,19 +57,19 @@ Let $\xi{_{ij}^k}=x{_i^k}-p_{j}$ and $\delta{_{ii'}^k}=x{_i^k}-x{_{i'}^k}$, solv
 \small{
 \begin{equation}
  \label{eq:WLOP1}
- \begin{split}
- & x{_i^{k+1}}=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}}{\sum_{j\in J}^{}\alpha{_{ij}^k}}+ \\
- &~~~~~~~~~~~\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}\beta{_{ii'}^k}},
- \end{split}
+ x{_i^{k+1}}=F_1(x{_i^k},P)+F_2(x{_i^k},X{_i^{'}})
 \end{equation}
 }
 \\
-where, \small{
+where,
+\small{
 \begin{equation}
  \label{eq:WLOP2}
  \begin{split}
- & \alpha{_{ij}^k}=\frac{\theta(\|\xi{_{ij}^k}\|)}{\|\xi{_{ij}^k}\|}, \\
- & \beta{_{ii'}^k}=\frac{\theta(\|\delta{_{ii'}^k}\|)|\eta'(\|\delta{_{ii'}^k}\|)|}{\|\delta{_{ii'}^k}\|}.
+ & F_1(x{_i^k},P)=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}}{\sum_{j\in J}^{}\alpha{_{ij}^k}},\\
+ & F_2(x{_i^k},X{_i^{'}})=\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}\beta{_{ii'}^k}},\\
+ & \alpha{_{ij}^k}=\frac{\theta(\|\xi{_{ij}^k}\|)}{\|\xi{_{ij}^k}\|},
+   ~\beta{_{ii'}^k}=\frac{\theta(\|\delta{_{ii'}^k}\|)|\eta'(\|\delta{_{ii'}^k}\|)|}{\|\delta{_{ii'}^k}\|}.
  \end{split}
 \end{equation}
 }
@@ -82,19 +82,19 @@ Like\cite{lipman2007parameterization}, many surface reconstruction methods try t
 In fact, oriented normals at the points play a critical role in surface reconstruction and the estimation of normals requires the sampling points to be uniformly distributed.
 \cite{huang2009consolidation} proposes a new consolidation technique whose central task is normal estimation.
 
-To take advantage of the success of LOP in denoising and outlier removal, and simultaneously address the non-uniform distribution problem, they incorporate locally adaptive density weights into LOP, resulting in WLOP, they define the weighted local densities for each point $p_{j}$ in P and $x_{i}$ in X during the $k$th iteration by $v_{j}=1+\sum_{j'\in J\setminus\{j\}}^{}\theta(\|p_{j}-p_{j'}\|)$ and $w{_i^k}=1+\sum_{i'\in I\setminus\{i\}}^{}\theta(\|\delta{_{ii'}^k}\|)$, the projection for point $x{_i^{k+1}}$ finally becomes
+To take advantage of the success of LOP in denoising and outlier removal, and simultaneously address the non-uniform distribution problem, they incorporate locally adaptive density weights into LOP, resulting in WLOP, they define the weighted local densities for each point $p_{j}$ in P and $x_{i}$ in X during the $k$th iteration by $v_{j}=1+\sum_{j'\in J\setminus\{j\}}^{}\theta(\|p_{j}-p_{j'}\|)$ and $w{_i^k}=1+\sum_{i'\in I\setminus\{i\}}^{}\theta(\|\delta{_{ii'}^k}\|)$, the term $F_1$ and $F_2$ in () finally becomes
 
 \small{
 \begin{equation}
  \label{eq:WLOP1}
  \begin{split}
- & x{_i^{k+1}}=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}/v_{j}}{\sum_{j\in J}^{}(\alpha{_{ij}^k}/v_{j})}+ \\
- &~~~~~~~~~~~\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{w{_{i'}^k}\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}(w{_{i'}^k}\beta{_{ii'}^k})},
+ & F_1(x{_i^k},P)=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}/v_{j}}{\sum_{j\in J}^{}(\alpha{_{ij}^k}/v_{j})}\\
+ & F_2(x{_i^k},X{_i^{'}})=\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{w{_{i'}^k}\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}(w{_{i'}^k}\beta{_{ii'}^k})},
  \end{split}
 \end{equation}
 }
 \\
-The weighted local density $v$ in the first term relaxes the attraction of point clusters and repulsion force in dense areas is strengthened by the local density $w$ in the second term.
+The weighted local density $v$ in $F_1$ relaxes the attraction of point clusters and repulsion force in dense areas is strengthened by the local density $w$ in $F_2$.
 
 So far, we actually have obtained a reconstructed point set which will then be used to improve the reliability of normal initialization that will be used in a second normal estimation phase.
 However, considering the high computational effort, it may not be a preferable choice using this consolidation technique as a preprocessing method for surface reconstruction even though some high quality surface can be reconstructed.
@@ -107,18 +107,44 @@ That is, $\mathcal{M}$ defines a probability density function(pdf) as a weighted
 
 \small{
 \begin{equation}
- \label{eq:TV}
+ \label{eq:CLOP1}
  f(\mathbf{x}|\mathcal{M})=\sum_{s}^{}w_{s}g(\mathbf{x}|\Theta_{s}),
 \end{equation}
 }
 \\
 where the $\Theta_{s}=(\mu_{s},\sum_{s}^{})$ are the Gaussian parameters, $w_{s}$ their corresponding convex weights, and $g$ denotes the $d$-variate Gaussian pdf with $g(\mathbf{x}|\mu,\sum)=|2\pi\sum_{}^{}|^{-\frac{1}{2}}e^{-\frac{1}{2}(\mathbf{x}-\mu)^{T}\sum_{}^{-1}(\mathbf{x}-\mu)}$.
 
+They define a $continuous$ $\mathcal{F}_1$ corresponding to $F_1$ in () by the convex sum over the internal attraction of each single Gaussian, with convex weights $w_s$ accounting for the Gaussian's relative point mass:
 
-a novel $continuous$ formulation of the WLOP operator based on a Gaussian mixture used for describing the input point density.
+\small{
+\begin{equation}
+ \label{eq:CLOP2}
+ \mathcal{F}(q,\mathcal{M})=\sum_{s}^{}w_s\int_{\mathbb{R}^3}^{}
+ \frac{\mathbf{x}g(\mathbf{x}|\Theta_{s})\alpha(\mathbf{x})}
+ {\sum_{s'}^{w_{s'}}\int_{\mathbb{R}^3}^{}g(\mathbf{x'}|\Theta_{s'})\alpha(x')d\mathbf{x}'}
+ d\mathbf{x},
+\end{equation}
+}
+\\
+and the final $\textbf{closed}$ $\textbf{form}$ is expressed as
+\small{
+\begin{equation}
+ \label{eq:CLOP3}
+ \mathcal{F}(q,\mathcal{M})=\frac{\sum_{s}^{}\sum_{k}^{}\int_{\mathbb{R}^3}^{}\mathbf{x}\widehat{\Omega}_{sk}(\mathbf{x})d\mathbf{x}}
+ {\sum_{s}^{}\sum_{k}^{}\int_{\mathbb{R}^3}^{}\widehat{\Omega}_{sk}(\mathbf{x})d\mathbf{x}}
+ =\frac{\sum_{s,k}^{}w_{sk}\mu_{sk}}
+ {\sum_{s,k}^{}w_{sk}},
+\end{equation}
+}
+\\
+where in the same way that Eq.() is convex of 3D points $p_{j}$, now becomes a convex combination of the product Gaussians' means $\mu_{sk}$ with weights $w_{sk}$.
 
+This method is up to 7 times faster than an optimized GPU implementation of LOP/WLOP, and achieves interactive frame rates for moderately sized point clouds though it can not automatically get the best choice of the parameters for different point set.
 
-cannot address the missing data problem like LOP. This method is up to 7 times faster than an optimized GPU implementation of WLOP, and achieves interactive frame rates for moderately sized point clouds.
+\vspace{10pt}
+In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts. 
+Most of the $l_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations, 
+and are designed for quality rather than performance due to their nature. So the performance problem is still challenging and worth researching.
 
 \subsubsection{Total variation(TV) based}
 TV has been a popular tool for image processing tasks, such as denoising, reconstruction, and segmentation\cite{chambolle2010introduction}, the underlying model for TV methods also aims at exploiting the sparsity of the gradient of the image just like the idea of image smoothing\cite{xu2011image} mentioned above. The discrete variant yields the following convex objective function
@@ -157,14 +183,3 @@ Convexity of these two problems allows for finding a global optimum and deriving
   \includegraphics[width=3in]{images/reconstruction_L1}
   \caption{Sparse regularization: point cloud consolidation. (a): LOP\cite{lipman2007parameterization}. (b): WOLP\cite{huang2009consolidation}. (c): continuous WLOP\cite{preiner2014CPF}. (d): TV based\cite{avron2010L1}.}
 \end{figure}
-
-
-%\begin{equation}
-% \label{eq:LOP}
-% \begin{split}
-% & Q=\arg\min_{x=\{x_{i}\}_{i\in I}}\{E_1(X,P,Q)+E_2(X,Q)\},\\
-% & where \\
-% & E_1(X,P,Q)=\sum_{i\in I}^{}\sum_{j\in J}^{}\|x_{i}-p_{j}\|\theta(\|q_{i}-p_{j}\|),\\
-% & E_2(X,Q)=\sum_{i'\in I}^{}\lambda_{i'}\sum_{i\in I\setminus\{i'\}}^{} \eta(\|x_{i'}-q_{i}\|)\theta(\|q_{i'}-q_{i}\|).
-% \end{split}
-%\end{equation} 
