@@ -101,15 +101,20 @@ The formulation is obtained by relaxing following problem replacing the $\ell_0$
 Generally, problem~\ref{eq-lowranksparse} can be treated as a general convex optimization problem and solved by any off-the-shelf interior point solver (like CVX~\cite{grant2008cvx}).
 
 \paragraph{Numerical solution}
-Here we introduce several popular ways to solve low-rank (robust PCA) problem in the form of~\eqref{eq-lowranksparse}.
-The iterative thresholding approach introduced in~\cite{wright2009robust} solves a relaxed convex problem of \eqref{eq-lowranksparse}
-\begin{equation}
-\begin{array}{cl}
-\min_{L,S} & \|L\|_*+\lambda\|S\|_1 +\frac{1}{2\tau} \|L\|_F^2 + \frac{1}{2\tau} \|S\|_F^2\\
-\mathrm{s.t.} & M = L+S
-\end{array}
-\end{equation}
-Another technique to solve this problem is the accelerated proximal gradient approach~\cite{beck2009fast}.
+There have been several popular ways to solve low-rank (robust PCA) problem~\eqref{eq-lowranksparse}:
+The iterative thresholding approach introduced in~\cite{wright2009robust} solves a relaxed convex problem of \eqref{eq-lowranksparse};
+the accelerated proximal gradient approach~\cite{beck2009fast} is applied to a relaxed version of RPCA problem;
+\cite{lin2009fast} tackles the problem via its dual;
+the methods of augmented Lagrange multipliers~\cite{lin2010augmented} is introduced to efficiently solve RPCA problem.
+%\begin{equation}
+%\begin{array}{cl}
+%\min_{L,S} & \|L\|_*+\lambda\|S\|_1 +\frac{1}{2\tau} \|L\|_F^2 + \frac{1}{2\tau} \|S\|_F^2\\
+%\mathrm{s.t.} & M = L+S
+%\end{array}
+%\end{equation}
+
+Here we take a closer look at how augmented Lagrange multipliers is applied to solve~\eqref{eq-lowranksparse}.
+%Accelerated proximal gradient approach~\cite{beck2009fast} is another commonly used technique to solve low-rank problems.
 %It is a critical task to find a low rank representation or approximation for a general data matrix.
 
 But low rank representation has been widely used in many applications like image compression, noise reduction, principle component analysis, regularization for ill-posed problems and so on.
