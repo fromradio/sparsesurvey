@@ -20,7 +20,7 @@ Unfortunately, $\|\mathbf{x}\|_0$ is not differentiable or even continuous.
 Thus this optimization problem is a NP-hard problem and cannot be easily solved.
 Generally, we are not able to obtain the optimal solution of Problem~\ref{eq-sparse}.
 But many approximated solvers have been created to solve this problem.
-Matching pursuit (MP), orthogonal matching pursuit (OMP) iteratively add the best basis vector to represent $\mathbf{x}$ which is an approximating solution of problem:
+Matching pursuit (MP)~\cite{mallat1993matching}, orthogonal matching pursuit (OMP)~\cite{pati1993orthogonal,tropp2007signal} iteratively add the best basis vector to represent $\mathbf{x}$ which is an approximating solution of problem:
 \begin{equation}
 \begin{array}{cl}
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 \\
@@ -28,10 +28,10 @@ Matching pursuit (MP), orthogonal matching pursuit (OMP) iteratively add the bes
 \end{array}
 \end{equation}
 Here $s$ denotes the number of chosen basis vectors which stands for the sparsity of this problem.
-Under certain assumptions, the solution of OMP algorithm converges to the real solution.
+Under certain assumptions~\cite{pati1993orthogonal}, the solution of OMP algorithm converges to the real solution.
 
 Another widely-used technique for solving sparse problem is to use $\ell_1$ norm to replace $\ell_0$ norm in Problem~\ref{eq-sparse}.
-The least absolute shrinkage and selection operator (LASSO) approach uses the constraint that $\|\mathbf{a}\|_1$ is no greater than a given value $\epsilon$
+The least absolute shrinkage and selection operator (LASSO)~\cite{tibshirani1996regression} approach uses the constraint that $\|\mathbf{a}\|_1$ is no greater than a given value $\epsilon$
 \begin{equation}
 \begin{array}{cl}
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2\\
@@ -44,10 +44,18 @@ This problem is also equivalent to an unconstrained minimization with a specific
 \min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{X}\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
 \end{array}
 \end{equation}
-This problem is solved using general convex optimization methods like quadratic programming, as well as by specific approaches like the least angle regression algorithm.
+The problem is solved using general convex optimization methods like quadratic programming, as well as by specific approaches like the least angle regression~\cite{efron2004least} algorithm.
 
-\subsection{Dictionary Learning}
-As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
+Sparse coding or sparse representation, on the other way has been applied on many kinds of problems~\cite{wright2010sparse} as face recognition~\cite{wright2009robust}, image super-resolution~\cite{yang2008image}, image classification~\cite{mairal2008discriminative}.
+
+
+\subsection{Dictionary Learning.}
+Sparse coding or representation aims at finding the sparse coefficient while assuming the dictionary is comprised of given basis.
+On the other hand dictionary learning tries to optimize the dictionary at the same time given a set of training data.
+Thus the basic problem becomes:
+\begin{equation}
+\end{equation}
+%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
 Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
 One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $\mathbf{A}$ and dictionary $\mathbf{X}$ separately
 \begin{equation}
@@ -60,6 +68,8 @@ One algorithm called K-SVD uses an iterative procedure by updating the coefficie
 Here $\mathbf{Y}=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $\mathbf{A} = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
 To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
 Then
+
+\subsection{Compressed Sensing}
 
 \subsection{Low rank representation and robust principle component analysis}
 Sparse-based matrix factorization technique is another hot field in machine learning.
