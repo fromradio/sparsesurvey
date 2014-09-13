@@ -1,20 +1,24 @@
-\label{sec:SRpart2}
-
-\subsection{Point cloud consolidation}
-
-Nowadays, reconstructing the geometry of a shape from scanned data, also called point cloud consolidation, is a convenient and direct way to obtain 3D models. It can be a preprocessing phase for some geometry problem, e.g., surface reconstruction whose result is a mesh object, with functionalities such as denoising, outlier removal, thinning, orientation, and redistribution of the input points. However, current scanners are capable of producing large amount of raw, dense point sets with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts. Then finding a robust reconstruction technique has always been an active researching area, and indeed there have been lots of works.
+\subsection{Point Cloud Consolidation}
+\label{subsec:Point Cloud Consolidation}
 
 
+Nowadays, reconstructing the geometry of a shape from scanned data, also called point cloud consolidation, is a convenient and direct way to obtain 3D models.
+It can be a preprocessing phase for some geometry problem, e.g., surface reconstruction whose result is a mesh object, with functionalities such as denoising, outlier removal, thinning, orientation, and redistribution of the input points.
+However, current scanners are capable of producing large amount of raw, dense point sets with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts.
+Then finding a robust reconstruction technique has always been an active researching area, and indeed there have been lots of works.
+The works introduced in this section are all based on the $L_1$ median.
 
 \subsubsection{$L_1$ median based}
+\label{subsubsec:$L_1$ median based}
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=2.5in]{images/L1median}
   \caption{Reconstruction by projection operation. (a). noisy point-set P(green) and an arbitrary point-set Q(red) that will be projected to P to approximate P. (b),(c) are two iterative projection results. (d) is the final projection.}
+  \label{fig:L1 median}
 \end{figure}
 
-Reconstruction by a projection operator, as shown in figure.., is to approximate the origin point-set(green) by iteratively projecting an arbitrary point-set(red) onto itself while removing the noises or outliers.
+Reconstruction by a projection operator, as shown in Figure~\ref{fig:L1 median}, is to approximate the origin point-set(green) by iteratively projecting an arbitrary point-set(red) onto itself while removing the noises or outliers.
 It has an important virtue: it defines a consistent geometry based on the data points, and provides constructive means to up-sample it.
 
 A new projection operator is introduced via a certain fixed-point iteration where the approximated geometry consists of its stationary points,
@@ -28,7 +32,11 @@ Briefly, it is a robust global center of an arbitrary set of points. Mathematica
 \end{equation}
 }
 
-\paragraph{(1)}\cite{lipman2007parameterization} applies this tool locally to constitute a robust reconstruction mechanism called parameterization-free local projection operator(LOP). Starting with an arbitrary initial point-set $X^{(0)}=\{{x_{i}}^{(0)}\}_{i\in I}\subset \mathbb{R}^3$(typically $|X|\ll|P|$, $|\cdot|$ is the number of point-set), LOP computes the target point positions $X$ by performing a fixed-point iteration
+\paragraph{(1)}
+
+\cite{lipman2007parameterization} applies this tool locally to constitute a robust reconstruction mechanism called parameterization-free local projection operator(LOP).
+Starting with an arbitrary initial point-set $X^{(0)}=\{{x_{i}}^{(0)}\}_{i\in I}\subset \mathbb{R}^3$(typically $|X|\ll|P|$, $|\cdot|$ is the number of point-set),
+LOP computes the target point positions $X$ by performing a fixed-point iteration
 
 \small{
 \begin{equation}
@@ -48,15 +56,15 @@ where,
 \end{equation}
 }
 \\
-The term $E_1$ is in fact a localized version of () by using a fast-decaying weight function $\theta(r)=e^{-r^2/(h/4)^2}$ with the finite support radius $h$,
+The term $E_1$ is in fact a localized version of~(\ref{eq:L1median}) by using a fast-decaying weight function $\theta(r)=e^{-r^2/(h/4)^2}$ with the finite support radius $h$,
 and thus it is just $E_1$ that drives the projected points $X$ to approximate the geometry of $P$.
 The term $E_2$ keeps the distribution of the points $X$ fair by incorporating local repulsion forces.
 
-Let $\xi{_{ij}^k}=x{_i^k}-p_{j}$ and $\delta{_{ii'}^k}=x{_i^k}-x{_{i'}^k}$, solving (), the projection for point $x{_i^{k+1}}$ is obtained as
+Let $\xi{_{ij}^k}=x{_i^k}-p_{j}$ and $\delta{_{ii'}^k}=x{_i^k}-x{_{i'}^k}$, solving~(\ref{eq:LOP1}), the projection for point $x{_i^{k+1}}$ is obtained as
 
 \small{
 \begin{equation}
- \label{eq:WLOP1}
+ \label{eq:LOP3}
  x{_i^{k+1}}=F_1(x{_i^k},P)+F_2(x{_i^k},X{_i^{'}})
 \end{equation}
 }
@@ -64,7 +72,7 @@ Let $\xi{_{ij}^k}=x{_i^k}-p_{j}$ and $\delta{_{ii'}^k}=x{_i^k}-x{_{i'}^k}$, solv
 where,
 \small{
 \begin{equation}
- \label{eq:WLOP2}
+ \label{eq:LOP4}
  \begin{split}
  & F_1(x{_i^k},P)=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}}{\sum_{j\in J}^{}\alpha{_{ij}^k}},\\
  & F_2(x{_i^k},X{_i^{'}})=\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}\beta{_{ii'}^k}},\\
@@ -78,6 +86,7 @@ Intuitively, LOP distributes the points by approximating their $L_1$ median to a
 However, also because of the use of the local density parameter $h$, it may not work well when the distribution of the input points is highly non-uniform and can fail to converge.
 
 \paragraph{(2)}
+
 Like\cite{lipman2007parameterization}, many surface reconstruction methods try to obtain the resulted mesh without estimation of normals due to the unreliability because of the noisy data.
 In fact, oriented normals at the points play a critical role in surface reconstruction and the estimation of normals requires the sampling points to be uniformly distributed.
 \cite{huang2009consolidation} proposes a new consolidation technique whose central task is normal estimation.
@@ -86,7 +95,7 @@ To take advantage of the success of LOP in denoising and outlier removal, and si
 
 \small{
 \begin{equation}
- \label{eq:WLOP1}
+ \label{eq:WLOP}
  \begin{split}
  & F_1(x{_i^k},P)=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}/v_{j}}{\sum_{j\in J}^{}(\alpha{_{ij}^k}/v_{j})}\\
  & F_2(x{_i^k},X{_i^{'}})=\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{w{_{i'}^k}\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}(w{_{i'}^k}\beta{_{ii'}^k})},
@@ -114,7 +123,7 @@ That is, $\mathcal{M}$ defines a probability density function(pdf) as a weighted
 \\
 where the $\Theta_{s}=(\mu_{s},\sum_{s}^{})$ are the Gaussian parameters, $w_{s}$ their corresponding convex weights, and $g$ denotes the $d$-variate Gaussian pdf with $g(\mathbf{x}|\mu,\sum)=|2\pi\sum_{}^{}|^{-\frac{1}{2}}e^{-\frac{1}{2}(\mathbf{x}-\mu)^{T}\sum_{}^{-1}(\mathbf{x}-\mu)}$.
 
-They define a $continuous$ $\mathcal{F}_1$ corresponding to $F_1$ in () by the convex sum over the internal attraction of each single Gaussian, with convex weights $w_s$ accounting for the Gaussian's relative point mass:
+They define a $continuous$ $\mathcal{F}_1$ corresponding to $F_1$ in~(\ref{eq:LOP4}) by the convex sum over the internal attraction of each single Gaussian, with convex weights $w_s$ accounting for the Gaussian's relative point mass:
 
 \small{
 \begin{equation}
@@ -126,7 +135,7 @@ They define a $continuous$ $\mathcal{F}_1$ corresponding to $F_1$ in () by the c
 \end{equation}
 }
 \\
-and the final $\textbf{closed}$ $\textbf{form}$ is expressed as
+and the final \textbf{closed form} is expressed as
 \small{
 \begin{equation}
  \label{eq:CLOP3}
@@ -137,49 +146,18 @@ and the final $\textbf{closed}$ $\textbf{form}$ is expressed as
 \end{equation}
 }
 \\
-where in the same way that Eq.() is convex of 3D points $p_{j}$, now becomes a convex combination of the product Gaussians' means $\mu_{sk}$ with weights $w_{sk}$.
+where in the same way that~(\ref{eq:LOP2}) is convex of 3D points $p_{j}$, now becomes a convex combination of the product Gaussians' means $\mu_{sk}$ with weights $w_{sk}$.
 
 This method is up to 7 times faster than an optimized GPU implementation of LOP/WLOP, and achieves interactive frame rates for moderately sized point clouds though it can not automatically get the best choice of the parameters for different point set.
 
 \vspace{10pt}
-In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts. 
-Most of the $l_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations, 
-and are designed for quality rather than performance due to their nature. So the performance problem is still challenging and worth researching.
-
-\subsubsection{Total variation(TV) based}
-TV has been a popular tool for image processing tasks, such as denoising, reconstruction, and segmentation\cite{chambolle2010introduction}, the underlying model for TV methods also aims at exploiting the sparsity of the gradient of the image just like the idea of image smoothing\cite{xu2011image} mentioned above. The discrete variant yields the following convex objective function
-
-\small{
-\begin{equation}
- \label{eq:TV}
- TV(u)=\sum_{i,j}^{}\|D_{i,j}u\|_2
-\end{equation}
-}
-\\
-where $D_{i,j}$ is the discrete gradient operator at pixel $(i,j)$ and $u$ is a vector containing the gray-level pixel values. TV methods filter the image by minimizing $TV(u)$ which is in fact the $l_1$ norm of the vector $[\cdots~\|D_{i,j}u\|_2~\cdots]$.
-
-Since TV is designed for images, it is not directly applicable to geometry processing problem. As we have stated, the key point is to find some form of second order information. Similar to the sparse gradient minimization, and based on the observation that the gradients of smooth surface normals are sparse, \cite{avron2010L1} formulates their piecewise smoothness reconstruction problem as a sparse minimization of orientation differences and position projections as following
-
-\small{
-\begin{equation}
- \label{eq:L1reconstruction}
- \begin{aligned}
- &N^{out} =\mathop{\argmin}_{N} \sum_{(p_{i},p_{j})\in E}^{} w_{i,j}\|n_{i}-n_{j}\|_2\\
- &s.t.~\forall i~\|n_{i}-{n_{i}}^{in}\|_2\le \gamma_{n} %~~~~~~~~
- \end{aligned}
-\end{equation}
-}
-\small{
-\begin{equation}
- \label{eq:L1reconstruction}
- X^{out} = \mathop{\argmin}_{X} \sum_{(p_{i},p_{j})\in E}^{} w_{i,j}|n_{i,j}\cdot (x_{i}-x_{j})|
-\end{equation}
-}
-
-Convexity of these two problems allows for finding a global optimum and deriving efficient solvers. Figure..(d) shows a well reconstructed example with sharp features. Due to the global nature, this algorithm is extremely slow. And it may fail for the point set with severe noises and outliers.
+Figure~\ref{fig:L1 median consolidation} shows the results of these three methods. In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts.
+Most of the $l_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations,
+and are designed for quality rather than performance due to their nature. So the performance problem is still challenging and worth researching. 
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=3in]{images/reconstruction_L1}
-  \caption{Sparse regularization: point cloud consolidation. (a): LOP\cite{lipman2007parameterization}. (b): WOLP\cite{huang2009consolidation}. (c): continuous WLOP\cite{preiner2014CPF}. (d): TV based\cite{avron2010L1}.}
+  \caption{Sparse regularization: point cloud consolidation. (a): LOP\cite{lipman2007parameterization}. (b): WOLP\cite{huang2009consolidation}. (c): continuous WLOP\cite{preiner2014CPF}.}
+  \label{fig:L1 median consolidation}
 \end{figure}
