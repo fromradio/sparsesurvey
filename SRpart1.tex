@@ -1,12 +1,22 @@
-\label{sec:SRpart1}
+\section{Sparse Regularization}
+\label{sec:Sparse Regularization}
 
-\section{Sparse regularization}
+\subsection{Denoising}
+\label{subsec:L0 denoising}
 
-\subsection{Denoising} Surfaces obtained through a scanning process or other reconstruction algorithm are inevitably noisy, even when using high-fidelity scanners, so mesh denoising is an important tool in geometry processing to remove the noise from the input data. A wide variety of denoising algorithms have already been proposed that mainly can be divided into two approaches: prescribed differential information based and extending the bilateral filter from 2D signal processing to arbitrary 3D meshes. But it is inherently challenging as it can be difficult to distinguish features from noise.
+Surfaces obtained through a scanning process or other reconstruction algorithm are inevitably noisy, even when using high-fidelity scanners,
+so mesh denoising is an important tool in geometry processing to remove the noise from the input data.
+A wide variety of denoising algorithms have already been proposed that mainly can be divided into two approaches:
+prescribed differential information based and extending the bilateral filter from 2D signal processing to arbitrary 3D meshes.
+But it is inherently challenging as it can be difficult to distinguish features from noise.
 
-\paragraph{(1)} In image processing, \cite{xu2011image} aiming to smooth images provides an algorithm for directly optimizing the $L_0$ norm to create piecewise constant images. Let $c$ be a vector of pixel colors and $\triangledown c$ be a vector of gradients of these colors. The authors get the smoothed image by minimizing $|c-c^{*}|^2+|\triangledown c|_0$ where $|\triangledown c|_0$ is the $L_0$ norm of $\triangledown c$ and $c^{*}$ represents the original image colors to provide a data fidelity term.
+\paragraph{(1)}
+In image processing, \cite{xu2011image} aiming to smooth images provides an algorithm for directly optimizing the $L_0$ norm to create piecewise constant images.
+Let $c$ be a vector of pixel colors and $\triangledown c$ be a vector of gradients of these colors.
+The authors get the smoothed image by minimizing $|c-c^{*}|^2+|\triangledown c|_0$ where $|\triangledown c|_0$ is the $L_0$ norm of $\triangledown c$
+and $c^{*}$ represents the original image colors to provide a data fidelity term.
 
-A natural extension to triangulated meshes is to design a discrete differential operator to replace $\triangledown c$ that is zero when the surface is flat for arbitrary triangulations irrespective of the rotation or translation of the surface. 
+A natural extension to triangulated meshes is to design a discrete differential operator to replace $\triangledown c$ that is zero when the surface is flat for arbitrary triangulations irrespective of the rotation or translation of the surface.
 This constraint implies that some form of second order information rather than the first order in formation provided by $\triangledown c$ is needed, e.g.,  the discrete Laplacian operator\cite{pinkall1993computing} which is computed as a weighted combination of a vertex and its one-ring where the weights are given by cotangents of angles of the triangles.
 However,\parpic[r]{\label{fig:failureLaplaciandenoise}\includegraphics[width=0.6\linewidth]{images/denoise12}}the vertex-based Laplacian only constrains the mean curvature vector as opposed to a metric that directly measures sharpness per edge, then the optimization fails to reproduce sharp features and shrinks the surface away from the features shown as right.
 
@@ -34,30 +44,32 @@ Then the extended optimization problem is to make the edge operator sparse formu
 
 \small{
 \begin{equation}
- \label{eq:edgecotanoperator}
+ \label{eq:L0 denoise}
  \min_{p,\delta}|p-p^{*}|^2+\alpha|R(p)|^2+\beta|D(p)-\delta|^2+\lambda|\delta|_0
 \end{equation}
 }
 \\
-where $p$ are the vertices of the shape, $p^{*}$ are their initial positions, $D(p)$ is a vector where the $i^{th}$ entry corresponds to the area-based edge operator applied to the $i^{th}$ edge, and $R(p)$ is a regularization term. Figure...gives one denoised result while preserving sharp features.
+where $p$ are the vertices of the shape, $p^{*}$ are their initial positions, $D(p)$ is a vector where the $i^{th}$ entry corresponds to the area-based edge operator applied to the $i^{th}$ edge, and $R(p)$ is a regularization term. Figure~\ref{fig:L0 denoise}gives one denoised result while preserving sharp features.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=2.5in]{images/denoise1}
   \caption{Sparse regularization: mesh denoising\cite{he2013mesh}. Left: initial surface. Center: surface corrupted by Gaussian noise in random directions with standard deviation $\sigma=0.4l_{e}$($l_{e}$ is the mean edge length). Right: denoising result. The wireframe shows folded triangles as red edges.}
+  \label{fig:L0 denoise}
 \end{figure}
 
 \begin{figure*}[ht]
   \centering
   \includegraphics[width=5in]{images/denoise2_1}
   \caption{Sparse regularization: mesh denoising\cite{wang2014decoupling}. (a) is the two-dimensional illustration for their key observation. (b) is a denoising example.}
+  \label{fig:decoupling}
 \end{figure*}
 
 \paragraph{(2)}
-Like most previous methods, how to tune the parameters shown in () has not theoretical guarantee and the computation of differential properties for detecting noise from feature is unreliable and unstable.
+Like most previous methods, how to tune the parameters shown in~(\ref{eq:L0 denoise})has not theoretical guarantee and the computation of differential properties for detecting noise from feature is unreliable and unstable.
 
 To address these problems, \cite{wang2014decoupling} presents a two phase approach for decoupling features and noise on discrete surfaces to.
-Figure..(a) gives a two-dimensional curve as illustrations of their key observation: any surface is piecewise $C^2$, that is, a surface consists of two parts: $C^2$ smooth part and $C^0$ feature part which can be transformed into a sparse signal by applying the Laplacian operator as mentioned above().
+Figure~\ref{fig:decoupling}(a) gives a two-dimensional curve as illustrations of their key observation: any surface is piecewise $C^2$, that is, a surface consists of two parts: $C^2$ smooth part and $C^0$ feature part which can be transformed into a sparse signal by applying the Laplacian operator.
 So the denoising problem is divided into two phase: smooth part(base mesh) estimation and recovering features from the corrupted feature part.
 
 They firstly generate a base mesh by denoising the input data using a global Laplacian regularization smoothing optimization in which the smoothness parameter is automatically chosen by adopting the generalized cross-validation scheme,
@@ -65,7 +77,7 @@ then decouple the features $x$ and noises simultaneously from the noisy feature 
 
 \small{
 \begin{equation}
- \label{eq:edgecotanoperator}
+ \label{eq:decoupling}
  \min_{x}\|Lx\|_1~~ s.t. ~ \|y-x\|_2 \le \epsilon
 \end{equation}
 }
