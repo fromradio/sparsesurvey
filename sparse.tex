@@ -113,9 +113,35 @@ the methods of augmented Lagrange multipliers~\cite{lin2010augmented} is introdu
 %\end{array}
 %\end{equation}
 
-Here we take a closer look at how augmented Lagrange multipliers is applied to solve~\eqref{eq-lowranksparse}.
+Here we take a closer look at how augmented Lagrange multipliers (ALM) is applied on solving~\eqref{eq-lowranksparse}.
+According to~\cite{bertsekas1982constrained}, the general approach of augmented Lagrange multipliers is utilized to solve constrained optimization problems:
+\begin{equation}
+\label{eq-generalalm}
+\begin{array}{cl}
+\min & f(\mathbf{x})\\
+\mathrm{s.t.} & h(\mathbf{x}) = 0
+\end{array}
+\end{equation} 
+Here $f: R^n\rightarrow R$ and $h: R^n\rightarrow R^m$.
+the augmented Lagrangian function is defined as:
+\begin{equation}
+Lag(\mathbf{x},\Lambda,\mu)=f(\mathbf{x})+<\Lambda,h(\mathbf{x})>+\frac{\mu}{2}\|h(\mathbf{x})\|_F^2
+\end{equation}
+Then $\mathbf{x}$ and $\Lambda$ are updated iteratively solving sub-problems (see~\cite{bertsekas1999nonlinear} for more details).
+Thus the augmented Lagrangian function of~\eqref{eq-lowranksparse} is:
+\begin{equation}
+\label{eq-lowrankalm}
+\begin{array}{ccl}
+Lag(L,S,\Lambda,\mu)& =& \|L\|_* + \lambda\|S\|_1 \\
+& &+ <\Lambda,M-L-S>\\
+& & +\frac{\mu}{2}\|M-L-S\|_2^2
+\end{array}
+\end{equation}
+Then $L$, $S$ and $\Lambda$ are separately updated by fixing other variables and minimizing augmented Lagrangian function~\cite{lin2010augmented}.
+
+Low rank representation or robust principle component analysis has been successfully applied onto different problems like face recognition~\cite{ma2012sparse}, 
 %Accelerated proximal gradient approach~\cite{beck2009fast} is another commonly used technique to solve low-rank problems.
 %It is a critical task to find a low rank representation or approximation for a general data matrix.
 
-But low rank representation has been widely used in many applications like image compression, noise reduction, principle component analysis, regularization for ill-posed problems and so on.
+%But low rank representation has been widely used in many applications like image compression, noise reduction, principle component analysis, regularization for ill-posed problems and so on.
 %The basic problem of low rank is to approximate a given matrix $A$ using a matrix $B$ with low rank. 
