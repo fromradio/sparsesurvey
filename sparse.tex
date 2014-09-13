@@ -45,7 +45,12 @@ The problem is solved using general convex optimization methods like quadratic p
 Sparse coding or sparse representation, on the other way has been applied on many kinds of problems~\cite{wright2010sparse} as face recognition~\cite{wright2009robust}, image super-resolution~\cite{yang2008image}, image classification~\cite{mairal2008discriminative}.
 
 \subsection{Dictionary Learning.}
-As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
+Sparse coding or representation aims at finding the sparse coefficient while assuming the dictionary is comprised of given basis.
+On the other hand dictionary learning tries to optimize the dictionary at the same time given a set of training data.
+Thus the basic problem becomes:
+\begin{equation}
+\end{equation}
+%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
 Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
 One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $\mathbf{A}$ and dictionary $\mathbf{X}$ separately
 \begin{equation}
