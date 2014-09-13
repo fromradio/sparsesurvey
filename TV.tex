@@ -27,7 +27,7 @@ Similar to the sparse gradient minimization, and based on the observation that t
  \label{eq:TVconsolidation1}
  \begin{aligned}
  &N^{out} =\mathop{\argmin}_{N} \sum_{(p_{i},p_{j})\in E}^{} w_{i,j}\|n_{i}-n_{j}\|_2\\
- &s.t.~\forall i~\|n_{i}-{n_{i}}^{in}\|_2\le \gamma_{n} 
+ &s.t.~\forall i~\|n_{i}-{n_{i}}^{in}\|_2\le \gamma_{n}
  \end{aligned}
 \end{equation}
 }
@@ -45,7 +45,7 @@ And it may fail for the point set with severe noises and outliers.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=3in]{images/TV consolidation}
+  \includegraphics[width=3in]{images/TV_consolidation}
   \caption{Sparse regularization: TV based point cloud consolidation\cite{lipman2007parameterization}. Using LBC for 3D cage-based manipulation allows for local, smooth and shape-aware deformations. Only parts near the manipulated control points are deformed, as indicated by the color-coding.}
   \label{fig:TV consolidation}
 \end{figure}
