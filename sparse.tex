@@ -1,21 +1,22 @@
 \section{The Problems of Sparse Coding}
 \label{sec:problem of SR}
+
+Generally, there are some basic assumptions in sparse techniques as an input signal can be represented by a sparse linear combination of basis functions or a matrix can be approximated by a low rank matrix.
+So there are several essential issues in this field for instance finding the weights or coefficients of the combination, learning the basis functions or vectors, rank minimization etc.
 \subsection{Sparse Coding}
 \label{subsec:sparse coding}
-
-
-There are many basic different aspects in sparse coding problems such as finding the coefficients, learning the basis vectors, matrix factorization etc.
+%There are many basic different aspects in sparse coding problems such as finding the coefficients, learning the basis vectors, matrix factorization etc.
 At the very first, we briefly introduce some popular sparse methods for machine learning.
 Recall that the target of sparse coding is to find as small number of basis vectors as possible to represent an input vector.
 A common formulation for this problem is that:
 \begin{equation}
 \begin{array}{cl}
 \min_{\mathbf{a}} & \|\mathbf{a}\|_0\\
-\mathrm{s.t.} & \|\mathbf{y}-\mathbf{D}\mathbf{a}\|_2 \leq \epsilon.
+\mathrm{s.t.} & \|\mathbf{y}-D\mathbf{a}\|_2 \leq \epsilon.
 \end{array}
 \label{eq-sparse}
 \end{equation}
-Here $\mathbf{D}=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_n)$ denotes the dictionary matrix collecting all basis vectors.
+Here $D=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_n)$ denotes the dictionary matrix collecting all basis vectors.
 Unfortunately, $\|\mathbf{d}\|_0$ is not differentiable or even continuous.
 Thus this optimization problem is a NP-hard problem and cannot be easily solved.
 Generally, we are not able to obtain the optimal solution of Problem~\ref{eq-sparse}.
@@ -23,7 +24,7 @@ But many approximated solvers have been created to solve this problem.
 Matching pursuit (MP)~\cite{mallat1993matching}, orthogonal matching pursuit (OMP)~\cite{pati1993orthogonal,tropp2007signal} iteratively add the best basis vector to represent $\mathbf{x}$ which is an approximating solution of problem:
 \begin{equation}
 \begin{array}{cl}
-\min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{D}\mathbf{a}\|_2^2 \\
+\min_{\mathbf{a}} & \|\mathbf{y}-D\mathbf{a}\|_2^2 \\
 \mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
 \end{array}
 \end{equation}
@@ -31,17 +32,17 @@ Here $s$ denotes the number of chosen basis vectors which stands for the sparsit
 Under certain assumptions~\cite{pati1993orthogonal}, the solution of OMP algorithm converges to the real solution.
 
 Another widely-used technique for solving sparse problem is to use $\ell_1$ norm to replace $\ell_0$ norm in Problem~\ref{eq-sparse}.
-The least absolute shrinkage and selection operator (LASSO)~\cite{tibshirani1996regression} approach uses the constraint that $\|\mathbf{a}\|_1$ is no greater than a given value $\epsilon$
+The least absolute shrinkage and selection operator (LASSO)~\cite{tibshirani1996regression} method uses the constraint that $\|\mathbf{a}\|_1$ is no greater than a given value $\epsilon$
 \begin{equation}
 \begin{array}{cl}
-\min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{D}\mathbf{a}\|_2^2\\
+\min_{\mathbf{a}} & \|\mathbf{y}-D\mathbf{a}\|_2^2\\
 \mathrm{s.t.} & \|\mathbf{a}\|_1 \leq \epsilon
 \end{array}
 \end{equation}
 This problem is also equivalent to an unconstrained minimization with a specific $\beta$ of:
 \begin{equation}
 \begin{array}{cl}
-\min_{\mathbf{a}} & \|\mathbf{y}-\mathbf{D}\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
+\min_{\mathbf{a}} & \|\mathbf{y}-D\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
 \end{array}
 \end{equation}
 The problem is solved using general convex optimization methods like quadratic programming, as well as by specific approaches like the least angle regression~\cite{efron2004least} algorithm.
@@ -51,23 +52,41 @@ Sparse coding or sparse representation, on the other way has been applied on man
 
 \subsection{Dictionary Learning.}
 Sparse coding or representation aims at finding the sparse coefficient while assuming the dictionary is comprised of given basis.
-On the other hand dictionary learning tries to optimize the dictionary at the same time given a set of training data.
-Thus the basic problem becomes:
-\begin{equation}
-\end{equation}
-%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
-Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
-One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $\mathbf{A}$ and dictionary $\mathbf{D}$ separately
+On the other hand, dictionary learning algorithms want to optimize the dictionary at the same time given a set of training data.
+Classical dictionary learning techniques for sparse coding~\cite{olshausen1997sparse,engan1999frame} consider a training set of signals or data $Y=[\mathbf{y}_1,\cdots,\,\mathbf{y}_n]$ and optimize the empirical cost function
 \begin{equation}
 \begin{array}{cl}
-\min_{\mathbf{D},\mathbf{A}} & \|\mathbf{Y}-\mathbf{D}\mathbf{A}\| \\
-\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
+f_n(D) \triangleq \frac{1}{n}\sum_{i=1}^n c(\mathbf{y}_i,D)
 \end{array}
 \end{equation}
+where $D$ in $\mathbb{R}^{k\times m}$ is the dictionary, each column representing a basis, and $c(\mathbf{y},D)$ is a loss function that $c(\mathbf{y},D)$ should be small if $D$ represents the signal $\mathbf{y}$ well in a sparse fashion.
+\cite{aharon2006svd} introduces a sparse constraint assuming that each signal is represented by a certain number of basis vectors.
+The problem is specified as:
+\begin{equation}
+\label{eq-diclearning}
+\begin{array}{cl}
+\min_{D,A} & \|Y-DA\|_F^2\\
+\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i=1,2,\cdots,\,m
+\end{array}
+\end{equation}
+where the dictionary $D=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_m)$ is also obtained as the coefficient matrix $A$ is obtained.
+As we can see, it is very difficult to optimize $D$ and $A$ at the same time.
+\cite{aharon2006svd} introduces the K-SVD algorithm, an iterative method that alternates between sparse coding and dictionary updating.
 
-Here $\mathbf{Y}=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $\mathbf{A} = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
-To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
-Then
+
+%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
+%Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
+%One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $A$ and dictionary $D$ separately
+%\begin{equation}
+%\begin{array}{cl}
+%\min_{\mathbf{X},\mathbf{A}} & \|Y-DA\| \\
+%\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
+%\end{array}
+%\end{equation}
+
+%Here $Y=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $A = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
+%To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
+%Then
 
 \subsection{Compressed Sensing}
 

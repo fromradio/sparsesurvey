@@ -1,13 +1,13 @@
 \section{Preliminaries}
 \label{sec:preliminaries}
-The goal of sparse coding is to represent input vectors $\mathbf{y}$ approximately as a linear combination of a small number of basis vectors $\{\mathbf{d}_i\}_{i=1}^n$.
-More precisely, any given input vector $\mathbf{y}\in R^k$ is compactly represented using basis vectors $\mathbf{d}_1,\,\mathbf{d}_2,\cdots,\,\mathbf{d}_n\in R^k$ and a sparse vector of coefficients $\mathbf{a}=(a_1,\,a_2,\cdots ,\,a_n)^T\in R^n$ such that $\mathbf{y} \approx \sum_i a_i\mathbf{d}_i$.
+The goal of sparse coding is to represent a given input vector $\mathbf{y}$ in $\mathbb{R}^k$ approximately as a linear combination of a small number of basis vectors $\{\mathbf{d}_i\}_{i=1}^n$ where $\mathbf{d}_i \in\mathbb{R}^k$.
+More precisely, any given input vector $\mathbf{y}$ is compactly represented using basis vectors $\mathbf{d}_1,\,\mathbf{d}_2,\cdots,\,\mathbf{d}_n$ and a sparse vector of weights or coefficients $\mathbf{a}=(a_1,\,a_2,\cdots ,\,a_n)^T\in \mathbb{R}^n$ such that $\mathbf{y} \approx \sum_i a_i\mathbf{d}_i$.
 Here the basis vectors can be overcomplete ($n>k$) and thus sparse coding can capture high-level patterns in the input.
 
 To make this paper self contained, here we introduce some basic notations.
-Let $\mathbf{x}=(x_1,\,x_2,\,\cdots ,\,x_k)^T$ be any vector in Euclidean space $R^k$, $\|\mathbf{x}\|_p$  is the $\ell_p$ norm of $\mathbf{x}$ with $\|\mathbf{x}\|_p=(\sum_{i=1}^k |x_i|^p)^{1/p}$. And the $\ell_0$ pseudo-norm of $\mathbf{x}$ is defined as $\|\mathbf{x}\|_0=\#\{i|x_i\neq 0\}=\sum_{i=1}^k |x_i|^0$.
-$M=(m_{ij})$ is denoted as a matrix in space $R^{m\times n}$.
+Let $\mathbf{x}=(x_1,\,x_2,\,\cdots ,\,x_k)^T$ be any vector in Euclidean space $\mathbb{R}^k$, $\|\mathbf{x}\|_p$  is the $\ell_p$ norm of $\mathbf{x}$ with $\|\mathbf{x}\|_p=(\sum_{i=1}^k |x_i|^p)^{1/p}$. And the $\ell_0$ pseudo-norm of $\mathbf{x}$ is defined as $\|\mathbf{x}_0\|=\#\{i|x_i\neq 0\}=\sum_{i=1}^k |x_i|^0$.
+$M=(m_{ij})$ is denoted as a matrix in space $\mathbb{R}^{m\times n}$.
 Frobenius norm of $M$ is given by $\|M\|_F=(\sum_{i=1}^m\sum_{i=1}^n m_{ij}^2)^{1/2}$.
 Another important norm is the nuclear norm for a matrix: $\|M\|_* = \sum_i \sigma_i(M)$ where $\sigma_i(M)$ is the i-th eigenvalue of $M$.
-Nuclear norm is the convex envelope of $\mathrm{rank}(M)$, thus $\|M\|_*$ can be considered the relaxation of the rank of $M$.
+Nuclear norm is the convex envelope of $\mathrm{rank}(M)$, which makes that $\|M\|_*$ can be considered the relaxation of the rank of $M$.
 %These vectors thus capture high-level patterns in the input data or vector.
