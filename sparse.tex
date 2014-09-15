@@ -56,7 +56,7 @@ f_n(D) \triangleq \frac{1}{n}\sum_{i=1}^n c(\mathbf{y}_i,D)
 \end{array}
 \end{equation}
 where $D$ in $\mathbb{R}^{k\times m}$ is the dictionary, each column representing a basis, and $c(\mathbf{y},D)$ is a loss function that $c(\mathbf{y},D)$ should be small if $D$ represents the signal $\mathbf{y}$ well in a sparse fashion.
-\cite{elad2006image} introduces a sparse constraint assuming that each signal is represented by a certain number of basis vectors.
+\cite{aharon2006svd} introduces a sparse constraint assuming that each signal is represented by a certain number of basis vectors.
 The problem is specified as:
 \begin{equation}
 \label{eq-diclearning}
@@ -65,20 +65,24 @@ The problem is specified as:
 \mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i=1,2,\cdots,\,m
 \end{array}
 \end{equation}
-where the dictionary $D=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_m)$ is also obtained while minimizing~\eqref{eq-diclearning}.
-%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
-Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
-One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $A$ and dictionary $D$ separately
-\begin{equation}
-\begin{array}{cl}
-\min_{\mathbf{X},\mathbf{A}} & \|Y-DA\| \\
-\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
-\end{array}
-\end{equation}
+where the dictionary $D=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_m)$ is also obtained as the coefficient matrix $A$ is obtained.
+As we can see, it is very difficult to optimize $D$ and $A$ at the same time.
+\cite{aharon2006svd} introduces the K-SVD algorithm, an iterative method that alternates between sparse coding and dictionary updating.
 
-Here $Y=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $A = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
-To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
-Then
+
+%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
+%Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
+%One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $A$ and dictionary $D$ separately
+%\begin{equation}
+%\begin{array}{cl}
+%\min_{\mathbf{X},\mathbf{A}} & \|Y-DA\| \\
+%\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
+%\end{array}
+%\end{equation}
+
+%Here $Y=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $A = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
+%To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
+%Then 
 
 \subsection{Compressed Sensing}
 
