@@ -6,9 +6,9 @@ Nowadays, reconstructing the geometry of a shape from scanned data, also called 
 It can be a preprocessing phase for some geometry problem, e.g., surface reconstruction whose result is a mesh object, with functionalities such as denoising, outlier removal, thinning, orientation, and redistribution of the input points.
 However, current scanners are capable of producing large amount of raw, dense point sets with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts.
 Then finding a robust reconstruction technique has always been an active researching area, and indeed there have been lots of works.
-The works introduced in this section are all based on the $L_1$ median.
+The works introduced in this section are all based on the $\ell_1$ median.
 
-\subsubsection{$L_1$ median based}
+\subsubsection{$\ell_1$ median based}
 \label{subsubsec:$L_1$ median based}
 
 \begin{figure}[ht]
@@ -22,8 +22,8 @@ Reconstruction by a projection operator, as shown in Figure~\ref{fig:L1 median},
 It has an important virtue: it defines a consistent geometry based on the data points, and provides constructive means to up-sample it.
 
 A new projection operator is introduced via a certain fixed-point iteration where the approximated geometry consists of its stationary points,
-and it is closely related to the $L_1$ median\cite{brown1983statistical,small1990survey} which is a statistical tool that applied globally to multivariate non-parametric point-samples in the presence of noise and outliers.
-Briefly, it is a robust global center of an arbitrary set of points. Mathematically, given a data set $P=\{p_{j}\}_{j\in J}\subset \mathbb{R}^3$, the $L_1$ median is defined as the point $q$ obtained by minimizing the sum of Euclidean distances to the data points
+and it is closely related to the $\ell_1$ median\cite{brown1983statistical,small1990survey} which is a statistical tool that applied globally to multivariate non-parametric point-samples in the presence of noise and outliers.
+Briefly, it is a robust global center of an arbitrary set of points. Mathematically, given a data set $P=\{p_{j}\}_{j\in J}\subset \mathbb{R}^3$, the $\ell_1$ median is defined as the point $q$ obtained by minimizing the sum of Euclidean distances to the data points
 
 \small{
 \begin{equation}
@@ -82,7 +82,7 @@ where,
 \end{equation}
 }
 
-Intuitively, LOP distributes the points by approximating their $L_1$ median to achieve robustness to outliers and data noises without any local orientation information nor a local manifold assumption.
+Intuitively, LOP distributes the points by approximating their $\ell_1$ median to achieve robustness to outliers and data noises without any local orientation information nor a local manifold assumption.
 However, also because of the use of the local density parameter $h$, it may not work well when the distribution of the input points is highly non-uniform and can fail to converge.
 
 \paragraph{(2)}
@@ -152,12 +152,12 @@ This method is up to 7 times faster than an optimized GPU implementation of LOP/
 
 \vspace{10pt}
 Figure~\ref{fig:L1 median consolidation} shows the results of these three methods. In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts.
-Most of the $l_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations,
-and are designed for quality rather than performance due to their nature. So the performance problem is still challenging and worth researching. 
+Most of the $\ell_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations,
+and are designed for quality rather than performance due to their nature. So the performance problem is still challenging and worth researching.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=3in]{images/reconstruction_L1}
   \caption{Sparse regularization: point cloud consolidation. (a): LOP\cite{lipman2007parameterization}. (b): WOLP\cite{huang2009consolidation}. (c): continuous WLOP\cite{preiner2014CPF}.}
   \label{fig:L1 median consolidation}
-\end{figure}
+\end{figure} 

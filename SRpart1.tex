@@ -11,9 +11,9 @@ prescribed differential information based and extending the bilateral filter fro
 But it is inherently challenging as it can be difficult to distinguish features from noise.
 
 \paragraph{(1)}
-In image processing, \cite{xu2011image} aiming to smooth images provides an algorithm for directly optimizing the $L_0$ norm to create piecewise constant images.
+In image processing, \cite{xu2011image} aiming to smooth images provides an algorithm for directly optimizing the $\ell_0$ norm to create piecewise constant images.
 Let $c$ be a vector of pixel colors and $\triangledown c$ be a vector of gradients of these colors.
-The authors get the smoothed image by minimizing $|c-c^{*}|^2+|\triangledown c|_0$ where $|\triangledown c|_0$ is the $L_0$ norm of $\triangledown c$
+The authors get the smoothed image by minimizing $|c-c^{*}|^2+|\triangledown c|_0$ where $|\triangledown c|_0$ is the $\ell_0$ norm of $\triangledown c$
 and $c^{*}$ represents the original image colors to provide a data fidelity term.
 
 A natural extension to triangulated meshes is to design a discrete differential operator to replace $\triangledown c$ that is zero when the surface is flat for arbitrary triangulations irrespective of the rotation or translation of the surface.
