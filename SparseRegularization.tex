@@ -5,12 +5,12 @@
 
 
 \subsection{Skeleton Extraction}
-In section~\ref{subsubsec:$L_1$ median based}, we have introduced much information about $L_1$ median and its success in point cloud consolidation.
+In section~\ref{subsubsec:$L_1$ median based}, we have introduced much information about $\ell_1$ median and its success in point cloud consolidation.
 Except for reducing 2D surface that approximate origin point-set,
-\cite{huang2013l1} observed that adapting $L_1$ medians $locally$ to a point set representing a geometric shape also gives rise to a $one-dimensional$ structure which can be seen as a localized center of the shape, i.e., a medial curve skeleton that can be used for shape abstraction and consequently an effective tool for shape analysis and manipulation\cite{cornea2007curve}.
+\cite{huang2013l1} observed that adapting $\ell_1$ medians $locally$ to a point set representing a geometric shape also gives rise to a $one-dimensional$ structure which can be seen as a localized center of the shape, i.e., a medial curve skeleton that can be used for shape abstraction and consequently an effective tool for shape analysis and manipulation\cite{cornea2007curve}.
 Without building any point connectivity or estimating point normals, they directly project point samples onto their local centers as $l_1$ medians with growing neighborhood and push the projected samples via conditional regularization to obtain a uniform distribution of samples along skeleton branches.
 
-It is intuitively a modification of LOP by modifying the repulsion term $E_2$ in () and proposing a different weighted density parameter that can also be named WLOP\cite{huang2009consolidation}. Re-centering. Figure~\ref{fig:skeleton extraction} shows an example.
+It is intuitively a modification of LOP by modifying the repulsion term $E_2$ in~(\ref{eq:LOP2}) and proposing a different weighted density parameter that can also be named WLOP\cite{huang2009consolidation}. Re-centering. Figure~\ref{fig:skeleton extraction} shows an example.
 
 \begin{figure}[ht]
   \centering

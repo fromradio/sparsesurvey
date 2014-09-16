@@ -27,7 +27,7 @@ The quality of a registration is evaluated by the metric $\varphi(\mathbf{x},\ma
 
 Now that sparse regularization methods excels in processing data set with noises or outliers,
 \cite{bouaziz2013sparse} tries to formulate the local alignment problem as recovering rigid transformation that minimizes the number of zero distances between two correspondences.
-Since \cite{chartrand2007exact} shows that $l_{p}$ norms with $p<1$ outperform the $l_1$ norm in inducing sparsity and \cite{elad2010sparse} also illustrates the tendency of $l_{p}$($0<p<1$)norms to drive results to become sparse.
+Since \cite{chartrand2007exact} shows that $\ell_{p}$ norms with $p<1$ outperform the $l_1$ norm in inducing sparsity and \cite{elad2010sparse} also illustrates the tendency of $\ell_{p}$($0<p<1$)norms to drive results to become sparse.
 \cite{bouaziz2013sparse} adopts $l_{p}$($0\le p\le1$) norm based sparse regularizer to obtain an heuristic-free, robust rigid registration algorithm by modifying
 
 \small{
@@ -53,11 +53,17 @@ but the value of $p$ is selected according to the experiments to offer a trade-o
 Matching of deformable shapes is a notoriously difficult problem playing an important role in many application, non-rigid matching typically uses point-wise representation of correspondence, which results in the number of degrees of freedom growing exponentially with the number of matched points.
 
 Recently, \cite{ovsjanikov2012functional} introduces a functional representation for correspondences which are modeled as the correspondences between functions on two shapes rather than points.
-Briefly, let $X$ and $Y$ be two shapes equipped with bases $\{\phi_{i}\}_{i\ge1}$ and $\{\psi_{j}\}_{j\ge1}$ respectively,
+Mathematically, let $X$ and $Y$ be two shapes equipped with bases $\{\phi_{i}\}_{i\ge1}$ and $\{\psi_{j}\}_{j\ge1}$ respectively,
 any real function $f: X\to \mathbb{R}$ and $g=T(f): Y\to \mathbb{R}$ can be represented as $f=\sum_{i\ge1}^{}a_{i}\phi_{i}$ and $g=\sum_{j\ge1}^{}b_{j}\psi_{j}$.
 Taking discretized functions $\phi_{i}$ and $\psi_{j}$ as the columns of bases matrices $\Phi$ and $\Psi$,
-the functions vectors...$\mathbf{b^{T}}=\mathbf{a^{T}}C$.
+the function vectors can be represented as
+$\mathbf{f}=\Phi \mathbf{a}$ and
+$\mathbf{g}=\Psi \mathbf{b}$, and then from
+$\Psi \mathbf{b}=T(\Phi \mathbf{a})=\Psi C^{T}\mathbf{a}$,
+the relationship between two coefficients is clear that $\mathbf{b^{T}}=\mathbf{a^{T}}C$.
 Thus, the matrix $C$ fully encodes the linear map $T$ between the functional spaces.
+
+
 In case the shapes $X$ and $Y$ are isometric and the corresponding Laplace-Beltrami operators have simple spectra,
 the harmonic bases(Laplacian eigenfunctions) have a compatible behavior, $\psi_{i}=T(\phi_{i})$ such that $c_{ij}=\delta_{ij}$.
 Choosing the discretized eigenfunctions of the Laplace-Beltrami operator as $\Phi$ and $\Psi$ causes every low-distortion correspondence being represented by a nearly diagonal, and therefore very sparse matrix $C$.
@@ -73,7 +79,7 @@ Based on the above theory, \cite{pokrass2013sparse} firstly gets two collections
 }
 \\
 where $W$ is assigned with larger weights in off-diagonal part and small weights in diagonal part to promote diagonal solutions, $\|O\|_{2,1}$ promotes row-wise sparsity allowing to absorb the errors in the data term corresponding to the rows of $A$ having no corresponding rows in $B$.
-Figure~\ref{fig:non-rigid matching}This method relies on the region detection technique and assumption: near-isometric shapes.
+Figure~\ref{fig:non-rigid matching} shows the correspondences between non-isometric shapes. This method relies on the region detection technique and assumption: near-isometric shapes.
 
 \begin{figure}[ht]
   \centering
@@ -111,7 +117,7 @@ and thus the combination could be sparse if the point is written as a linear com
  \label{eq:SSC}
  \begin{split}
  &\min_{W_{h}}\|X_{h}W_{h}-X_{h}\|{_{F}^2}+\lambda\|W_{h}^{T}W_{h}\|_{1,1} \\
- &s.t.~W_{h}\ge0,~\textrm{diag}(W_{h})=0
+ &\mathrm{s.t.}~W_{h}\ge0,~\textrm{diag}(W_{h})=0
  \end{split}
 \end{equation}
 }
@@ -131,7 +137,7 @@ finding the most similar patch pairs considering selected features and correspon
  \label{eq:coseg1}
  \begin{split}
  &\min_{W_{1},\cdots,W_{H}}\sum_{h=1}^{H}\mathcal{F}(W_{h})+\mathcal{P}_{cons}(W_1,W_2,\cdots,W_H)\\
- &s.t.~W_{h}\ge0,~\textrm{diag}(W_{h})=0,h=1,2,\cdots,H.
+ &\mathrm{s.t.}~W_{h}\ge0,~\textrm{diag}(W_{h})=0,h=1,2,\cdots,H.
  \end{split}
 \end{equation}
 }
