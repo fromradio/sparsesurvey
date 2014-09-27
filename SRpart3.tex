@@ -7,8 +7,7 @@ Here, we give shape matching a more extensive definition: finding the correspond
 \subsubsection{Rigid registration}
 \label{subsubsec:Rigid registration}
 
-Rigid registration is a fundamental task in computer graphics and geometry processing.
-It aims at finding a suitable set of corresponding points on source and target point set.
+Rigid registration aims at finding a suitable set of corresponding points on source and target point set.
 The $Iterative~Closest~Point$(ICP) addresses this problem by assuming the input data to be in coarse alignment.
 Under this assumption, a set of correspondences can be obtained by querying closest points on the target geometry.
 Given two surfaces $\mathcal{X}$, $\mathcal{Y}$, it is formulated as
@@ -16,19 +15,20 @@ Given two surfaces $\mathcal{X}$, $\mathcal{Y}$, it is formulated as
 \small{
 \begin{equation}
  \label{eq:ICP}
- \mathop{\argmin}_{R,t}\int_{\mathcal{X}}^{}\varphi(R\mathbf{x}+t,\mathcal{Y})d\mathbf{x}+I_{\mathcal{SO}(k)}(R)
+ \mathop{\argmin}_{R,\mathbf{t}}\int_{\mathcal{X}}^{}\varphi(R\mathbf{x}+t,\mathcal{Y})d\mathbf{x}+I_{\mathcal{SO}(k)}(R)
 \end{equation}
 }
 \\
 where $R$ is a rotation matrix,
-$t$ is a translation vector,
+$\mathbf{t}$ is a translation vector,
 $\mathbf{x}$ is a point on the source geometry.
-The quality of a registration is evaluated by the metric $\varphi(\mathbf{x},\mathbf{y})=\|\mathbf{x}-\mathbf{y}\|{_2^2}$, i.e., classical ICP is in a least-square sense which would fail with outliers.
+The quality of a registration is evaluated by the metric
+$\varphi(\mathbf{x},\mathbf{y})=\|\mathbf{x}-\mathbf{y}\|{_2^2}$, i.e.,
+classical ICP is in a least-square sense which would fail with outliers.
 
 Now that sparse regularization methods excels in processing data set with noises or outliers,
 \cite{bouaziz2013sparse} tries to formulate the local alignment problem as recovering rigid transformation that minimizes the number of zero distances between two correspondences.
-Since \cite{chartrand2007exact} shows that $\ell_{p}$ norms with $p<1$ outperform the $l_1$ norm in inducing sparsity and \cite{elad2010sparse} also illustrates the tendency of $\ell_{p}$($0<p<1$)norms to drive results to become sparse.
-\cite{bouaziz2013sparse} adopts $l_{p}$($0\le p\le1$) norm based sparse regularizer to obtain an heuristic-free, robust rigid registration algorithm by modifying
+They adopt $\ell_{p}$($0\le p\le1$) norm based sparse regularizer to obtain an heuristic-free, robust rigid registration algorithm by modifying
 
 \small{
 \begin{equation}
@@ -36,8 +36,9 @@ Since \cite{chartrand2007exact} shows that $\ell_{p}$ norms with $p<1$ outperfor
  \varphi(\mathbf{x},\mathbf{y})=\|\mathbf{x}-\mathbf{y}\|{_2^{p}}
 \end{equation}
 }
-
-Figure~\ref{fig:sparseICP}is the registration results of sparse ICP under different values of $p$ among which it can be found that $0<p<1$ reduces better results,
+\\
+About $\ell_{p}$ norm, \cite{chartrand2007exact} shows that $\ell_{p}$ norms with $p<1$ outperform the $l_1$ norm in inducing sparsity and \cite{elad2010sparse} also illustrates the tendency of $\ell_{p}$($0<p<1$)norms to drive results to become sparse.
+Figure~\ref{fig:sparseICP} is the registration results of sparse ICP under different values of $p$ among which it can be found that $0<p<1$ reduces better results,
 but the value of $p$ is selected according to the experiments to offer a trade-off between performance and robustness which may make the sparse ICP unpractical.
 
 \begin{figure}[ht]
@@ -47,12 +48,75 @@ but the value of $p$ is selected according to the experiments to offer a trade-o
   \label{fig:sparseICP}
 \end{figure}
 
+
+
 \subsubsection{Non-rigid shape matching}
 \label{subsubsec:non-rigid shape matching}
 
-Matching of deformable shapes is a notoriously difficult problem playing an important role in many application, non-rigid matching typically uses point-wise representation of correspondence, which results in the number of degrees of freedom growing exponentially with the number of matched points.
+\paragraph{(1)Local functional basis}
+For a 3D surface, the invariance of intrinsic properties to extrinsic transformations should always be handled.
+The eigenfunctions of the Laplace-Beltrami operator just define this kind of basis, manifold harmonic basis(MHB), 
+which is unique and characteristic of the geometric and topological properties of the shape.
+Now we first have a look at one work about it, which is closely related to the following non-rigid shape matching algorithm.
 
-Recently, \cite{ovsjanikov2012functional} introduces a functional representation for correspondences which are modeled as the correspondences between functions on two shapes rather than points.
+
+The Laplace-Beltrami operator $\triangle$ on a 2D manifold surface embedded in 3D space induces the eigenfunctions $\{\phi_{k}\}$ satisfying the equations
+
+\small{
+\begin{equation}
+ \label{eq:MHB}
+ -\triangle\phi_{k}=\lambda_{k}\phi_{k},~k\in\mathbb{N},\lambda_{k}\in\mathbb{R},
+\end{equation}
+}
+\\
+where $\lambda_{k}$ are the eigenvalues of the operator.
+With their global spatial support, MHB have been used for many applications.
+
+But as we have known that many times only locality can reduce a good result, like deformation(\cite{zhang2014local} mentioned above), correspondence.
+So, to produce an intrinsic shape basis with local spatial support while taking advantage of MHB simultaneouly, \cite{neumann2014compressed} proposes the $compressed~manifold~basis(CMB)$, whose individual basis functions are called $compressed~manifold~modes(CMMs)$, by adding a sparsity inducing $\ell_1$ norm into~(\ref{eq:MHB})
+
+
+\small{
+\begin{equation}
+ \label{eq:CMBA}
+ \begin{split}
+ & \min_{\phi_{k}}  \sum_{k=1}^{K} \langle \phi_{k},\triangle\phi_{k} \rangle  +  \mu | \phi_{k} |_1,\\
+ & ~\textrm{s.t.}~ \langle \phi_{k}, \phi_{j}  \rangle= \delta_{kj},
+ \end{split}
+\end{equation}
+}
+\\
+where $\delta_{kj}$ is the Kronecker delta used to enforce orthogonality of the eigenfunctions and $\mu$ is used to control the sparsity.
+For a triangle mesh with $N$ vertices, discretizing the Laplacian $\triangle$ using a sparse matrix $L\in\mathbb{R}^{N\times N}$ with cotangent weights in previous work, and incorporating a lumped mass matrix $M$, containing the vertex areas along its diagonal making the eigenbasis independent of the mesh resolution, the discretization of~(\ref{eq:CMBA}) becomes
+
+\small{
+\begin{equation}
+ \label{eq:discreteCMBA}
+ \begin{split}
+ & \min_{\Phi} \textrm{Tr}(\Phi^{T}L \Phi)+\mu\| \Phi \|_1,\\
+ & ~\textrm{s.t.}~ \Phi^{T}M\Phi=I.
+ \end{split}
+\end{equation}
+}
+\\
+here, $\Phi\in\mathbb{R}^{N\times K}$ contains the first $K$ eigenvectors corresponding to the matrix columns.
+Solving~(\ref{eq:discreteCMBA}), the obtained orthogonal $compressed~manifold~modes(CMMs)$ could automatically identify key shape features of the underlying mesh, as shown in Figure~\ref{fig:CMB}. As such, it can be used for shape matching which involves robust feature detection.
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=2.5in]{images/CMB}
+  \caption{Sparse regularization: local functional basis\cite{zhang2013point}. The proposed compressed manifold modes(CMMs) have local support and are confined to specific local features like protrusions and ridges. 8 of the CMMs were found for the 8 protrusion at the corner(2 shown here), 6 concentrate at each of the dents(2 shown here), and 12 CMMs automatically form at the valleys between the protrusions.}
+  \label{fig:CMB}
+\end{figure}
+
+
+
+\paragraph{(2)Non-rigid shape matching}
+Matching of deformable shapes is a notoriously difficult problem which results in the number of degrees of freedom growing exponentially with the number of matched points.
+
+Recently, \cite{ovsjanikov2012functional} introduces a functional representation for correspondences 
+which are modeled as the correspondences between functions on two shapes rather than points.
 Mathematically, let $X$ and $Y$ be two shapes equipped with bases $\{\phi_{i}\}_{i\ge1}$ and $\{\psi_{j}\}_{j\ge1}$ respectively,
 any real function $f: X\to \mathbb{R}$ and $g=T(f): Y\to \mathbb{R}$ can be represented as $f=\sum_{i\ge1}^{}a_{i}\phi_{i}$ and $g=\sum_{j\ge1}^{}b_{j}\psi_{j}$.
 Taking discretized functions $\phi_{i}$ and $\psi_{j}$ as the columns of bases matrices $\Phi$ and $\Psi$,
@@ -64,12 +128,13 @@ the relationship between two coefficients is clear that $\mathbf{b^{T}}=\mathbf{
 Thus, the matrix $C$ fully encodes the linear map $T$ between the functional spaces.
 
 
-In case the shapes $X$ and $Y$ are isometric and the corresponding Laplace-Beltrami operators have simple spectra,
+In case the shapes $X$ and $Y$ are isometric and the corresponding Laplace-Beltrami operators have simple spectra mentioned above,
 the harmonic bases(Laplacian eigenfunctions) have a compatible behavior, $\psi_{i}=T(\phi_{i})$ such that $c_{ij}=\delta_{ij}$.
 Choosing the discretized eigenfunctions of the Laplace-Beltrami operator as $\Phi$ and $\Psi$ causes every low-distortion correspondence being represented by a nearly diagonal, and therefore very sparse matrix $C$.
 
-Based on the above theory, \cite{pokrass2013sparse} firstly gets two collections of similar functions $\{f_{i}:X\to \mathbb{R}\}$ and $\{g_{j}:Y\to \mathbb{R}\}$ using some region detection process like\cite{litman2011diffusion}. \parpic[r]{\label{fig:regionmatching}\includegraphics[width=0.4\linewidth]{images/matching_function}}As shown in the right figure, different colors represent different functions and the correspondence of these two collections of functions is unknown, i.e., we do not know to which $g_{j}$ in $Y$ a $f_{i}$ in $X$ corresponds.
-\cite{pokrass2013sparse} adopts an unknown permutation matrix $\mathbf{\Pi}$ to express this ordering. Finally, the robust permuted sparse coding is formulated as following
+Based on the above theory, \cite{pokrass2013sparse} firstly gets two collections of similar functions $\{f_{i}:X\to \mathbb{R}\}$ and $\{g_{j}:Y\to \mathbb{R}\}$ using some region detection process like\cite{litman2011diffusion}. \parpic[r]{\label{fig:regionmatching}\includegraphics[width=0.3\linewidth]{images/matching_function}}
+As shown in the right figure, different colors represent different functions and the correspondence of these two collections of functions is unknown, i.e., we do not know to which $g_{j}$ in $Y$ a $f_{i}$ in $X$ corresponds.
+\cite{pokrass2013sparse} adopts an unknown permutation matrix $\Pi$ to express this ordering. Finally, the robust permuted sparse coding is formulated as following
 
 \small{
 \begin{equation}
@@ -79,7 +144,8 @@ Based on the above theory, \cite{pokrass2013sparse} firstly gets two collections
 }
 \\
 where $W$ is assigned with larger weights in off-diagonal part and small weights in diagonal part to promote diagonal solutions, $\|O\|_{2,1}$ promotes row-wise sparsity allowing to absorb the errors in the data term corresponding to the rows of $A$ having no corresponding rows in $B$.
-Figure~\ref{fig:non-rigid matching} shows the correspondences between non-isometric shapes. This method relies on the region detection technique and assumption: near-isometric shapes.
+From the formulation we know that this method relies on the region detection technique and assumption: near-isometric shapes.
+Figure~\ref{fig:non-rigid matching} shows the correspondences between non-isometric shapes.
 
 \begin{figure}[ht]
   \centering
@@ -92,25 +158,27 @@ Figure~\ref{fig:non-rigid matching} shows the correspondences between non-isomet
 \subsubsection{Co-segmentation}
 \label{subsubsec:co-segmentation}
 
-Co-segmentation aims to consistently segment a group of shapes and obtain the correspondence between resulted segments simultaneously. As the right figure in Figure~\ref{fig:co-segmentation}shows, corresponding parts are labeled in the same colors.
-To be more intuitive and efficient, \cite{hu2012co} processes co-segmentation on patch-level instead of face-level like many other works.
+Co-segmentation aims to consistently segment a group of shapes and obtain the correspondence between resulted segments simultaneously,
+as the right figure in Figure~\ref{fig:co-segmentation} shows, corresponding parts are labeled in the same colors.
+To be more intuitive and efficient, \cite{hu2012co} processes co-segmentation on patch-level instead of face-level.
 
-So they firstly over-segment all the models(left in Figure~\ref{fig:co-segmentation}) followed by calculating their feature vectors using some feature descriptors.
-For example, Figure~\ref{fig:co-segmentationAGD} shows the colormaps of average geodesic distance(AGD) features of two tables with over-segmented patches, and actually there are $H=5$ feature descriptors.
+Thus they firstly over-segment all the models(left in Figure~\ref{fig:co-segmentation}) followed by calculating their feature vectors using some feature descriptors(in this paper, they adopt $H=5$ feature descriptors).
+For example, Figure~\ref{fig:co-segmentationAGD} shows the colormaps of average geodesic distance(AGD) features of two tables with over-segmented patches.
 They define the feature vector as a histogram of the feature measurement on the triangles of that patch.
-Then it is obvious that two corresponding patches have similar distributions, which means their feature vectors lie in a common subspace generated by standard basis corresponding to these nonzero entries.
-Based on this observation, they regard co-segmentation as a subspace clustering problem since the final segments are all clustering of patches.
+It is obvious that two corresponding patches have similar distributions, that is, their feature vectors lie in a common subspace generated by standard basis corresponding to these nonzero entries.
+Based on this observation, they regard co-segmentation as a subspace clustering problem since the final segments are all clustering of over-segmented patches.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=3in]{images/co-segmentationAGD}
+  \includegraphics[width=2.5in]{images/co-segmentationAGD}
   \caption{Sparse regularization: co-segmentation\cite{hu2012co}. Colormaps of AGD features of two tables with over-segmented patches. The AGD feature vectors of the two patches(marked in rectangles) from each table's leg have similar distribution, as shown in histograms in the middle. It can be seen that these two feature vectors lie in the common subspace generated by standard basis corresponding to the nonzero entries.}
   \label{fig:co-segmentationAGD}
 \end{figure}
 
 
-Since that each data point(here is the feature vector) in a union of linear subspaces can always be represented as a linear combination of the points belonging to the same linear subspace
-and thus the combination could be sparse if the point is written as a linear combination of all other points. Following\cite{elhamifar2009sparse,wang2011efficient}, finding the sparse combination matrix for the single-feature co-segmentation is formulated as
+Since each data point(here is the feature vector) in a union of linear subspaces can always be represented as a linear combination of the points belonging to the same linear subspace,
+the combination will be sparse if the point is written as a linear combination of all other points.
+Following\cite{elhamifar2009sparse,wang2011efficient}, finding the sparse combination matrix for the single-feature co-segmentation is formulated as
 
 \small{
 \begin{equation}
@@ -123,13 +191,12 @@ and thus the combination could be sparse if the point is written as a linear com
 }
 \\
 where $h$ corresponds to the $h$-th feature descriptor,
-the feature matrix $X_{h}=[x_{h1},x_{h2},\cdots,x_{hN}]$ is constructed with $x_{hi}$ which is the feature vector of the $i$-th patch($i=1,2,\cdots,N$).
-$\|W_{h}^{T}W_{h}\|_{1,1}$ is seen as a penalty item in the optimization, which favors the sparsity of the optimal solution $\overline{W_{h}}$ of which each entry measures the linear correlation between two points in the meshes.
+the feature matrix $X_{h}=[x_{h1},x_{h2},\cdots,x_{hN}]$ is constructed with the feature vector $x_{hi}$ of the $i$-th patch($i=1,2,\cdots,N$).
+$\|W_{h}^{T}W_{h}\|_{1,1}$, as a penalty item, favors the sparsity of the optimal solution $\overline{W_{h}}$ of which each entry measures the linear correlation between two points in the meshes.
 After defining the affinity matrix $S=(s_{ij})$ as $s_{ij}=|\overline{w_{h}}_{ij}|+|\overline{w_{h}}_{ji}|$, the NCut method\cite{shi2000normalized} is applied to get the co-segmentation results.
 
-However, single one feature is not enough for co-segmenting different categories of models.
-Taking two following things into account:
-finding the most similar patch pairs considering selected features and corresponding patches need not be similar in these features,
+In fact, single one feature is not enough for co-segmenting different categories of models.
+To find the most similar patch pairs considering all selected features some of which the corresponding patches may not be similar ,
 \cite{hu2012co} adds the consistent multi-feature penalty to ensure the co-segmentation results consistent with different feature spaces by combing $H$ feature descriptors
 
 \small{
@@ -166,10 +233,9 @@ here the $H\times N^2$ matrix $W$ is formed by concatenating $W_1,W_2,\cdots,W_H
 \end{equation}
 }
 \\
-the $\ell_{2,1}$ penalty on $W$ induces column sparsity of $W$ such that most columns of $W$ are shrunken to be entirely zero, which means that the corresponding pairs of patches will likely not be in the same cluster.
-The $\ell_{1,1}$ penalty on $W$ induces the sparsity within each column of $W$.
-This means that for each non-zero column, that is for each similar patch pair, only a subset of features are actually used to measure their similarity.
-Hence this term enables the prominent features to pop up and guarantees the sparsity-consistency of the matrices $W_1,W_2,\cdots,W_H$.
+the $\ell_{2,1}$ penalty induces column sparsity of $W$ such that most columns of $W$ are shrunken to be entirely zero, which means that the corresponding pairs of patches will likely not be in the same cluster.
+The $\ell_{1,1}$ penalty induces the sparsity within each column, then for each similar patch pair, only a subset of features are actually used to measure their similarity.
+Combining these two penalties enables the prominent features to pop up and guarantees the sparsity consistency of the matrices $W_1,W_2,\cdots,W_H$.
 
 Notice that without $\mathcal{P}_{cons}$, the formulation~(\ref{eq:coseg1}) will reduce to a naive solution which is exactly the same as applying subspace clustering to each feature matrix $X_{h}$ independently.
 

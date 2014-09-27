@@ -1,0 +1,322 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{mallat1993matching}
+S.~G. Mallat, Z.~Zhang, Matching pursuits with time-frequency dictionaries,
+  Signal Processing, IEEE Transactions on 41~(12) (1993) 3397--3415.
+
+\bibitem{pati1993orthogonal}
+Y.~C. Pati, R.~Rezaiifar, P.~Krishnaprasad, Orthogonal matching pursuit:
+  Recursive function approximation with applications to wavelet decomposition,
+  in: Signals, Systems and Computers, 1993. 1993 Conference Record of The
+  Twenty-Seventh Asilomar Conference on, IEEE, 1993, pp. 40--44.
+
+\bibitem{tropp2007signal}
+J.~A. Tropp, A.~C. Gilbert, Signal recovery from random measurements via
+  orthogonal matching pursuit, Information Theory, IEEE Transactions on 53~(12)
+  (2007) 4655--4666.
+
+\bibitem{tibshirani1996regression}
+R.~Tibshirani, Regression shrinkage and selection via the lasso, Journal of the
+  Royal Statistical Society. Series B (Methodological) (1996) 267--288.
+
+\bibitem{efron2004least}
+B.~Efron, T.~Hastie, I.~Johnstone, R.~Tibshirani, et~al., Least angle
+  regression, The Annals of statistics 32~(2) (2004) 407--499.
+
+\bibitem{wright2010sparse}
+J.~Wright, Y.~Ma, J.~Mairal, G.~Sapiro, T.~S. Huang, S.~Yan, Sparse
+  representation for computer vision and pattern recognition, Proceedings of
+  the IEEE 98~(6) (2010) 1031--1044.
+
+\bibitem{wright2009robust}
+J.~Wright, A.~Y. Yang, A.~Ganesh, S.~S. Sastry, Y.~Ma, Robust face recognition
+  via sparse representation, Pattern Analysis and Machine Intelligence, IEEE
+  Transactions on 31~(2) (2009) 210--227.
+
+\bibitem{yang2008image}
+J.~Yang, J.~Wright, T.~Huang, Y.~Ma, Image super-resolution as sparse
+  representation of raw image patches, in: Computer Vision and Pattern
+  Recognition, 2008. CVPR 2008. IEEE Conference on, IEEE, 2008, pp. 1--8.
+
+\bibitem{mairal2008discriminative}
+J.~Mairal, F.~Bach, J.~Ponce, G.~Sapiro, A.~Zisserman, Discriminative learned
+  dictionaries for local image analysis, in: Computer Vision and Pattern
+  Recognition, 2008. CVPR 2008. IEEE Conference on, IEEE, 2008, pp. 1--8.
+
+\bibitem{olshausen1997sparse}
+B.~A. Olshausen, D.~J. Field, Sparse coding with an overcomplete basis set: A
+  strategy employed by v1?, Vision research 37~(23) (1997) 3311--3325.
+
+\bibitem{engan1999frame}
+K.~Engan, S.~O. Aase, J.~Husoy, Frame based signal compression using method of
+  optimal directions (mod), in: Circuits and Systems, 1999. ISCAS'99.
+  Proceedings of the 1999 IEEE International Symposium on, Vol.~4, IEEE, 1999,
+  pp. 1--4.
+
+\bibitem{aharon2006svd}
+M.~Aharon, M.~Elad, A.~Bruckstein, K-svd: An algorithm for designing
+  overcomplete dictionaries for sparse representation, Signal Processing, IEEE
+  Transactions on 54~(11) (2006) 4311--4322.
+
+\bibitem{jolliffe2005principal}
+I.~Jolliffe, Principal component analysis, Wiley Online Library, 2005.
+
+\bibitem{wold1987principal}
+S.~Wold, K.~Esbensen, P.~Geladi, Principal component analysis, Chemometrics and
+  intelligent laboratory systems 2~(1) (1987) 37--52.
+
+\bibitem{candes2011robust}
+E.~J. Cand{\`e}s, X.~Li, Y.~Ma, J.~Wright, Robust principal component
+  analysis?, Journal of the ACM (JACM) 58~(3) (2011) 11.
+
+\bibitem{candes2009exact}
+E.~J. Cand{\`e}s, B.~Recht, Exact matrix completion via convex optimization,
+  Foundations of Computational mathematics 9~(6) (2009) 717--772.
+
+\bibitem{lin2010augmented}
+Z.~Lin, M.~Chen, Y.~Ma, The augmented lagrange multiplier method for exact
+  recovery of corrupted low-rank matrices, arXiv preprint arXiv:1009.5055.
+
+\bibitem{grant2008cvx}
+M.~Grant, S.~Boyd, Y.~Ye, Cvx: Matlab software for disciplined convex
+  programming (2008).
+
+\bibitem{beck2009fast}
+A.~Beck, M.~Teboulle, A fast iterative shrinkage-thresholding algorithm for
+  linear inverse problems, SIAM Journal on Imaging Sciences 2~(1) (2009)
+  183--202.
+
+\bibitem{lin2009fast}
+Z.~Lin, A.~Ganesh, J.~Wright, L.~Wu, M.~Chen, Y.~Ma, Fast convex optimization
+  algorithms for exact recovery of a corrupted low-rank matrix, Computational
+  Advances in Multi-Sensor Adaptive Processing (CAMSAP) 61.
+
+\bibitem{bertsekas1982constrained}
+D.~P. Bertsekas, Constrained optimization and lagrange multiplier methods,
+  Computer Science and Applied Mathematics, Boston: Academic Press, 1982 1.
+
+\bibitem{bertsekas1999nonlinear}
+D.~P. Bertsekas, Nonlinear programming.
+
+\bibitem{ma2012sparse}
+L.~Ma, C.~Wang, B.~Xiao, W.~Zhou, Sparse representation for face recognition
+  based on discriminative low-rank dictionary learning, in: Computer Vision and
+  Pattern Recognition (CVPR), 2012 IEEE Conference on, IEEE, 2012, pp.
+  2586--2593.
+
+\bibitem{shen2012unified}
+X.~Shen, Y.~Wu, A unified approach to salient object detection via low rank
+  matrix recovery, in: Computer Vision and Pattern Recognition (CVPR), 2012
+  IEEE Conference on, IEEE, 2012, pp. 853--860.
+
+\bibitem{ji2010robust}
+H.~Ji, C.~Liu, Z.~Shen, Y.~Xu, Robust video denoising using low rank matrix
+  completion, in: Computer Vision and Pattern Recognition (CVPR), 2010 IEEE
+  Conference on, IEEE, 2010, pp. 1791--1798.
+
+\bibitem{lipman2007parameterization}
+Y.~Lipman, D.~Cohen-Or, D.~Levin, H.~Tal-Ezer, Parameterization-free projection
+  for geometry reconstruction, in: ACM Transactions on Graphics (TOG), Vol.~26,
+  ACM, 2007, p.~22.
+
+\bibitem{huang2009consolidation}
+H.~Huang, D.~Li, H.~Zhang, U.~Ascher, D.~Cohen-Or, Consolidation of unorganized
+  point clouds for surface reconstruction, in: ACM Transactions on Graphics
+  (TOG), Vol.~28, ACM, 2009, p. 176.
+
+\bibitem{preiner2014CPF}
+R.~Preiner, O.~Mattausch, M.~Arikan, R.~Pajarola, M.~Wimmer,
+  \href{http://doi.acm.org/10.1145/2601097.2601172}{Continuous projection for
+  fast l1 reconstruction}, ACM Trans. Graph. 33~(4) (2014) 47:1--47:13.
+\newblock \href {http://dx.doi.org/10.1145/2601097.2601172}
+  {\path{doi:10.1145/2601097.2601172}}.
+\newline\urlprefix\url{http://doi.acm.org/10.1145/2601097.2601172}
+
+\bibitem{avron2010L1}
+H.~Avron, A.~Sharf, C.~Greif, D.~Cohen-Or, L1-sparse reconstruction of sharp
+  point set surfaces, ACM Transactions on Graphics (TOG) 29~(5) (2010) 135.
+
+\bibitem{mustafa2014subdivision}
+G.~Mustafa, H.~Li, J.~Zhang, J.~Deng, $\ell_1$-regression based subdivision
+  schemes for noisy data, Computer-Aided Design.
+
+\bibitem{zhang2013point}
+J.~Zhang, J.~Cao, X.~Liu, J.~Wang, J.~Liu, X.~Shi, Point cloud normal
+  estimation via low-rank subspace clustering, Computers \& Graphics 37~(6)
+  (2013) 697--706.
+
+\bibitem{he2013mesh}
+L.~He, S.~Schaefer, Mesh denoising via $\ell_0$ minimization, ACM Transactions
+  on Graphics (TOG) 32~(4) (2013) 64.
+
+\bibitem{wang2014decoupling}
+R.~Wang, Z.~Yang, L.~Liu, J.~Deng, F.~Chen, Decoupling noise and features via
+  weighted $\ell_1$-analysis compressed sensing, ACM Transactions on Graphics
+  (TOG) 33~(2) (2014) 18.
+
+\bibitem{zhang2014variational}
+H.~Zhang, C.~Wu, J.~Zhang, J.~Deng, Variational mesh denoising using total
+  variation and piecewise constant function space, Visualization and Computer
+  Graphics, IEEE Transactions on.
+
+\bibitem{bouaziz2013sparse}
+S.~Bouaziz, A.~Tagliasacchi, M.~Pauly, Sparse iterative closest point, in:
+  Proceedings of the Eleventh Eurographics/ACMSIGGRAPH Symposium on Geometry
+  Processing, Eurographics Association, 2013, pp. 113--123.
+
+\bibitem{hu2012co}
+R.~Hu, L.~Fan, L.~Liu, Co-segmentation of 3d shapes via subspace clustering,
+  in: Computer graphics forum, Vol.~31, Wiley Online Library, 2012, pp.
+  1703--1713.
+
+\bibitem{digne2014self}
+J.~Digne, R.~Chaine, S.~Valette, Self-similarity for accurate compression of
+  point sampled surfaces, month.
+
+\bibitem{miandji2013learning}
+E.~Miandji, J.~Kronander, J.~Unger, Learning based compression of surface light
+  fields for real-time rendering of global illumination scenes, in: SIGGRAPH
+  Asia 2013 Technical Briefs, ACM, 2013, p.~24.
+
+\bibitem{zhang2012variational}
+J.~Zhang, J.~Zheng, C.~Wu, J.~Cai, Variational mesh decomposition, ACM
+  Transactions on Graphics (TOG) 31~(3) (2012) 21.
+
+\bibitem{neumann2013sparse}
+T.~Neumann, K.~Varanasi, S.~Wenger, M.~Wacker, M.~Magnor, C.~Theobalt, Sparse
+  localized deformation components, ACM Transactions on Graphics (TOG) 32~(6)
+  (2013) 179.
+
+\bibitem{le2012smooth}
+B.~H. Le, Z.~Deng, Smooth skinning decomposition with rigid bones, ACM
+  Transactions on Graphics (TOG) 31~(6) (2012) 199.
+
+\bibitem{le2013two}
+B.~H. Le, Z.~Deng, Two-layer sparse compression of dense-weight blend skinning,
+  ACM Transactions on Graphics (TOG) 32~(4) (2013) 124.
+
+\bibitem{le2014ras}
+B.~H. Le, Z.~Deng, \href{http://doi.acm.org/10.1145/2601097.2601161}{Robust and
+  accurate skeletal rigging from mesh sequences}, ACM Trans. Graph. 33~(4)
+  (2014) 84:1--84:10.
+\newblock \href {http://dx.doi.org/10.1145/2601097.2601161}
+  {\path{doi:10.1145/2601097.2601161}}.
+\newline\urlprefix\url{http://doi.acm.org/10.1145/2601097.2601161}
+
+\bibitem{deng2013exploring}
+B.~Deng, S.~Bouaziz, M.~Deuss, J.~Zhang, Y.~Schwartzburg, M.~Pauly, Exploring
+  local modifications for constrained meshes, Computer Graphics Forum
+  (Proceedings of Eurographics 2013) 32~(2).
+
+\bibitem{jin2012unsupervised}
+Y.~Jin, Q.~Wu, L.~Liu, Unsupervised upright orientation of man-made models,
+  Graphical Models 74~(4) (2012) 99--108.
+
+\bibitem{wang2014upright}
+W.~Wang, X.~Liu, L.~Liu, Upright orientation of 3d shapes via tensor rank
+  minimization, Journal of Mechanical Science and Technology (2014) 40--53.
+
+\bibitem{neumann2014compressed}
+T.~Neumann, K.~Varanasi, C.~Theobalt, M.~Magnor, M.~Wacker, Compressed manifold
+  modes for mesh processing, in: Computer Graphics Forum, Vol.~33, Wiley Online
+  Library, 2014, pp. 35--44.
+
+\bibitem{zhang2014local}
+J.~Zhang, B.~Deng, Z.~Liu, G.~Patane, S.~Bouaziz, K.~Hormann, L.~Liu, Local
+  barycentric coordinates, ACM Transactions on Graphics (Proc. SIGGRAPH Aisa)
+  33~(6).
+
+\bibitem{huang2013l1}
+H.~Huang, S.~Wu, D.~Cohen-Or, M.~Gong, H.~Zhang, G.~Li, B.~Chen,
+  $\ell_1$-medial skeleton of point cloud., ACM Trans. Graph. 32~(4) (2013) 65.
+
+\bibitem{xiong2014robust}
+S.~Xiong, J.~Zhang, J.~Zheng, J.~Cai, L.~Liu, Robust surface reconstruction via
+  dictionary learning, ACM Transactions on Graphics (Proc. SIGGRAPH Aisa)
+  33~(6).
+
+\bibitem{brown1983statistical}
+B.~Brown, Statistical uses of the spatial median, Journal of the Royal
+  Statistical Society. Series B (Methodological) (1983) 25--30.
+
+\bibitem{small1990survey}
+C.~G. Small, A survey of multidimensional medians, International Statistical
+  Review/Revue Internationale de Statistique (1990) 263--277.
+
+\bibitem{xu2011image}
+L.~Xu, C.~Lu, Y.~Xu, J.~Jia, Image smoothing via $\ell_0$ gradient
+  minimization, ACM Transactions on Graphics (TOG) 30~(6) (2011) 174.
+
+\bibitem{pinkall1993computing}
+U.~Pinkall, K.~Polthier, Computing discrete minimal surfaces and their
+  conjugates, Experimental mathematics 2~(1) (1993) 15--36.
+
+\bibitem{chartrand2007exact}
+R.~Chartrand, Exact reconstruction of sparse signals via nonconvex
+  minimization, Signal Processing Letters, IEEE 14~(10) (2007) 707--710.
+
+\bibitem{elad2010sparse}
+M.~Elad, Sparse and redundant representations: from theory to applications in
+  signal and image processing, Springer, 2010.
+
+\bibitem{ovsjanikov2012functional}
+M.~Ovsjanikov, M.~Ben-Chen, J.~Solomon, A.~Butscher, L.~Guibas, Functional
+  maps: a flexible representation of maps between shapes, ACM Transactions on
+  Graphics (TOG) 31~(4) (2012) 30.
+
+\bibitem{pokrass2013sparse}
+J.~Pokrass, A.~M. Bronstein, M.~M. Bronstein, P.~Sprechmann, G.~Sapiro, Sparse
+  modeling of intrinsic correspondences, in: Computer Graphics Forum, Vol.~32,
+  Wiley Online Library, 2013, pp. 459--468.
+
+\bibitem{litman2011diffusion}
+R.~Litman, A.~M. Bronstein, M.~M. Bronstein, Diffusion-geometric maximally
+  stable component detection in deformable shapes, Computers \& Graphics 35~(3)
+  (2011) 549--560.
+
+\bibitem{elhamifar2009sparse}
+E.~Elhamifar, R.~Vidal, Sparse subspace clustering, in: Computer Vision and
+  Pattern Recognition, 2009. CVPR 2009. IEEE Conference on, IEEE, 2009, pp.
+  2790--2797.
+
+\bibitem{wang2011efficient}
+S.~Wang, X.~Yuan, T.~Yao, S.~Yan, J.~Shen, Efficient subspace segmentation via
+  quadratic programming., in: AAAI, 2011.
+
+\bibitem{shi2000normalized}
+J.~Shi, J.~Malik, Normalized cuts and image segmentation, Pattern Analysis and
+  Machine Intelligence, IEEE Transactions on 22~(8) (2000) 888--905.
+
+\bibitem{cornea2007curve}
+N.~D. Cornea, D.~Silver, P.~Min, Curve-skeleton properties, applications, and
+  algorithms, Visualization and Computer Graphics, IEEE Transactions on 13~(3)
+  (2007) 530--548.
+
+\bibitem{chambolle2010introduction}
+A.~Chambolle, V.~Caselles, D.~Cremers, M.~Novaga, T.~Pock, An introduction to
+  total variation for image analysis, Theoretical foundations and numerical
+  methods for sparse recovery 9 (2010) 263--340.
+
+\bibitem{mumford1989optimal}
+D.~Mumford, J.~Shah, Optimal approximations by piecewise smooth functions and
+  associated variational problems, Communications on pure and applied
+  mathematics 42~(5) (1989) 577--685.
+
+\bibitem{chen2009benchmark}
+X.~Chen, A.~Golovinskiy, T.~Funkhouser, A benchmark for 3d mesh segmentation,
+  in: ACM Transactions on Graphics (TOG), Vol.~28, ACM, 2009, p.~73.
+
+\bibitem{schaefer2007example}
+S.~Schaefer, C.~Yuksel, Example-based skeleton extraction, in: Symposium on
+  Geometry Processing, Citeseer, 2007, pp. 153--162.
+
+\bibitem{zou2006sparse}
+H.~Zou, T.~Hastie, R.~Tibshirani, Sparse principal component analysis, Journal
+  of computational and graphical statistics 15~(2) (2006) 265--286.
+
+\end{thebibliography}

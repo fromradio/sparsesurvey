@@ -1,0 +1,27 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: sparsesurvey.aux
+The style file: elsarticle-num.bst
+Database file #1: sparsesurvey.bib
+Repeated entry---line 655 of file sparsesurvey.bib
+ : @article{zhang2014local
+ :                        ,
+I'm skipping whatever remains of this entry
+You're missing a field name---line 718 of file sparsesurvey.bib
+ : 
+ : %  title={Linear analysis of nonlinear constraints for interactive geometric modeling},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+Repeated entry---line 869 of file sparsesurvey.bib
+ : @inproceedings{wright2009robust
+ :                                ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 884 of file sparsesurvey.bib
+ : @inproceedings{shen2012unified
+ :                               ,
+I'm skipping whatever remains of this entry
+Warning--empty journal in bertsekas1999nonlinear
+Warning--can't use both volume and number fields in neumann2014compressed
+Name 3 in "Zhang, Juyong and Deng, Bailin and Liu, Zishun, and Patane, Giuseppe and Bouaziz, Sofien and Hormann, Kai and Liu, Ligang" has a comma at the end for entry zhang2014local
+while executing---line 1495 of file elsarticle-num.bst
+Warning--empty pages in wang2011efficient
+Warning--can't use both volume and number fields in chen2009benchmark
+(There were 5 error messages)

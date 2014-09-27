@@ -1,0 +1,824 @@
+
+%%------books
+@book{elad2010sparse,
+  title={Sparse and redundant representations: from theory to applications in signal and image processing},
+  author={Elad, Michael},
+  year={2010},
+  publisher={Springer}
+}
+
+@book{jolliffe2005principal,
+  title={Principal component analysis},
+  author={Jolliffe, Ian},
+  year={2005},
+  publisher={Wiley Online Library}
+}
+
+
+%------articles
+@article{aharon2006svd,
+  title={-svd: An algorithm for designing overcomplete dictionaries for sparse representation},
+  author={Aharon, Michal and Elad, Michael and Bruckstein, Alfred},
+  journal={Signal Processing, IEEE Transactions on},
+  volume={54},
+  number={11},
+  pages={4311--4322},
+  year={2006},
+  publisher={IEEE}
+}
+
+@article{avron2010L1,
+  title={L1-Sparse reconstruction of sharp point set surfaces},
+  author={Avron, Haim and Sharf, Andrei and Greif, Chen and Cohen-Or, Daniel},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={29},
+  number={5},
+  pages={135},
+  year={2010},
+  publisher={ACM}
+}
+
+@article{bach2012optimization,
+  title={Optimization with sparsity-inducing penalties},
+  author={Bach, Francis and Jenatton, Rodolphe and Mairal, Julien and Obozinski, Guillaume},
+  journal={Foundations and Trends{\textregistered} in Machine Learning},
+  volume={4},
+  number={1},
+  pages={1--106},
+  year={2012},
+  publisher={Now Publishers Inc.}
+}
+
+@article{beck2009fast,
+  title={A fast iterative shrinkage-thresholding algorithm for linear inverse problems},
+  author={Beck, Amir and Teboulle, Marc},
+  journal={SIAM Journal on Imaging Sciences},
+  volume={2},
+  number={1},
+  pages={183--202},
+  year={2009},
+  publisher={SIAM}
+}
+
+@article{bertsekas1982constrained,
+  title={Constrained optimization and Lagrange multiplier methods},
+  author={Bertsekas, Dimitri P},
+  journal={Computer Science and Applied Mathematics, Boston: Academic Press, 1982},
+  volume={1},
+  year={1982}
+}
+
+@article{bertsekas1999nonlinear,
+  title={Nonlinear programming},
+  author={Bertsekas, Dimitri P},
+  year={1999},
+  publisher={Athena Scientific}
+}
+
+@article{brown1983statistical,
+  title={Statistical uses of the spatial median},
+  author={Brown, BM},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  pages={25--30},
+  year={1983},
+  publisher={JSTOR}
+}
+
+@article{bruckstein2009sparse,
+  title={From sparse solutions of systems of equations to sparse modeling of signals and images},
+  author={Bruckstein, Alfred M and Donoho, David L and Elad, Michael},
+  journal={SIAM review},
+  volume={51},
+  number={1},
+  pages={34--81},
+  year={2009},
+  publisher={SIAM}
+}
+
+@article{candes2006robust,
+  title={Robust uncertainty principles: Exact signal reconstruction from highly incomplete frequency information},
+  author={Cand{\`e}s, Emmanuel J and Romberg, Justin and Tao, Terence},
+  journal={Information Theory, IEEE Transactions on},
+  volume={52},
+  number={2},
+  pages={489--509},
+  year={2006},
+  publisher={IEEE}
+}
+
+@article{candes2008introduction,
+  title={An introduction to compressive sampling},
+  author={Cand{\`e}s, Emmanuel J and Wakin, Michael B},
+  journal={Signal Processing Magazine, IEEE},
+  volume={25},
+  number={2},
+  pages={21--30},
+  year={2008},
+  publisher={IEEE}
+}
+
+@article{candes2009exact,
+  title={Exact matrix completion via convex optimization},
+  author={Cand{\`e}s, Emmanuel J and Recht, Benjamin},
+  journal={Foundations of Computational mathematics},
+  volume={9},
+  number={6},
+  pages={717--772},
+  year={2009},
+  publisher={Springer}
+}
+
+@article{candes2011robust,
+  title={Robust principal component analysis?},
+  author={Cand{\`e}s, Emmanuel J and Li, Xiaodong and Ma, Yi and Wright, John},
+  journal={Journal of the ACM (JACM)},
+  volume={58},
+  number={3},
+  pages={11},
+  year={2011},
+  publisher={ACM}
+}
+
+@article{chambolle2010introduction,
+  title={An introduction to total variation for image analysis},
+  author={Chambolle, Antonin and Caselles, Vicent and Cremers, Daniel and Novaga, Matteo and Pock, Thomas},
+  journal={Theoretical foundations and numerical methods for sparse recovery},
+  volume={9},
+  pages={263--340},
+  year={2010},
+  publisher={Walter de Gruyter}
+}
+
+@article{chartrand2007exact,
+  title={Exact reconstruction of sparse signals via nonconvex minimization},
+  author={Chartrand, Rick},
+  journal={Signal Processing Letters, IEEE},
+  volume={14},
+  number={10},
+  pages={707--710},
+  year={2007},
+  publisher={IEEE}
+}
+
+@article{chen1998atomic,
+  title={Atomic decomposition by basis pursuit},
+  author={Chen, Scott Shaobing and Donoho, David L and Saunders, Michael A},
+  journal={SIAM journal on scientific computing},
+  volume={20},
+  number={1},
+  pages={33--61},
+  year={1998},
+  publisher={SIAM}
+}
+
+@article{cornea2007curve,
+  title={Curve-skeleton properties, applications, and algorithms},
+  author={Cornea, Nicu D and Silver, Deborah and Min, Patrick},
+  journal={Visualization and Computer Graphics, IEEE Transactions on},
+  volume={13},
+  number={3},
+  pages={530--548},
+  year={2007},
+  publisher={IEEE}
+}
+
+@article{digne2014self,
+  title={Self-similarity for accurate compression of point sampled surfaces},
+  author={Digne, Julie and Chaine, Rapha{\"e}lle and Valette, S{\'e}bastien},
+  journal={month},
+  year={2014}
+}
+
+@article{donoho1992maximum,
+  title={Maximum entropy and the nearly black object},
+  author={Donoho, David L and Johnstone, Iain M and Hoch, Jeffrey C and Stern, Alan S},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  pages={41--81},
+  year={1992},
+  publisher={JSTOR}
+}
+
+@article{donoho1994ideal,
+  title={Ideal spatial adaptation by wavelet shrinkage},
+  author={Donoho, David L and Johnstone, Jain M},
+  journal={Biometrika},
+  volume={81},
+  number={3},
+  pages={425--455},
+  year={1994},
+  publisher={Biometrika Trust}
+}
+
+@article{donoho1995wavelet,
+  title={Wavelet shrinkage: asymptopia?},
+  author={Donoho, David L and Johnstone, Iain M and Kerkyacharian, G{\'e}rard and Picard, Dominique},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  pages={301--369},
+  year={1995},
+  publisher={JSTOR}
+}
+
+@inproceedings{engan1999frame,
+  title={Frame based signal compression using method of optimal directions (MOD)},
+  author={Engan, Kjersti and Aase, Sven Ole and Husoy, JH},
+  booktitle={Circuits and Systems, 1999. ISCAS'99. Proceedings of the 1999 IEEE International Symposium on},
+  volume={4},
+  pages={1--4},
+  year={1999},
+  organization={IEEE}
+}
+
+@article{efron2004least,
+  title={Least angle regression},
+  author={Efron, Bradley and Hastie, Trevor and Johnstone, Iain and Tibshirani, Robert and others},
+  journal={The Annals of statistics},
+  volume={32},
+  number={2},
+  pages={407--499},
+  year={2004},
+  publisher={Institute of Mathematical Statistics}
+}
+
+@article{elad2006image,
+  title={Image denoising via sparse and redundant representations over learned dictionaries},
+  author={Elad, Michael and Aharon, Michal},
+  journal={Image Processing, IEEE Transactions on},
+  volume={15},
+  number={12},
+  pages={3736--3745},
+  year={2006},
+  publisher={IEEE}
+}
+
+@article{elsey2009analogue,
+  title={Analogue of the total variation denoising model in the context of geometry processing},
+  author={Elsey, Matthew and Esedo g{\={}} lu, Selim},
+  journal={Multiscale Modeling \& Simulation},
+  volume={7},
+  number={4},
+  pages={1549--1573},
+  year={2009},
+  publisher={SIAM}
+}
+
+@article{he2013mesh,
+  title={Mesh denoising via L 0 minimization},
+  author={He, Lei and Schaefer, Scott},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={32},
+  number={4},
+  pages={64},
+  year={2013},
+  publisher={ACM}
+}
+
+@article{huang2013l1,
+  title={L1-medial skeleton of point cloud.},
+  author={Huang, Hui and Wu, Shihao and Cohen-Or, Daniel and Gong, Minglun and Zhang, Hao and Li, Guiqing and Chen, Baoquan},
+  journal={ACM Trans. Graph.},
+  volume={32},
+  number={4},
+  pages={65},
+  year={2013}
+}
+
+@article{huang2014ell,
+  title={\&ell; 1-Based Construction of Polycube Maps from Complex Shapes},
+  author={Huang, Jin and Jiang, Tengfei and Shi, Zeyun and Tong, Yiying and Bao, Hujun and Desbrun, Mathieu},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={33},
+  number={3},
+  pages={25},
+  year={2014},
+  publisher={ACM}
+}
+
+@article{jin2012unsupervised,
+  title={Unsupervised upright orientation of man-made models},
+  author={Jin, Yong and Wu, Qingbiao and Liu, Ligang},
+  journal={Graphical Models},
+  volume={74},
+  number={4},
+  pages={99--108},
+  year={2012},
+  publisher={Elsevier}
+}
+
+@article{zhang2014local,
+  title={Local Barycentric Coordinates},
+  author={Zhang, Juyong and Deng, Bailin and Liu, Zishun, and Patane, Giuseppe and Bouaziz, Sofien and Hormann, Kai and Liu, Ligang},
+  journal={ACM Transactions on Graphics  (Proc. SIGGRAPH Aisa)},
+  volume={33},
+  number={6},
+  year={2014},
+  publisher={ACM}
+}
+
+@article{le2012smooth,
+  title={Smooth skinning decomposition with rigid bones},
+  author={Le, Binh Huy and Deng, Zhigang},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={31},
+  number={6},
+  pages={199},
+  year={2012},
+  publisher={ACM}
+}
+
+@article{le2013two,
+  title={Two-layer sparse compression of dense-weight blend skinning},
+  author={Le, Binh Huy and Deng, Zhigang},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={32},
+  number={4},
+  pages={124},
+  year={2013},
+  publisher={ACM}
+}
+
+@article{le2014ras,
+ author = {Le, Binh Huy and Deng, Zhigang},
+ title = {Robust and Accurate Skeletal Rigging from Mesh Sequences},
+ journal = {ACM Trans. Graph.},
+ issue_date = {July 2014},
+ volume = {33},
+ number = {4},
+ month = jul,
+ year = {2014},
+ issn = {0730-0301},
+ pages = {84:1--84:10},
+ articleno = {84},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/2601097.2601161},
+ doi = {10.1145/2601097.2601161},
+ acmid = {2601161},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {geometric deformation, linear blend skinning, rigging, skeleton extraction, skinning from examples},
+}
+
+@article{lin2009fast,
+  title={Fast convex optimization algorithms for exact recovery of a corrupted low-rank matrix},
+  author={Lin, Zhouchen and Ganesh, Arvind and Wright, John and Wu, Leqin and Chen, MINMING and Ma, Yi},
+  journal={Computational Advances in Multi-Sensor Adaptive Processing (CAMSAP)},
+  volume={61},
+  year={2009},
+  publisher={Citeseer}
+}
+
+@article{lin2010augmented,
+  title={The augmented lagrange multiplier method for exact recovery of corrupted low-rank matrices},
+  author={Lin, Zhouchen and Chen, Minming and Ma, Yi},
+  journal={arXiv preprint arXiv:1009.5055},
+  year={2010}
+}
+
+@article{litman2011diffusion,
+  title={Diffusion-geometric maximally stable component detection in deformable shapes},
+  author={Litman, Roee and Bronstein, Alexander M and Bronstein, Michael M},
+  journal={Computers \& Graphics},
+  volume={35},
+  number={3},
+  pages={549--560},
+  year={2011},
+  publisher={Elsevier}
+}
+
+
+@article{mallat1993matching,
+  title={Matching pursuits with time-frequency dictionaries},
+  author={Mallat, St{\'e}phane G and Zhang, Zhifeng},
+  journal={Signal Processing, IEEE Transactions on},
+  volume={41},
+  number={12},
+  pages={3397--3415},
+  year={1993},
+  publisher={IEEE}
+}
+
+@article{marjanovic2012optimization,
+  title={On optimization and matrix completion},
+  author={Marjanovic, Goran and Solo, Victor},
+  journal={Signal Processing, IEEE Transactions on},
+  volume={60},
+  number={11},
+  pages={5714--5724},
+  year={2012},
+  publisher={IEEE}
+}
+
+@article{neumann2013sparse,
+  title={Sparse localized deformation components},
+  author={Neumann, Thomas and Varanasi, Kiran and Wenger, Stephan and Wacker, Markus and Magnor, Marcus and Theobalt, Christian},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={32},
+  number={6},
+  pages={179},
+  year={2013},
+  publisher={ACM}
+}
+
+@article{olshausen1997sparse,
+  title={Sparse coding with an overcomplete basis set: A strategy employed by V1?},
+  author={Olshausen, Bruno A and Field, David J},
+  journal={Vision research},
+  volume={37},
+  number={23},
+  pages={3311--3325},
+  year={1997},
+  publisher={Elsevier}
+}
+
+@article{ovsjanikov2012functional,
+  title={Functional maps: a flexible representation of maps between shapes},
+  author={Ovsjanikov, Maks and Ben-Chen, Mirela and Solomon, Justin and Butscher, Adrian and Guibas, Leonidas},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={31},
+  number={4},
+  pages={30},
+  year={2012},
+  publisher={ACM}
+}
+
+@article{pinkall1993computing,
+  title={Computing discrete minimal surfaces and their conjugates},
+  author={Pinkall, Ulrich and Polthier, Konrad},
+  journal={Experimental mathematics},
+  volume={2},
+  number={1},
+  pages={15--36},
+  year={1993},
+  publisher={Taylor \& Francis}
+}
+
+@article{preiner2014CPF,
+ author = {Preiner, Reinhold and Mattausch, Oliver and Arikan, Murat and Pajarola, Renato and Wimmer, Michael},
+ title = {Continuous Projection for Fast L1 Reconstruction},
+ journal = {ACM Trans. Graph.},
+ issue_date = {July 2014},
+ volume = {33},
+ number = {4},
+ month = jul,
+ year = {2014},
+ issn = {0730-0301},
+ pages = {47:1--47:13},
+ articleno = {47},
+ numpages = {13},
+ url = {http://doi.acm.org/10.1145/2601097.2601172},
+ doi = {10.1145/2601097.2601172},
+ acmid = {2601172},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Gaussian mixture, L1 reconstruction, dynamic reconstruction, hierarchical EM, point set, upsampling},
+}
+
+@article{small1990survey,
+  title={A survey of multidimensional medians},
+  author={Small, Christopher G},
+  journal={International Statistical Review/Revue Internationale de Statistique},
+  pages={263--277},
+  year={1990},
+  publisher={JSTOR}
+}
+
+@article{shi2000normalized,
+  title={Normalized cuts and image segmentation},
+  author={Shi, Jianbo and Malik, Jitendra},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={22},
+  number={8},
+  pages={888--905},
+  year={2000},
+  publisher={IEEE}
+}
+
+@article{tibshirani1996regression,
+  title={Regression shrinkage and selection via the lasso},
+  author={Tibshirani, Robert},
+  journal={Journal of the Royal Statistical Society. Series B (Methodological)},
+  pages={267--288},
+  year={1996},
+  publisher={JSTOR}
+}
+
+@article{tropp2007signal,
+  title={Signal recovery from random measurements via orthogonal matching pursuit},
+  author={Tropp, Joel A and Gilbert, Anna C},
+  journal={Information Theory, IEEE Transactions on},
+  volume={53},
+  number={12},
+  pages={4655--4666},
+  year={2007},
+  publisher={IEEE}
+}
+
+@article{vidal2010tutorial,
+  title={A tutorial on subspace clustering},
+  author={Vidal, Ren{\'e}},
+  journal={IEEE Signal Processing Magazine},
+  volume={28},
+  number={2},
+  pages={52--68},
+  year={2010},
+  publisher={Citeseer}
+}
+
+@article{wang2014upright,
+  title={Upright Orientation of 3D shapes via Tensor Rank Minimization},
+  author={Wang, Weiming and Liu, Xiuping and Liu, Ligang},
+  journal={Journal of Mechanical Science and Technology},
+  year={2014}
+}
+
+@article{wang2014decoupling,
+  title={Decoupling noise and features via weighted L1-analysis compressed sensing},
+  author={Wang, Ruimin and Yang, Zhouwang and Liu, Ligang and Deng, Jiansong and Chen, Falai},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={33},
+  number={2},
+  pages={18},
+  year={2014},
+  publisher={ACM}
+}
+
+@article{weber1909theory,
+  title={Theory of industrial location},
+  author={Weber, Alfred},
+  year={1909},
+  publisher={University of Chicago Press, Chicago}
+}
+
+@article{wright2009robust,
+  title={Robust face recognition via sparse representation},
+  author={Wright, John and Yang, Allen Y and Ganesh, Arvind and Sastry, Shankar S and Ma, Yi},
+  journal={Pattern Analysis and Machine Intelligence, IEEE Transactions on},
+  volume={31},
+  number={2},
+  pages={210--227},
+  year={2009},
+  publisher={IEEE}
+}
+
+@article{wright2010sparse,
+  title={Sparse representation for computer vision and pattern recognition},
+  author={Wright, John and Ma, Yi and Mairal, Julien and Sapiro, Guillermo and Huang, Thomas S and Yan, Shuicheng},
+  journal={Proceedings of the IEEE},
+  volume={98},
+  number={6},
+  pages={1031--1044},
+  year={2010},
+  publisher={IEEE}
+}
+
+@article{xiong2014robust,
+  author = {Shiyao Xiong and Juyong Zhang and Jianmin Zheng and Jianfei Cai and Ligang Liu},
+  title = {Robust Surface Reconstruction via Dictionary Learning},
+  journal = {ACM Transactions on Graphics (Proc. SIGGRAPH Aisa)},
+  volume = {33},
+  number = {6},
+  pages = {},
+  year = {2014}
+}
+
+@article{xu2011image,
+  title={Image smoothing via L 0 gradient minimization},
+  author={Xu, Li and Lu, Cewu and Xu, Yi and Jia, Jiaya},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={30},
+  number={6},
+  pages={174},
+  year={2011},
+  publisher={ACM}
+}
+
+@article{zhang2014local,
+  title={Local Barycentric Coordinates},
+  author={Zhang, Juyong and Deng, Bailin and Liu, Zishun, and Patane, Giuseppe and Bouaziz, Sofien and Hormann, Kai and Liu, Ligang},
+  journal={ACM Transactions on Graphics  (Proc. SIGGRAPH Aisa)},
+  volume={33},
+  number={6},
+  year={2014},
+  publisher={ACM}
+}
+
+@article{zou2006sparse,
+  title={Sparse principal component analysis},
+  author={Zou, Hui and Hastie, Trevor and Tibshirani, Robert},
+  journal={Journal of computational and graphical statistics},
+  volume={15},
+  number={2},
+  pages={265--286},
+  year={2006},
+  publisher={Taylor \& Francis}
+}
+
+
+
+%------inproceedings
+@inproceedings{bouaziz2013sparse,
+  title={Sparse iterative closest point},
+  author={Bouaziz, Sofien and Tagliasacchi, Andrea and Pauly, Mark},
+  booktitle={Proceedings of the Eleventh Eurographics/ACMSIGGRAPH Symposium on Geometry Processing},
+  pages={113--123},
+  year={2013},
+  organization={Eurographics Association}
+}
+
+@inproceedings{cheng2011multi,
+  title={Multi-task low-rank affinity pursuit for image segmentation},
+  author={Cheng, Bin and Liu, Guangcan and Wang, Jingdong and Huang, Zhongyang and Yan, Shuicheng},
+  booktitle={Computer Vision (ICCV), 2011 IEEE International Conference on},
+  pages={2439--2446},
+  year={2011},
+  organization={IEEE}
+}
+
+@inproceedings{elhamifar2009sparse,
+  title={Sparse subspace clustering},
+  author={Elhamifar, Ehsan and Vidal, Ren{\'e}},
+  booktitle={Computer Vision and Pattern Recognition, 2009. CVPR 2009. IEEE Conference on},
+  pages={2790--2797},
+  year={2009},
+  organization={IEEE}
+}
+
+@inproceedings{habbecke2012linear,
+  title={Linear analysis of nonlinear constraints for interactive geometric modeling},
+  author={Habbecke, Martin and Kobbelt, Leif},
+  booktitle={Computer Graphics Forum},
+  volume={31},
+  pages={641--650},
+  year={2012},
+  organization={Wiley Online Library}
+}
+
+@inproceedings{hu2012co,
+  title={Co-Segmentation of 3D Shapes via Subspace Clustering},
+  author={Hu, Ruizhen and Fan, Lubin and Liu, Ligang},
+  booktitle={Computer graphics forum},
+  volume={31},
+  pages={1703--1713},
+  year={2012},
+  organization={Wiley Online Library}
+}
+
+@inproceedings{huang2009consolidation,
+  title={Consolidation of unorganized point clouds for surface reconstruction},
+  author={Huang, Hui and Li, Dan and Zhang, Hao and Ascher, Uri and Cohen-Or, Daniel},
+  booktitle={ACM Transactions on Graphics (TOG)},
+  volume={28},
+  pages={176},
+  year={2009},
+  organization={ACM}
+}
+
+@inproceedings{ji2010robust,
+  title={Robust video denoising using low rank matrix completion},
+  author={Ji, Hui and Liu, Chaoqiang and Shen, Zuowei and Xu, Yuhong},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2010 IEEE Conference on},
+  pages={1791--1798},
+  year={2010},
+  organization={IEEE}
+}
+
+@inproceedings{liao2011efficient,
+  title={Efficient feature-preserving local projection operator for geometry reconstruction},
+  author={Liao, Bin and Xiao, Chunxia and Jin, Liqiang},
+  booktitle={Eurographics 2011-Short Papers},
+  pages={13--16},
+  year={2011},
+  organization={The Eurographics Association}
+}
+
+@inproceedings{lipman2007parameterization,
+  title={Parameterization-free projection for geometry reconstruction},
+  author={Lipman, Yaron and Cohen-Or, Daniel and Levin, David and Tal-Ezer, Hillel},
+  booktitle={ACM Transactions on Graphics (TOG)},
+  volume={26},
+  pages={22},
+  year={2007},
+  organization={ACM}
+}
+
+@inproceedings{ma2012sparse,
+  title={Sparse representation for face recognition based on discriminative low-rank dictionary learning},
+  author={Ma, Long and Wang, Chunheng and Xiao, Baihua and Zhou, Wen},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2012 IEEE Conference on},
+  pages={2586--2593},
+  year={2012},
+  organization={IEEE}
+}
+
+@inproceedings{mairal2008discriminative,
+  title={Discriminative learned dictionaries for local image analysis},
+  author={Mairal, Julien and Bach, Francis and Ponce, Jean and Sapiro, Guillermo and Zisserman, Andrew},
+  booktitle={Computer Vision and Pattern Recognition, 2008. CVPR 2008. IEEE Conference on},
+  pages={1--8},
+  year={2008},
+  organization={IEEE}
+}
+
+@inproceedings{miandji2013learning,
+  title={Learning based compression of surface light fields for real-time rendering of global illumination scenes},
+  author={Miandji, Ehsan and Kronander, Joel and Unger, Jonas},
+  booktitle={SIGGRAPH Asia 2013 Technical Briefs},
+  pages={24},
+  year={2013},
+  organization={ACM}
+}
+
+@inproceedings{pati1993orthogonal,
+  title={Orthogonal matching pursuit: Recursive function approximation with applications to wavelet decomposition},
+  author={Pati, Yagyensh Chandra and Rezaiifar, Ramin and Krishnaprasad, PS},
+  booktitle={Signals, Systems and Computers, 1993. 1993 Conference Record of The Twenty-Seventh Asilomar Conference on},
+  pages={40--44},
+  year={1993},
+  organization={IEEE}
+}
+
+@inproceedings{pokrass2013sparse,
+  title={Sparse modeling of intrinsic correspondences},
+  author={Pokrass, Jonathan and Bronstein, Alexander M and Bronstein, Michael M and Sprechmann, Pablo and Sapiro, Guillermo},
+  booktitle={Computer Graphics Forum},
+  volume={32},
+  pages={459--468},
+  year={2013},
+  organization={Wiley Online Library}
+}
+
+@inproceedings{schaefer2007example,
+  title={Example-based skeleton extraction},
+  author={Schaefer, Scott and Yuksel, Can},
+  booktitle={Symposium on Geometry Processing},
+  pages={153--162},
+  year={2007},
+  organization={Citeseer}
+}
+
+@inproceedings{shen2012unified,
+  title={A unified approach to salient object detection via low rank matrix recovery},
+  author={Shen, Xiaohui and Wu, Ying},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2012 IEEE Conference on},
+  pages={853--860},
+  year={2012},
+  organization={IEEE}
+}
+
+@inproceedings{wang2011efficient,
+  title={Efficient Subspace Segmentation via Quadratic Programming.},
+  author={Wang, Shusen and Yuan, Xiaotong and Yao, Tiansheng and Yan, Shuicheng and Shen, Jialie},
+  booktitle={AAAI},
+  year={2011}
+}
+
+@article{wold1987principal,
+  title={Principal component analysis},
+  author={Wold, Svante and Esbensen, Kim and Geladi, Paul},
+  journal={Chemometrics and intelligent laboratory systems},
+  volume={2},
+  number={1},
+  pages={37--52},
+  year={1987},
+  publisher={Elsevier}
+}
+
+
+@inproceedings{wright2009robust,
+  title={Robust principal component analysis: Exact recovery of corrupted low-rank matrices via convex optimization},
+  author={Wright, John and Ganesh, Arvind and Rao, Shankar and Peng, Yigang and Ma, Yi},
+  booktitle={Advances in neural information processing systems},
+  pages={2080--2088},
+  year={2009}
+}
+
+@phdthesis{jenatton2011structured,
+  title={Structured sparsity-inducing norms: Statistical and algorithmic properties with applications to neuroimaging},
+  author={Jenatton, Rodolphe},
+  year={2011},
+  school={{\'E}cole normale sup{\'e}rieure de Cachan-ENS Cachan}
+}
+
+@inproceedings{shen2012unified,
+  title={A unified approach to salient object detection via low rank matrix recovery},
+  author={Shen, Xiaohui and Wu, Ying},
+  booktitle={Computer Vision and Pattern Recognition (CVPR), 2012 IEEE Conference on},
+  pages={853--860},
+  year={2012},
+  organization={IEEE}
+}
+
+@inproceedings{yang2008image,
+  title={Image super-resolution as sparse representation of raw image patches},
+  author={Yang, Jianchao and Wright, John and Huang, Thomas and Ma, Yi},
+  booktitle={Computer Vision and Pattern Recognition, 2008. CVPR 2008. IEEE Conference on},
+  pages={1--8},
+  year={2008},
+  organization={IEEE}
+}
+
+%-------------other style
+@misc{grant2008cvx,
+  title={CVX: Matlab software for disciplined convex programming},
+  author={Grant, Michael and Boyd, Stephen and Ye, Yinyu},
+  year={2008}
+}

@@ -1,0 +1,173 @@
+\section{The Problems of Sparse Coding}
+Generally, there are some basic assumptions in sparse techniques as an input signal can be represented by a sparse linear combination of basis functions or a matrix can be approximated by a low rank matrix. 
+So there are several essential issues in this field for instance finding the weights or coefficients of the combination, learning the basis functions or vectors, rank minimization etc.
+\subsection{Sparse Coding}
+%There are many basic different aspects in sparse coding problems such as finding the coefficients, learning the basis vectors, matrix factorization etc.
+At the very first, we briefly introduce some popular sparse methods for machine learning.
+Recall that the target of sparse coding is to find as small number of basis vectors as possible to represent an input vector.
+A common formulation for this problem is that:
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{a}\|_0\\
+\mathrm{s.t.} & \|\mathbf{y}-D\mathbf{a}\|_2 \leq \epsilon.
+\end{array}
+\label{eq-sparse}
+\end{equation}
+Here $D=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_n)$ denotes the dictionary matrix collecting all basis vectors.
+Unfortunately, $\|\mathbf{d}\|_0$ is not differentiable or even continuous.
+Thus this optimization problem is a NP-hard problem and cannot be easily solved.
+Generally, we are not able to obtain the optimal solution of Problem~\ref{eq-sparse}.
+But many approximated solvers have been created to solve this problem.
+Matching pursuit (MP)~\cite{mallat1993matching}, orthogonal matching pursuit (OMP)~\cite{pati1993orthogonal,tropp2007signal} iteratively add the best basis vector to represent $\mathbf{x}$ which is an approximating solution of problem:
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{y}-D\mathbf{a}\|_2^2 \\
+\mathrm{s.t.} & \|\mathbf{a}\|_0 \leq s
+\end{array}
+\end{equation}
+Here $s$ denotes the number of chosen basis vectors which stands for the sparsity of this problem.
+Under certain assumptions~\cite{pati1993orthogonal}, the solution of OMP algorithm converges to the real solution.
+
+Another widely-used technique for solving sparse problem is to use $\ell_1$ norm to replace $\ell_0$ norm in Problem~\ref{eq-sparse}.
+The least absolute shrinkage and selection operator (LASSO)~\cite{tibshirani1996regression} method uses the constraint that $\|\mathbf{a}\|_1$ is no greater than a given value $\epsilon$
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{y}-D\mathbf{a}\|_2^2\\
+\mathrm{s.t.} & \|\mathbf{a}\|_1 \leq \epsilon
+\end{array}
+\end{equation}
+This problem is also equivalent to an unconstrained minimization with a specific $\beta$ of:
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{a}} & \|\mathbf{y}-D\mathbf{a}\|_2^2 + \beta \|\mathbf{a}\|_1
+\end{array}
+\end{equation}
+The problem is solved using general convex optimization methods like quadratic programming, as well as by specific approaches like the least angle regression~\cite{efron2004least} algorithm.
+
+Sparse coding or sparse representation, on the other way has been applied on many kinds of problems~\cite{wright2010sparse} as face recognition~\cite{wright2009robust}, image super-resolution~\cite{yang2008image}, image classification~\cite{mairal2008discriminative}.
+
+\subsection{Dictionary Learning.}
+Sparse coding or representation aims at finding the sparse coefficient while assuming the dictionary is comprised of given basis.
+On the other hand, dictionary learning algorithms want to optimize the dictionary at the same time given a set of training data.
+Classical dictionary learning techniques for sparse coding~\cite{olshausen1997sparse,engan1999frame} consider a training set of signals or data $Y=[\mathbf{y}_1,\cdots,\,\mathbf{y}_n]$ and optimize the empirical cost function
+\begin{equation}
+\begin{array}{cl}
+f_n(D) \triangleq \frac{1}{n}\sum_{i=1}^n c(\mathbf{y}_i,D)
+\end{array}
+\end{equation}
+where $D$ in $\mathbb{R}^{k\times m}$ is the dictionary, each column representing a basis, and $c(\mathbf{y},D)$ is a loss function that $c(\mathbf{y},D)$ should be small if $D$ represents the signal $\mathbf{y}$ well in a sparse fashion.
+\cite{elad2006image} introduces a sparse constraint assuming that each signal is represented by a certain number of basis vectors.
+The problem is specified as:
+\begin{equation}
+\label{eq-diclearning}
+\begin{array}{cl}
+\min_{D,A} & \|Y-DA\|_F^2\\
+\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i=1,2,\cdots,\,m
+\end{array}
+\end{equation}
+where the dictionary $D=(\mathbf{d}_1,\,\mathbf{d}_2,\cdots ,\,\mathbf{d}_m)$ is also obtained as the coefficient matrix $A$ is obtained.
+These 
+%As discussed above, we show some basic methods of finding the coefficients corresponding to a given input vector when the basis vectors are given.
+%Another big collection of problems discusses algorithms of learning the dictionary or the basis vectors.
+One algorithm called K-SVD uses an iterative procedure by updating the coefficient matrix $A$ and dictionary $D$ separately
+\begin{equation}
+\begin{array}{cl}
+\min_{\mathbf{X},\mathbf{A}} & \|Y-DA\| \\
+\mathrm{s.t.} & \|\mathbf{a}_i\|_0 \leq s,\,\forall i\in\{1,\,2,\cdots ,\,m\}
+\end{array}
+\end{equation}
+
+Here $Y=(\mathbf{y}_1,\,\mathbf{y}_2,\cdots ,\,\mathbf{y}_m)$ contains all input vectors and $A = (\mathbf{a}_1,\,\mathbf{a}_2,\cdots ,\,\mathbf{a}_m)$ is the corresponding coefficient matrix.
+To solve this problem, we first initialize the dictionary using known overcomplete basis vector like wavelet, discrete cosine transformations etc or using random vectors from  input vectors.
+Then 
+
+\subsection{Compressed Sensing}
+
+\subsection{Low rank representation and robust principle component analysis}
+Sparse-based matrix factorization technique is another hot field in machine learning.
+A typical technique is low rank representation which attemps to decompose any given matrix $M$ into a low rank matrix $L$ and a residual matrix $S$.
+The residual matrix $S$ may have some specific properties like the input is corrupted by Gaussian noise or spase noise.
+Under the assumption that $M$ is corrupted by Gaussian noise, a low rank problem is formulated as:
+\begin{equation}
+\label{eq-lowrank}
+\begin{array}{cl}
+\min_{L,S} & \|S\|_F\\
+\mathrm{s.t.} & \mathrm{rank}(L)\leq r\\
+&M=L+S
+\end{array}
+\end{equation}
+here $r\ll \min(m,n)$ where $M$ is a $m\times n$ matrix.
+The above problem is equivalent to principle component analysis (PCA) according to~\cite{jolliffe2005principal,wold1987principal}.
+This problem is easily solved by first computing the singular value decomposition (SVD) of $M$ and then projecting the columns of $M$ onto the subspace spanned by the $r$ principle left singular vectors.
+%Low rank representation attempts to approxmate
+%\paragraph{Low rank representation}
+
+However, PCA assumes that corruption is caused by Gaussian noise.
+The result of PCA can be arbitraryly far from $M$ if only a few entry of $M$ is corrupted.
+\cite{wright2009robust,candes2011robust} show that under some conditions that $S$ is rather sparse, one can exactly recover $M$ by solving
+%If $S$ is assumed to be sparse, the problem becomes:
+\begin{equation}
+\label{eq-lowranksparse}
+\begin{array}{cl}
+\min_{L,S} & \|L\|_* + \lambda \|S\|_1 \\
+\mathrm{s.t.} & M = L+S
+\end{array}
+\end{equation}
+
+The formulation is obtained by relaxing following problem replacing the $\ell_0$ norm with the $\ell_1$ norm:
+\begin{equation}
+\label{eq-lowrankorigin}
+\begin{array}{cl}
+\min_{L,S} & \mathrm{rank}(L) + \lambda \|S\|_0 \\
+\mathrm{s.t.} & M = L+S
+\end{array}
+\end{equation}
+
+\cite{candes2009exact,wright2009robust} shows the uniqueness of the solution and~\cite{lin2010augmented} discusses efficient algorithm for solving low rank problem.
+Generally, problem~\ref{eq-lowranksparse} can be treated as a general convex optimization problem and solved by any off-the-shelf interior point solver (like CVX~\cite{grant2008cvx}).
+
+\paragraph{Numerical solution}
+There have been several popular ways to solve low-rank (robust PCA) problem~\eqref{eq-lowranksparse}:
+The iterative thresholding approach introduced in~\cite{wright2009robust} solves a relaxed convex problem of \eqref{eq-lowranksparse};
+the accelerated proximal gradient approach~\cite{beck2009fast} is applied to a relaxed version of RPCA problem;
+\cite{lin2009fast} tackles the problem via its dual;
+the methods of augmented Lagrange multipliers~\cite{lin2010augmented} is introduced to efficiently solve RPCA problem.
+%\begin{equation}
+%\begin{array}{cl}
+%\min_{L,S} & \|L\|_*+\lambda\|S\|_1 +\frac{1}{2\tau} \|L\|_F^2 + \frac{1}{2\tau} \|S\|_F^2\\
+%\mathrm{s.t.} & M = L+S
+%\end{array}
+%\end{equation}
+
+Here we take a closer look at how augmented Lagrange multipliers (ALM) is applied on solving~\eqref{eq-lowranksparse}.
+According to~\cite{bertsekas1982constrained}, the general approach of augmented Lagrange multipliers is utilized to solve constrained optimization problems:
+\begin{equation}
+\label{eq-generalalm}
+\begin{array}{cl}
+\min & f(\mathbf{x})\\
+\mathrm{s.t.} & h(\mathbf{x}) = 0
+\end{array}
+\end{equation} 
+Here $f: R^n\rightarrow R$ and $h: R^n\rightarrow R^m$.
+the augmented Lagrangian function is defined as:
+\begin{equation}
+Lag(\mathbf{x},\Lambda,\mu)=f(\mathbf{x})+<\Lambda,h(\mathbf{x})>+\frac{\mu}{2}\|h(\mathbf{x})\|_F^2
+\end{equation}
+Then $\mathbf{x}$ and $\Lambda$ are updated iteratively solving sub-problems (see~\cite{bertsekas1999nonlinear} for more details).
+Thus the augmented Lagrangian function of~\eqref{eq-lowranksparse} is:
+\begin{equation}
+\label{eq-lowrankalm}
+\begin{array}{ccl}
+Lag(L,S,\Lambda,\mu)& =& \|L\|_* + \lambda\|S\|_1 \\
+& &+ <\Lambda,M-L-S>\\
+& & +\frac{\mu}{2}\|M-L-S\|_2^2
+\end{array}
+\end{equation}
+Then $L$, $S$ and $\Lambda$ are separately updated by fixing other variables and minimizing augmented Lagrangian function~\cite{lin2010augmented}.
+
+Low rank representation or robust principle component analysis has been successfully applied onto different problems like face recognition~\cite{ma2012sparse}, latent object detection~\cite{shen2012unified}, video denoising~\cite{ji2010robust}.
+%Accelerated proximal gradient approach~\cite{beck2009fast} is another commonly used technique to solve low-rank problems.
+%It is a critical task to find a low rank representation or approximation for a general data matrix.
+
+%But low rank representation has been widely used in many applications like image compression, noise reduction, principle component analysis, regularization for ill-posed problems and so on.
+%The basic problem of low rank is to approximate a given matrix $A$ using a matrix $B$ with low rank. 

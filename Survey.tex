@@ -1,5 +1,128 @@
 \label{sec:Survey}
 
+\begin{table}
+\begin{center}
+\tiny{
+\caption{Comparison of applications between image and geometry.}
+
+    \begin{tabular}{| c |  p{1.0in}<{\centering} |  p{1.0in}<{\centering} |}\hline
+                            &   Image                 &    Geometry     \\ \hline
+        Domain              &   Regular               &    Irregular   \\ \hline
+        Smoothness          &   Piecewise constant    &  Piecewise Smooth  \\ \hline
+    \end{tabular}
+    \label{table:difference}
+}
+\end{center}
+\end{table}
+
+
+
+
+
+
+
+\begin{table*}
+\begin{center}
+\tiny{
+\caption{An overview about the effectiveness of  sparsity in all the papers.}
+\settowidth\rotheadsize{\theadfont \tiny{$\mathbf{Regularization}$}}
+    \begin{tabular}{| c | ccc | c |} \hline
+
+     &  \multicolumn{3}{c}{$\mathbf{Method}$} \\ \cline{2-4}
+
+     \raisebox{0.5ex}[0pt]{Application}
+     & \rothead{\tiny{$\mathbf{Sparse}$} \\ \tiny{$\mathbf{Regularization}$}}
+     & \rothead{\tiny{$\mathbf{Dictionary}$} \\ \tiny{$\mathbf{Learning}$}}
+     & \rothead{\tiny{$\mathbf{Low~Rank}$}}
+     & \raisebox{1.2ex}[0pt]{Effectiveness of Sparsity} \\ \hline
+
+%%% Point cloud consolidation
+     $\mathbf{Point~Cloud~Consolidation}$ & & & &  \\ \hline
+     LOP\cite{lipman2007parameterization} & $\bigstar$ & & & robust to noises, outliers \\
+     WLOP\cite{huang2009consolidation}  & $\bigstar$ & & & robust to noises, outliers \\
+     CLOP\cite{preiner2014CPF}  & $\bigstar$ & & & robust to noises, outliers \\
+     TV($\ell_1$) based/\cite{avron2010L1} & $\bigstar$ & & & robust to noises, outliers \\
+     Subdivision\cite{mustafa2014subdivision}  & $\bigstar$ & & & robust to noises, outliers \\
+     LRSCPK\cite{zhang2013point} & & & $\bigstar$ & sharp feature preserving \\ \hline
+
+%%% Mesh denoising
+     $\mathbf{Mesh~Denoising}$ & & & &\\ \hline
+     $\ell_0$-norm of Edge Operator\cite{he2013mesh} & $\bigstar$ & & & sharp feature preserving\\
+     $\ell_1$-analysis Compressed Sensing\cite{wang2014decoupling} & $\bigstar$ & & & sharp feature preserving\\
+     TV{$\ell_1$} based\cite{zhang2014variational}  & $\bigstar$ & & & sharp feature preserving \\ \hline
+
+%%% Shape matching
+     $\mathbf{Shape~Matching}$ & & & &\\ \hline
+     Rigid\cite{bouaziz2013sparse} & $\bigstar$ & & & robust to noises, outliers \\
+     Non-rigid\cite{zhang2014variational} & $\bigstar$ & & & constraining invariance of intrinsic properties\\
+     Co-segmentation\cite{hu2012co} & $\bigstar$ & & & dimension reduction\\ \hline
+
+%%% Compression
+     $\mathbf{Compression}$ & & & &\\ \hline
+     Point Cloud\cite{digne2014self} & & $\bigstar$ & & high compression ratio, robust to noise\\
+     Rendering\cite{miandji2013learning} & & $\bigstar$ & & real-time rendering, small reconstruction error, low memory \\ \hline
+
+%%% Decomposition
+     $\mathbf{Decomposition}$ & & & & \\ \hline
+     Mesh\cite{zhang2012variational}  & $\bigstar$ & & & improving smoothness of decomposition boundaries\\
+     Mesh Sequence\cite{neumann2013sparse}  & & $\bigstar$ & & versatile with the local controllability \\ \hline
+
+%%% Deformation
+     $\mathbf{Deformation}$ & & & & \\ \hline
+     SSDR\cite{le2012smooth}  & & $\bigstar$ & & low memory, robust to noise \\
+     Blend Skinning Compression\cite{le2013two}  & & $\bigstar$ & & large reduction of computational cost\\
+     Skeletal Rigging\cite{le2014ras}  & & $\bigstar$ & & low memory\\
+     Constrained Mesh Editing\cite{deng2013exploring}  & $\bigstar$ & & & local controllability\\ \hline
+
+%%% Upright orientation
+     $\mathbf{Upright~Orientation}$ & & & & \\ \hline
+     Low Rank\cite{jin2012unsupervised} & & & $\bigstar$ & intuitive, relatively robust\\
+     Tensor Rank\cite{wang2014upright} & & & $\bigstar$ & capturing global symmetry, relatively robust\\ \hline
+
+%%% Other applications
+     $\mathbf{Other~Applications}$ & & & & \\ \hline
+     CMM\cite{neumann2014compressed}  & $\bigstar$ & & & local controllability\\
+     LBC\cite{zhang2014local}  & $\bigstar$ & & & local controllability\\
+     Skeleton Extraction\cite{huang2013l1}  & $\bigstar$ & & & robust to noise and outlier \\
+     Reconstruction\cite{xiong2014robust} & & $\bigstar$ & & sharp feature preserving, robust to noise and outlier, unifying geometry and connectivity\\ \hline
+
+    \end{tabular}
+    \label{table:overview}
+}
+\end{center}
+\end{table*}
+
+Before reviewing the usage of sparsity in geometry modeling and processing, Table~\ref{table:overview} gives an overview about the effectiveness of sparsity in all the papers.
+
 \input{SparseRegularization}
 \input{DictionaryLearning}
 \input{LowRank} 
+
+\vspace{15pt}
+Now an obvious conclusion is that the extensions from images to geometries is non-trivial, 
+thus it is much difficult to achieve some applications that have high performance in images(Figure~\ref{table:applications}).
+Then how to resolve the unresolved problems gives much challenges as future works.
+
+\begin{table}
+\begin{center}
+\small{
+\caption{Comparison of applications between image and geometry.}
+
+    \begin{tabular}{| c |  p{0.6in}<{\centering} |  p{0.6in}<{\centering} |}\hline
+                            &   Image         &    Geometry     \\ \hline
+        Denoising           &   $\bigstar$    &    $\bigstar$   \\ \hline
+        Retrieval           &   $\bigstar$    &                 \\ \hline
+        Alignment           &   $\bigstar$    &    $\bigstar$   \\ \hline
+        Inpainting          &   $\bigstar$    &                 \\ \hline
+        Separation          &   $\bigstar$    &                 \\ \hline
+        Compression         &   $\bigstar$    &    $\bigstar$   \\ \hline
+        Deformation         &                 &    $\bigstar$   \\ \hline
+        Segmentation        &   $\bigstar$    &    $\bigstar$   \\ \hline
+        Classification      &   $\bigstar$    &                 \\ \hline
+        Super-resolution    &   $\bigstar$    &    $\bigstar$   \\ \hline
+        Skeleton Extraction &   $\bigstar$    &    $\bigstar$   \\ \hline
+    \end{tabular}
+    \label{table:applications}
+}
+\end{center}
+\end{table}

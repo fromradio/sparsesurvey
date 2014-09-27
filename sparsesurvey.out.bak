@@ -1,0 +1,32 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Preliminaries}{}% 2
+\BOOKMARK [1][-]{section.3}{The Problems of Sparse Coding}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Sparse Coding}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Dictionary Learning.}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Compressed Sensing}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{Low rank representation and robust principle component analysis}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{Sparse Regularization}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Point Cloud Consolidation}{section.4}% 9
+\BOOKMARK [3][-]{subsubsection.4.1.1}{1 median based}{subsection.4.1}% 10
+\BOOKMARK [3][-]{subsubsection.4.1.2}{1 regression based}{subsection.4.1}% 11
+\BOOKMARK [2][-]{subsection.4.2}{Mesh Denoising}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.3}{Shape Matching}{section.4}% 13
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Rigid registration}{subsection.4.3}% 14
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Non-rigid shape matching}{subsection.4.3}% 15
+\BOOKMARK [3][-]{subsubsection.4.3.3}{Co-segmentation}{subsection.4.3}% 16
+\BOOKMARK [2][-]{subsection.4.4}{Skeleton Extraction}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.5}{Deformation-Constrained Modeling}{section.4}% 18
+\BOOKMARK [2][-]{subsection.4.6}{Total Variation\(TV\) Based Applications}{section.4}% 19
+\BOOKMARK [3][-]{subsubsection.4.6.1}{Point cloud consolidation}{subsection.4.6}% 20
+\BOOKMARK [3][-]{subsubsection.4.6.2}{Mesh Denoising}{subsection.4.6}% 21
+\BOOKMARK [3][-]{subsubsection.4.6.3}{Decomposition}{subsection.4.6}% 22
+\BOOKMARK [3][-]{subsubsection.4.6.4}{Barycentric coordinates}{subsection.4.6}% 23
+\BOOKMARK [1][-]{section.5}{Dictionary Learning}{}% 24
+\BOOKMARK [2][-]{subsection.5.1}{Deformation-Blend Skinning}{section.5}% 25
+\BOOKMARK [2][-]{subsection.5.2}{Decomposition}{section.5}% 26
+\BOOKMARK [2][-]{subsection.5.3}{Reconstruction}{section.5}% 27
+\BOOKMARK [2][-]{subsection.5.4}{Compression}{section.5}% 28
+\BOOKMARK [1][-]{section.6}{Low Rank}{}% 29
+\BOOKMARK [2][-]{subsection.6.1}{Upright orientation}{section.6}% 30
+\BOOKMARK [2][-]{subsection.6.2}{Point cloud normal estimation}{section.6}% 31
+\BOOKMARK [1][-]{section.7}{Discussion}{}% 32

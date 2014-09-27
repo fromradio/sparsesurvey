@@ -1,163 +1,90 @@
-\subsection{Point Cloud Consolidation}
-\label{subsec:Point Cloud Consolidation}
 
+\subsection{Mesh Denoising}
+\label{subsec:L0 denoising}
 
-Nowadays, reconstructing the geometry of a shape from scanned data, also called point cloud consolidation, is a convenient and direct way to obtain 3D models.
-It can be a preprocessing phase for some geometry problem, e.g., surface reconstruction whose result is a mesh object, with functionalities such as denoising, outlier removal, thinning, orientation, and redistribution of the input points.
-However, current scanners are capable of producing large amount of raw, dense point sets with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts.
-Then finding a robust reconstruction technique has always been an active researching area, and indeed there have been lots of works.
-The works introduced in this section are all based on the $\ell_1$ median.
-
-\subsubsection{$\ell_1$ median based}
-\label{subsubsec:$L_1$ median based}
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=2.5in]{images/L1median}
-  \caption{Reconstruction by projection operation. (a). noisy point-set P(green) and an arbitrary point-set Q(red) that will be projected to P to approximate P. (b),(c) are two iterative projection results. (d) is the final projection.}
-  \label{fig:L1 median}
-\end{figure}
-
-Reconstruction by a projection operator, as shown in Figure~\ref{fig:L1 median}, is to approximate the origin point-set(green) by iteratively projecting an arbitrary point-set(red) onto itself while removing the noises or outliers.
-It has an important virtue: it defines a consistent geometry based on the data points, and provides constructive means to up-sample it.
-
-A new projection operator is introduced via a certain fixed-point iteration where the approximated geometry consists of its stationary points,
-and it is closely related to the $\ell_1$ median\cite{brown1983statistical,small1990survey} which is a statistical tool that applied globally to multivariate non-parametric point-samples in the presence of noise and outliers.
-Briefly, it is a robust global center of an arbitrary set of points. Mathematically, given a data set $P=\{p_{j}\}_{j\in J}\subset \mathbb{R}^3$, the $\ell_1$ median is defined as the point $q$ obtained by minimizing the sum of Euclidean distances to the data points
-
-\small{
-\begin{equation}
- \label{eq:L1median}
- q=\arg\min_{x}\left\{ \sum_{j\in J}^{}\|p_{j}-x\| \right\}
-\end{equation}
-}
+Different from denoising in point cloud, for mesh surfaces, there are vertex connectivity and triangle quality that can be used or considered.
+But how to distinguish features from noise is still a challenging problem. 
 
 \paragraph{(1)}
-
-\cite{lipman2007parameterization} applies this tool locally to constitute a robust reconstruction mechanism called parameterization-free local projection operator(LOP).
-Starting with an arbitrary initial point-set $X^{(0)}=\{{x_{i}}^{(0)}\}_{i\in I}\subset \mathbb{R}^3$(typically $|X|\ll|P|$, $|\cdot|$ is the number of point-set),
-LOP computes the target point positions $X$ by performing a fixed-point iteration
+In image processing, \cite{xu2011image}, aiming to smooth images, provides an algorithm for directly optimizing the $\ell_0$ norm of gradients of image colors to create piecewise constant images.
+Let $\mathbf{c}$ be a vector of pixel colors and $\triangledown \mathbf{c}$ be a vector of gradients of these colors.
+They formulates the smooth problem as
 
 \small{
 \begin{equation}
- \label{eq:LOP1}
- X^{k+1}=\mathop{\argmin}_{X=\{x_{i}\}_{i\in I}}\{E_1(X^{k},P)+E_2(X^{k})\},\\
+ \label{eq:imagesmooth}
+ \min_{\mathbf{c}}|\mathbf{c}-\mathbf{c}^{*}|^2+|\triangledown \mathbf{c}|_0
 \end{equation}
 }
 \\
-where,
+where $\mathbf{c}^{*}$ represents the original image colors to provide a data fidelity term.
+
+A natural extension to triangulated meshes is to design a discrete differential operator to replace $\triangledown c$ that is zero when the surface is flat for arbitrary triangulations irrespective of the rotation or translation of the surface.
+This constraint implies that some form of second order information rather than the first order information provided by $\triangledown c$ is needed, e.g.,  the discrete Laplacian operator\cite{pinkall1993computing} which is computed as a weighted combination of a vertex and its one-ring where the weights are given by cotangents of angles of the triangles.
+However,
+\parpic[r]{\label{fig:failureLaplaciandenoise}\includegraphics[width=0.4\linewidth]{images/denoise12}}
+the vertex-based Laplacian only constrains the mean curvature vector as opposed to a metric that should directly measure sharpness per edge, then the optimization fails to reproduce sharp features well shown as the right figure.
+
+\parpic[r]{\label{fig:edgeoperator}\includegraphics[width=0.5\linewidth]{images/denoise11}}
+\cite{he2013mesh} generalizes this construction of the vertex-based cotan operator to an operator that acts directly on an edge
+
 \small{
 \begin{equation}
- \label{eq:LOP2}
- \begin{split}
- & E_1(X^{k},P)=\sum_{i\in I}^{}\sum_{j\in J}^{}\|x_{i}-p_{j}\|\theta(\|x{_i^k}-p_{j}\|),\\
- & E_2(X^{k})=\sum_{i'\in I}^{}\lambda_{i'}\sum_{i\in I\setminus\{i'\}}^{} \eta(\|x_{i}-x{_{i'}^k}\|)\theta(\|x{_i^k}-x{_{i'}^k}\|).
- \end{split}
+ \label{eq:edgecotanoperator}
+ D(e) := {\left[ \begin{array}{c}
+ \frac{\vartriangle_{1,2,3}((p_4-p_3)\cdot(p_3-p_1))}{\vartriangle_{1,3,4}((p_1-p_3)\cdot(p_3-p_2))} \\
+ \frac{\vartriangle_{1,3,4}}{\vartriangle_{1,2,3}+\vartriangle_{1,3,4}} \\
+ \frac{\vartriangle_{1,2,3}((p_3-p_1)\cdot(p_1-p_4))}{\vartriangle_{1,3,4}((p_2-p_1)\cdot(p_1-p_3))} \\
+ \frac{\vartriangle_{1,2,3}}{\vartriangle_{1,2,3}+\vartriangle_{1,3,4}}
+ \end{array}
+ \right]}^{T}
+ \left[ \begin{array}{c}
+ p_1 \\ p_2 \\ p_3 \\ p_4
+ \end{array}
+ \right]
+\end{equation}
+}
+
+Then the extended optimization problem is to make the edge operator sparse formulated as following
+
+\small{
+\begin{equation}
+ \label{eq:L0 denoise}
+ \min_{p,\delta}|p-p^{*}|^2+\alpha|R(p)|^2+\beta|D(p)-\delta|^2+\lambda|\delta|_0
 \end{equation}
 }
 \\
-The term $E_1$ is in fact a localized version of~(\ref{eq:L1median}) by using a fast-decaying weight function $\theta(r)=e^{-r^2/(h/4)^2}$ with the finite support radius $h$,
-and thus it is just $E_1$ that drives the projected points $X$ to approximate the geometry of $P$.
-The term $E_2$ keeps the distribution of the points $X$ fair by incorporating local repulsion forces.
-
-Let $\xi{_{ij}^k}=x{_i^k}-p_{j}$ and $\delta{_{ii'}^k}=x{_i^k}-x{_{i'}^k}$, solving~(\ref{eq:LOP1}), the projection for point $x{_i^{k+1}}$ is obtained as
-
-\small{
-\begin{equation}
- \label{eq:LOP3}
- x{_i^{k+1}}=F_1(x{_i^k},P)+F_2(x{_i^k},X{_i^{'}})
-\end{equation}
-}
-\\
-where,
-\small{
-\begin{equation}
- \label{eq:LOP4}
- \begin{split}
- & F_1(x{_i^k},P)=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}}{\sum_{j\in J}^{}\alpha{_{ij}^k}},\\
- & F_2(x{_i^k},X{_i^{'}})=\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}\beta{_{ii'}^k}},\\
- & \alpha{_{ij}^k}=\frac{\theta(\|\xi{_{ij}^k}\|)}{\|\xi{_{ij}^k}\|},
-   ~\beta{_{ii'}^k}=\frac{\theta(\|\delta{_{ii'}^k}\|)|\eta'(\|\delta{_{ii'}^k}\|)|}{\|\delta{_{ii'}^k}\|}.
- \end{split}
-\end{equation}
-}
-
-Intuitively, LOP distributes the points by approximating their $\ell_1$ median to achieve robustness to outliers and data noises without any local orientation information nor a local manifold assumption.
-However, also because of the use of the local density parameter $h$, it may not work well when the distribution of the input points is highly non-uniform and can fail to converge.
-
-\paragraph{(2)}
-
-Like\cite{lipman2007parameterization}, many surface reconstruction methods try to obtain the resulted mesh without estimation of normals due to the unreliability because of the noisy data.
-In fact, oriented normals at the points play a critical role in surface reconstruction and the estimation of normals requires the sampling points to be uniformly distributed.
-\cite{huang2009consolidation} proposes a new consolidation technique whose central task is normal estimation.
-
-To take advantage of the success of LOP in denoising and outlier removal, and simultaneously address the non-uniform distribution problem, they incorporate locally adaptive density weights into LOP, resulting in WLOP, they define the weighted local densities for each point $p_{j}$ in P and $x_{i}$ in X during the $k$th iteration by $v_{j}=1+\sum_{j'\in J\setminus\{j\}}^{}\theta(\|p_{j}-p_{j'}\|)$ and $w{_i^k}=1+\sum_{i'\in I\setminus\{i\}}^{}\theta(\|\delta{_{ii'}^k}\|)$, the term $F_1$ and $F_2$ in () finally becomes
-
-\small{
-\begin{equation}
- \label{eq:WLOP}
- \begin{split}
- & F_1(x{_i^k},P)=\sum_{j\in J}^{}p_{j}\frac{\alpha{_{ij}^k}/v_{j}}{\sum_{j\in J}^{}(\alpha{_{ij}^k}/v_{j})}\\
- & F_2(x{_i^k},X{_i^{'}})=\mu\sum_{{i'}\in I\setminus\{i\}}^{}\delta{_{ii'}^k}\frac{w{_{i'}^k}\beta{_{ii'}^k}}{\sum_{{i'}\in I\setminus\{i\}}^{}(w{_{i'}^k}\beta{_{ii'}^k})},
- \end{split}
-\end{equation}
-}
-\\
-The weighted local density $v$ in $F_1$ relaxes the attraction of point clusters and repulsion force in dense areas is strengthened by the local density $w$ in $F_2$.
-
-So far, we actually have obtained a reconstructed point set which will then be used to improve the reliability of normal initialization that will be used in a second normal estimation phase.
-However, considering the high computational effort, it may not be a preferable choice using this consolidation technique as a preprocessing method for surface reconstruction even though some high quality surface can be reconstructed.
-
-
-\paragraph{(3)}
-In LOP/WLOP, the majority of the time is spent on the evaluation of the attractive forces from all points in $P$,
-so \cite{preiner2014CPF} efficiently reduce the set $P$ of unordered input points to a much more compact mixture of Gaussians $\mathcal{M}=\{w_{s},\Theta_{s}\}$ that reflects the density distribution of the points.
-That is, $\mathcal{M}$ defines a probability density function(pdf) as a weighted sum of $|\mathcal{M}|$ Gaussian components
-
-\small{
-\begin{equation}
- \label{eq:CLOP1}
- f(\mathbf{x}|\mathcal{M})=\sum_{s}^{}w_{s}g(\mathbf{x}|\Theta_{s}),
-\end{equation}
-}
-\\
-where the $\Theta_{s}=(\mu_{s},\sum_{s}^{})$ are the Gaussian parameters, $w_{s}$ their corresponding convex weights, and $g$ denotes the $d$-variate Gaussian pdf with $g(\mathbf{x}|\mu,\sum)=|2\pi\sum_{}^{}|^{-\frac{1}{2}}e^{-\frac{1}{2}(\mathbf{x}-\mu)^{T}\sum_{}^{-1}(\mathbf{x}-\mu)}$.
-
-They define a $continuous$ $\mathcal{F}_1$ corresponding to $F_1$ in~(\ref{eq:LOP4}) by the convex sum over the internal attraction of each single Gaussian, with convex weights $w_s$ accounting for the Gaussian's relative point mass:
-
-\small{
-\begin{equation}
- \label{eq:CLOP2}
- \mathcal{F}(q,\mathcal{M})=\sum_{s}^{}w_s\int_{\mathbb{R}^3}^{}
- \frac{\mathbf{x}g(\mathbf{x}|\Theta_{s})\alpha(\mathbf{x})}
- {\sum_{s'}^{w_{s'}}\int_{\mathbb{R}^3}^{}g(\mathbf{x'}|\Theta_{s'})\alpha(x')d\mathbf{x}'}
- d\mathbf{x},
-\end{equation}
-}
-\\
-and the final \textbf{closed form} is expressed as
-\small{
-\begin{equation}
- \label{eq:CLOP3}
- \mathcal{F}(q,\mathcal{M})=\frac{\sum_{s}^{}\sum_{k}^{}\int_{\mathbb{R}^3}^{}\mathbf{x}\widehat{\Omega}_{sk}(\mathbf{x})d\mathbf{x}}
- {\sum_{s}^{}\sum_{k}^{}\int_{\mathbb{R}^3}^{}\widehat{\Omega}_{sk}(\mathbf{x})d\mathbf{x}}
- =\frac{\sum_{s,k}^{}w_{sk}\mu_{sk}}
- {\sum_{s,k}^{}w_{sk}},
-\end{equation}
-}
-\\
-where in the same way that~(\ref{eq:LOP2}) is convex of 3D points $p_{j}$, now becomes a convex combination of the product Gaussians' means $\mu_{sk}$ with weights $w_{sk}$.
-
-This method is up to 7 times faster than an optimized GPU implementation of LOP/WLOP, and achieves interactive frame rates for moderately sized point clouds though it can not automatically get the best choice of the parameters for different point set.
-
-\vspace{10pt}
-Figure~\ref{fig:L1 median consolidation} shows the results of these three methods. In summary, many robust point cloud consolidation or surface reconstruction techniques have been developed to deal with a variety of acquisition errors like noise, outliers, missing data(holes) or registration artifacts.
-Most of the $\ell_1$ techniques are typically too expensive to achieve interactive reconstruction times for at least moderately sized point sets, even for parallel implementations,
-and are designed for quality rather than performance due to their nature. So the performance problem is still challenging and worth researching.
+where $p$ are the vertices of the shape, $p^{*}$ are their initial positions, $D(p)$ is a vector where the $i^{th}$ entry corresponds to the area-based edge operator applied to the $i^{th}$ edge, and $R(p)$ is a regularization term. Figure~\ref{fig:L0 denoise}gives one denoised result with sharp features.
 
 \begin{figure}[ht]
   \centering
-  \includegraphics[width=3in]{images/reconstruction_L1}
-  \caption{Sparse regularization: point cloud consolidation. (a): LOP\cite{lipman2007parameterization}. (b): WOLP\cite{huang2009consolidation}. (c): continuous WLOP\cite{preiner2014CPF}.}
-  \label{fig:L1 median consolidation}
-\end{figure} 
+  \includegraphics[width=2.5in]{images/denoise1}
+  \caption{Sparse regularization: mesh denoising\cite{he2013mesh}. Left: initial surface. Center: surface corrupted by Gaussian noise in random directions with standard deviation $\sigma=0.4l_{e}$($l_{e}$ is the mean edge length). Right: denoising result. The wireframe shows folded triangles as red edges.}
+  \label{fig:L0 denoise}
+\end{figure}
+
+\begin{figure*}[ht]
+  \centering
+  \includegraphics[width=5in]{images/denoise2_1}
+  \caption{Sparse regularization: mesh denoising\cite{wang2014decoupling}. (a) is the two-dimensional illustration for their key observation. (b) is a denoising example.}
+  \label{fig:decoupling}
+\end{figure*}
+
+\paragraph{(2)}
+Like most previous methods, how to tune the parameters shown in~(\ref{eq:L0 denoise}) has not theoretical guarantee and the computation of differential properties for distinguishing noise from feature is unreliable and unstable.
+
+To address these problems, \cite{wang2014decoupling} presents a two-phase approach for decoupling features and noise on discrete surfaces.
+Figure~\ref{fig:decoupling}(a) gives a two-dimensional curve as the illustration for their key observation: any surface is piecewise $C^2$, that is, a surface consists of two parts: $C^2$ smooth part and $C^0$ feature part which can be transformed into a sparse signal by applying the Laplacian operator.
+As such, the denoising problem is divided into two phase: smooth part(base mesh) estimation and recovering features from the corrupted feature part.
+
+They firstly get a base mesh by denoising the input data using a global Laplacian regularization smoothing optimization, in which the smoothness parameter is automatically chosen by adopting the generalized cross-validation scheme,
+then decouple the features $x$ and noises simultaneously from the noisy feature part $y$ via the $\ell_1$ analysis compressed sensing optimization
+
+\small{
+\begin{equation}
+ \label{eq:decoupling}
+ \min_{x}\|Lx\|_1~~ s.t. ~ \|y-x\|_2 \le \epsilon
+\end{equation}
+}
+
+Finally, combining the denoised feature part and the obtained base mesh reduces the final denoising result. Note that it is the first time noise and features are analyzed and separated in such an elegant manner with guarantees by statistical theory which is much exciting and sightworthy in the smoothing optimization. 
